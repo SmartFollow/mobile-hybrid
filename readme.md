@@ -1,4 +1,4 @@
-# SmartFollow - IOS
+# SmartFollow - Mobile
 
 ## Git workflow
 
