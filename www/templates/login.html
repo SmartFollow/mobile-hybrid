@@ -1,0 +1,13 @@
+<ion-view view-title="Login">
+  <ion-content class="padding">
+    <form name="myForm" ng-submit="submit()" novalidate>
+        <label class="item item-input item-stacked-label">
+            <input type="text" name="username" required placeholder="Nom" ng-model="data.username" ng-required='true'>
+        </label>
+        <label class="item item-input item-stacked-label">
+            <input type="password" name="password" placeholder="Mot de passe" ng-model="data.password" ng-minlength="6" ng-required='true'>
+        </label>
+       <button class="button button-block button-calm" ng-disabled="myForm.$invalid" ng-click="login()">Login</button>                    
+    </form>
+  </ion-content>
+</ion-view>

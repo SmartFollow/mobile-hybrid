@@ -1,0 +1,47 @@
+<ion-view view-title="Profile">
+    <html ng-app="ionic.example">
+        <head>
+            <meta charset="utf-8">
+            <title>Profile</title>
+            <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+            <link href="http://code.ionicframework.com/0.9.25/css/ionic.min.css" rel="stylesheet">
+            <script src="http://code.ionicframework.com/0.9.25/js/ionic.bundle.min.js"></script>
+        </head>
+        <body ng-controller="ProfileCtrl">
+            <ion-content id="profile-background" has-header="true">
+                <div id="profile-bg"></div>
+                <div id="content">
+                    <div id="profile-info">
+                        <img id="profile-image" ng-src="{{user.face}}">
+                        <h3 id="profile-name">{{user.firstname + " " + user.lastname}}</h3>
+                        <h3 id="profile-class">{{user.group.name}}</h3>
+                    </div>
+                    <div id="profile-notes">
+                        <div class="card">
+                            <div class="item item-divider">
+                                Dernieres notes
+                            </div>
+                            <div class="item item-text-wrap">
+                                <ul>
+                                    <li ng-repeat="matter in allNotes">
+                                        <h2 class="item">{{matter.matter}}</h2>
+                                        <ion-list>
+                                            <item class="item-remove-animate item-icon-right" ng-repeat="note in matter.notes">
+                                                <a class="item" href="#/tab/dash/{{note.id}}/{{note.matter}}">
+                                                    {{note.name}}
+                                                    <h2>{{note.note}}</h2>
+                                                    <p>{{note.comment}}</p>
+                                                </a>
+                                            </item>
+                                        </ion-list>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </ion-content>
+        </body>
+    </html>
+</ion-view>
