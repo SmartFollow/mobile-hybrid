@@ -21,3 +21,13 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+// Include Bourbon
+@import "www/lib/bourbon/app/assets/stylesheets/_bourbon";
+
+// Include all scss
+@import "scss/variables";
+@import "scss/style";
+@import "scss/mixins";
+@import "scss/sidemenu/side-menu.styles";
+@import "scss/settings/settings.styles";
+@import "scss/profile/profile.styles";

@@ -39,16 +39,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/side-menu.html',
+    controller: 'DashCtrl'
   })
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.profile', {
+    url: '/profile',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
+      'menuContent': {
+        templateUrl: 'templates/tab-profile.html',
         controller: 'DashCtrl'
       }
     }
@@ -57,7 +58,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('tab.note-detail', {
     url: '/dash/:noteId/:noteMatter',
     views: {
-      'tab-dash': {
+      'menuContent': {
         templateUrl: 'templates/note-detail.html',
         controller: 'NoteDetailCtrl'
       }
@@ -66,7 +67,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('tab.schedule', {
     url: '/schedule',
     views: {
-      'tab-schedule': {
+      'menuContent': {
         templateUrl: 'templates/tab-schedule.html',
         controller: 'ScheduleCtrl'
       }
@@ -76,7 +77,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('tab.chats', {
       url: '/chats',
       views: {
-        'tab-chats': {
+        'menuContent': {
           templateUrl: 'templates/tab-chats.html',
           controller: 'ChatsCtrl'
         }
@@ -86,18 +87,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     .state('tab.chat-detail', {
       url: '/chats/:chatId',
       views: {
-        'tab-chats': {
+        'menuContent': {
           templateUrl: 'templates/chat-detail.html',
           controller: 'ChatDetailCtrl'
         }
       }
     })
 
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.settings', {
+    url: '/settings',
     views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
+      'menuContent': {
+        templateUrl: 'templates/tab-settings.html',
         controller: 'AccountCtrl'
       }
     }

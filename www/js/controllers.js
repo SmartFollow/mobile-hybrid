@@ -29,7 +29,7 @@ angular.module('starter.controllers', [])
  
     $scope.login = function(data) {
         AuthService.login($scope.data.username, $scope.data.password).then(function() {
-            $state.go('tab.dash', {});
+            $state.go('tab.profile', {});
         }, function(err) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Login failed!',

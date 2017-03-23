@@ -1,0 +1,73 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content class="post-size-14px">
+    <ion-nav-bar class="bar app-top-bar">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left" class="main-menu" expose-aside-when="large">
+    <img class="logo" ng-src="../img/logo.png" height="25">
+    <ion-content class="has-header">
+      <ion-list>
+        <ion-item class="heading-item item item-avatar" nav-clear menu-close ui-sref="tab.profile">
+          <div class="user-image-container">
+            <pre-img ratio="_1_1" helper-class="rounded-image">
+              <img class="user-image" ng-src="{{user.face}}" spinner-on-load>
+          	</pre-img>
+          </div>
+          <h2 class="greeting">{{user.firstname + " " + user.lastname}}</h2>
+          <p class="message">{{user.group.name}}</p>
+        </ion-item>
+        <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.schedule">
+          <i class="icon ion-ios-calendar-outline"></i>
+          <h2 class="menu-text">Planning</h2>
+        </ion-item>
+        <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.lessons">
+          <i class="icon ion-ios-book"></i>
+          <h2 class="menu-text">Cours</h2>
+        </ion-item>
+        <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.chats">
+          <i class="icon ion-ios-chatboxes"></i>
+          <h2 class="menu-text">Messagerie</h2>
+        </ion-item>
+        <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.notifications">
+          <i class="icon ion-ios-list"></i>
+          <h2 class="menu-text">Notifications</h2>
+        </ion-item>
+        <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.settings">
+          <i class="icon ion-gear-a"></i>
+          <h2 class="menu-text">Paramètres</h2>
+        </ion-item>
+        
+
+    </ion-list>
+    <ion-item class="notif">
+          <h2 class="menu-text">Evalutations</h2>
+          <div class="tabs tabs-icon-left">
+            <a class="tab-item">
+              <i class="icon ion-star"></i>
+              <span class="eval">12</span>
+            </a>
+            <a class="tab-item">
+              <i class="icon ion-ios-chatbubble"></i>
+              <span class="eval">3</span>
+            </a>
+            <a class="tab-item">
+              <i class="icon ion-ios-paper"></i>
+              <span class="eval">1</span>
+            </a>
+            <a class="tab-item">
+              <i class="icon ion-alert-circled"></i>
+              <span class="eval">0</span>
+            </a>
+          </div>
+        </ion-item>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
