@@ -1,0 +1,37 @@
+var user = 
+            {
+                "face": "img/ben.png",
+                "id": 3,
+                "email": "otto.oreilly@example.net",
+                "created_at": "2016-10-14 15:18:19",
+                "updated_at": "2016-10-14 15:18:19",
+                "firstname": "Creola",
+                "lastname": "Little",
+                "class_id": null,
+                "group_id": 4,
+                "group": {
+                  "id": 4,
+                  "name": "Students",
+                  "description": "Students of the school",
+                  "deletable": 0,
+                  "created_at": null,
+                  "updated_at": null,
+                  "access_rules": [
+                    {
+                      "id": 1,
+                      "name": "user.profile",
+                      "route": "user.profile",
+                      "description": null,
+                      "created_at": null,
+                      "updated_at": null,
+                      "pivot": {
+                        "group_id": 4,
+                        "access_rule_id": 1
+                      }
+                    }
+                  ]
+                }
+              };
+
+
+              

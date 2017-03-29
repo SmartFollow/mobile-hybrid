@@ -39,6 +39,7 @@ angular.module('starter.services', [])
     
     function useCredentials(token) {
         username = token.split("..")[1];
+        //onsole.log(username);
         isAuth = true;
         authToken = token;
 
@@ -47,7 +48,7 @@ angular.module('starter.services', [])
         // Set the token as header for your requests!
         $http.defaults.headers.common['X-Auth-Token'] = token;
     }
-  
+
     function destroyUserCredentials() {
         authToken = undefined;
         username = '';
@@ -74,6 +75,7 @@ angular.module('starter.services', [])
         username: function() {return username;},
         role: function() {return role;}
     };
+;
 })
 
 .factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
@@ -93,7 +95,7 @@ angular.module('starter.services', [])
 })
 
 
-.service('UserService', function($q) {  
+.service('UserService', ['$http', '$q', 'API_NAME', function($http, $q, API_NAME) {  
     var notes = 
                 [
                     {
@@ -128,56 +130,48 @@ angular.module('starter.services', [])
                         ]
                     }
                 ];
-    var user = 
-                {
-                    "face": "img/ben.png",
-                    "id": 3,
-                    "email": "otto.oreilly@example.net",
-                    "created_at": "2016-10-14 15:18:19",
-                    "updated_at": "2016-10-14 15:18:19",
-                    "firstname": "Creola",
-                    "lastname": "Little",
-                    "class_id": null,
-                    "group_id": 4,
-                    "group": {
-                      "id": 4,
-                      "name": "Students",
-                      "description": "Students of the school",
-                      "deletable": 0,
-                      "created_at": null,
-                      "updated_at": null,
-                      "access_rules": [
-                        {
-                          "id": 1,
-                          "name": "user.profile",
-                          "route": "user.profile",
-                          "description": null,
-                          "created_at": null,
-                          "updated_at": null,
-                          "pivot": {
-                            "group_id": 4,
-                            "access_rule_id": 1
-                          }
-                        }
-                      ]
-                    }
-                  };
+    var me = this;
     return {
-        getUser: function() {  
-            var deferred = $q.defer();
-            var promise = deferred.promise;
-            var link = '';
-            
-            deferred.resolve(user);
-            promise.success = function(fn) {
-                promise.then(fn);
-                return promise;
-            },
-            promise.error = function(fn) {
-                promise.then(null, fn);
-                return promise;
-            };
-            return promise;
+        getUser: function(callback) {
+            if(me.currentUser)
+                callback(me.currentUser);
+            $http({
+                method: 'GET',
+                url: 'http://api.dev.smartfollow.lan/api/users/4',
+                headers: {Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijk0Nzk4MGY0NjY1MzY4OTExYmQ3MjE2YzE0MDAwOTgzNjE2ZTlhY2YzZGM2ZWM0NGM3YTgxZjg4YzI3ZTE0YzhmZmZmNmMzNDFhODA5NzczIn0.eyJhdWQiOiIyIiwianRpIjoiOTQ3OTgwZjQ2NjUzNjg5MTFiZDcyMTZjMTQwMDA5ODM2MTZlOWFjZjNkYzZlYzQ0YzdhODFmODhjMjdlMTRjOGZmZmY2YzM0MWE4MDk3NzMiLCJpYXQiOjE0OTAyOTc4NzYsIm5iZiI6MTQ5MDI5Nzg3NiwiZXhwIjoxNTIxODMzODc2LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.gWBVNU5u_K61tKSGd5Z1Pk9ko18agQvvPt7acFX5_SW-PTuUypr5dHmQglSJARc9Hh9NIY77OMp0DY51d_BmEdV3Swe0iJT0etHpLE-6Ba_gGwXEPQL7eLe9HaVBlARuwyvUvYxNSp0SYdoTbneA3mV4OhatoECr8pAHupXEvYKo88sTz-EBoGIEo7IbJvSy2G4sdQqVvCzOE2MEbwYeHy2K3QT1_KihH6nioqMM7AXag3sUh3uHd2-yd3Wyb-msjw559hOdSRXlmeHFgseK2da6uW5xLxX9ENeEFpVvfy3t78TzaZ7_zrAeNJIFzJJ-S13WmEqTprc6e8NJWBQKO5gHvM4n1OV4wrAedMbOq_ZESpwWC_jxI-YGqmvvjlzzX8qzs0HFWFWlNM_NOYbS4PqDe42ZBQeVHKf3DG310vngM04mt50PZfHNdpLHByecHxjYQZbt-1CQUXw1Ow3sap06MXsPB8n2nI1ZqFGPCzJE5Dq2_hWIazUiqsCW7Xb2wjxdjOQ0Hq-FNQF8M600QzqPx8m5qsLY5hIRRmYwAw0NNTH7C2RLbRYNqtqax-QwkDzZOKUWgKPckbkr3QqUoeylLhjrwv_gbaM3V1azpehFBHmCi_oSyew9bAbpIOL18bUMG-bsWmaqksH5siUXDVAow8aMzXqMu9p3vnv8xxI"}
+
+            }).then(function(res){
+                me.currentUser = res.data;
+                callback(me.currentUser);
+            });
+        },
+        getLesson: function(callback)
+        {
+            if(me.currentUser)
+                callback(me.currentUser);
+            $http({
+                method: 'GET',
+                url: 'http://api.dev.smartfollow.lan/api/lessons',
+                headers: {Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijk0Nzk4MGY0NjY1MzY4OTExYmQ3MjE2YzE0MDAwOTgzNjE2ZTlhY2YzZGM2ZWM0NGM3YTgxZjg4YzI3ZTE0YzhmZmZmNmMzNDFhODA5NzczIn0.eyJhdWQiOiIyIiwianRpIjoiOTQ3OTgwZjQ2NjUzNjg5MTFiZDcyMTZjMTQwMDA5ODM2MTZlOWFjZjNkYzZlYzQ0YzdhODFmODhjMjdlMTRjOGZmZmY2YzM0MWE4MDk3NzMiLCJpYXQiOjE0OTAyOTc4NzYsIm5iZiI6MTQ5MDI5Nzg3NiwiZXhwIjoxNTIxODMzODc2LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.gWBVNU5u_K61tKSGd5Z1Pk9ko18agQvvPt7acFX5_SW-PTuUypr5dHmQglSJARc9Hh9NIY77OMp0DY51d_BmEdV3Swe0iJT0etHpLE-6Ba_gGwXEPQL7eLe9HaVBlARuwyvUvYxNSp0SYdoTbneA3mV4OhatoECr8pAHupXEvYKo88sTz-EBoGIEo7IbJvSy2G4sdQqVvCzOE2MEbwYeHy2K3QT1_KihH6nioqMM7AXag3sUh3uHd2-yd3Wyb-msjw559hOdSRXlmeHFgseK2da6uW5xLxX9ENeEFpVvfy3t78TzaZ7_zrAeNJIFzJJ-S13WmEqTprc6e8NJWBQKO5gHvM4n1OV4wrAedMbOq_ZESpwWC_jxI-YGqmvvjlzzX8qzs0HFWFWlNM_NOYbS4PqDe42ZBQeVHKf3DG310vngM04mt50PZfHNdpLHByecHxjYQZbt-1CQUXw1Ow3sap06MXsPB8n2nI1ZqFGPCzJE5Dq2_hWIazUiqsCW7Xb2wjxdjOQ0Hq-FNQF8M600QzqPx8m5qsLY5hIRRmYwAw0NNTH7C2RLbRYNqtqax-QwkDzZOKUWgKPckbkr3QqUoeylLhjrwv_gbaM3V1azpehFBHmCi_oSyew9bAbpIOL18bUMG-bsWmaqksH5siUXDVAow8aMzXqMu9p3vnv8xxI"}
+
+            }).then(function(res){
+                me.currentUser = res.data;
+                callback(me.currentUser);
+            });
+        },
+        getHomework: function(callback)
+        {
+            if(me.currentUser)
+                callback(me.currentUser);
+            $http({
+                method: 'GET',
+                url: 'http://api.dev.smartfollow.lan/api/lessons/1/homeworks',
+                headers: {Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijk0Nzk4MGY0NjY1MzY4OTExYmQ3MjE2YzE0MDAwOTgzNjE2ZTlhY2YzZGM2ZWM0NGM3YTgxZjg4YzI3ZTE0YzhmZmZmNmMzNDFhODA5NzczIn0.eyJhdWQiOiIyIiwianRpIjoiOTQ3OTgwZjQ2NjUzNjg5MTFiZDcyMTZjMTQwMDA5ODM2MTZlOWFjZjNkYzZlYzQ0YzdhODFmODhjMjdlMTRjOGZmZmY2YzM0MWE4MDk3NzMiLCJpYXQiOjE0OTAyOTc4NzYsIm5iZiI6MTQ5MDI5Nzg3NiwiZXhwIjoxNTIxODMzODc2LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.gWBVNU5u_K61tKSGd5Z1Pk9ko18agQvvPt7acFX5_SW-PTuUypr5dHmQglSJARc9Hh9NIY77OMp0DY51d_BmEdV3Swe0iJT0etHpLE-6Ba_gGwXEPQL7eLe9HaVBlARuwyvUvYxNSp0SYdoTbneA3mV4OhatoECr8pAHupXEvYKo88sTz-EBoGIEo7IbJvSy2G4sdQqVvCzOE2MEbwYeHy2K3QT1_KihH6nioqMM7AXag3sUh3uHd2-yd3Wyb-msjw559hOdSRXlmeHFgseK2da6uW5xLxX9ENeEFpVvfy3t78TzaZ7_zrAeNJIFzJJ-S13WmEqTprc6e8NJWBQKO5gHvM4n1OV4wrAedMbOq_ZESpwWC_jxI-YGqmvvjlzzX8qzs0HFWFWlNM_NOYbS4PqDe42ZBQeVHKf3DG310vngM04mt50PZfHNdpLHByecHxjYQZbt-1CQUXw1Ow3sap06MXsPB8n2nI1ZqFGPCzJE5Dq2_hWIazUiqsCW7Xb2wjxdjOQ0Hq-FNQF8M600QzqPx8m5qsLY5hIRRmYwAw0NNTH7C2RLbRYNqtqax-QwkDzZOKUWgKPckbkr3QqUoeylLhjrwv_gbaM3V1azpehFBHmCi_oSyew9bAbpIOL18bUMG-bsWmaqksH5siUXDVAow8aMzXqMu9p3vnv8xxI"}
+
+            }).then(function(res){
+                me.currentUser = res.data;
+                callback(me.currentUser);
+            });
         },
         getNotes: function() {
             var deferred = $q.defer();
@@ -232,7 +226,7 @@ angular.module('starter.services', [])
         return promise;
         }
     };*/
-})
+}])
 
 .service('ScheduleService', function($q) {  
     var schedule = 

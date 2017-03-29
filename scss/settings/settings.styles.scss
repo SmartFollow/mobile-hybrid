@@ -1,4 +1,19 @@
 .settings-view
 {
 	background-color: $content-bg !important;
+
+	.checkbox input, .checkbox-icon { 
+		margin-top: 40px;
+	}
+
+	.handle {
+	    margin-top: 5px;
+	    margin-left: 5px;
+	}
+}
+
+
+.toggle .handle {
+	top: 6.5px;
+    left: 7px;
 }

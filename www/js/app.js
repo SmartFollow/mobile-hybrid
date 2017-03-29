@@ -40,7 +40,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/side-menu.html',
-    controller: 'DashCtrl'
+    controller: 'ProfileCtrl'
   })
 
   // Each tab has its own nav history stack:
@@ -50,7 +50,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     views: {
       'menuContent': {
         templateUrl: 'templates/tab-profile.html',
-        controller: 'DashCtrl'
+        controller: 'ProfileCtrl'
       }
     }
   })

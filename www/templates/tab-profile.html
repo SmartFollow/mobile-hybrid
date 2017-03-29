@@ -1,4 +1,4 @@
-<ion-view view-title="Profile">
+<ion-view class="profile-view" view-title="Profile">
     <html ng-app="ionic.example">
         <head>
             <meta charset="utf-8">
@@ -9,14 +9,22 @@
             <script src="http://code.ionicframework.com/0.9.25/js/ionic.bundle.min.js"></script>
         </head>
         <body ng-controller="ProfileCtrl">
-            <ion-content id="profile-background" has-header="true">
-                <div id="profile-bg"></div>
-                <div id="content">
-                    <div id="profile-info">
-                        <img id="profile-image" ng-src="{{user.face}}">
-                        <h3 id="profile-name">{{user.firstname + " " + user.lastname}}</h3>
-                        <h3 id="profile-class">{{user.group.name}}</h3>
+            <ion-content has-header="true">
+                <div class="top-content row">
+                  <div class="profile-container">
+                    <div class="user-image-container">
+                      <pre-img ratio="_1_1" helper-class="rounded-image">
+                        <img class="user-image" ng-src="{{ imgUser }}" spinner-on-load>
+                      </pre-img>
                     </div>
+                    <div class="user-name">{{currentUser.firstname + " " + currentUser.lastname}}</div>
+                    <div class="user-twitter">{{currentUser.group.name}}</div>
+                  </div>
+                </div>
+                <!-- Profile etudiant -->
+                <div ng-if="currentUser.group.id == 4">
+
+                    <!-- Tableau des notes récentes -->
                     <div id="profile-notes">
                         <div class="card">
                             <div class="item item-divider">
@@ -25,22 +33,127 @@
                             <div class="item item-text-wrap">
                                 <ul>
                                     <li ng-repeat="matter in allNotes">
-                                        <h2 class="item">{{matter.matter}}</h2>
-                                        <ion-list>
-                                            <item class="item-remove-animate item-icon-right" ng-repeat="note in matter.notes">
-                                                <a class="item" href="#/tab/dash/{{note.id}}/{{note.matter}}">
-                                                    {{note.name}}
-                                                    <h2>{{note.note}}</h2>
-                                                    <p>{{note.comment}}</p>
-                                                </a>
-                                            </item>
-                                        </ion-list>
+                                        <h2 class="myh2">{{matter.matter}}</h2>
+                                        <div class="row row-color" ng-repeat="note in matter.notes">
+                                            <div ng-if="note.note == '3/10'" class="col-25 note">
+                                              {{note.note}}
+                                            </div>
+                                            <div ng-if="note.note != '3/10'" class="col-25">
+                                                {{note.note}}
+                                            </div>
+                                            <div class="col-50">{{note.comment}}</div>
+                                            <div class="col-25"><a class="item" href="#/tab/dash/{{note.id}}/{{note.matter}}"><i class="icon ion-eye"></i></a></div>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
+                            <a href="" class="forgot-password">
+                                Voir toutes les notes
+                            </a>
+                        </div>
+                    </div> 
+
+                    <!-- Tableau des leçon du jour -->
+
+                    <div id="profile-lesson">
+                        <div class="card">
+                            <div class="item item-divider">
+                                <div class="row nopadding">
+                                    <div class="col-50 pt-4">Leçons du jour</div>
+                                    <div class="col-50 right">
+                                        <label class="item item-input">
+                                          <span class="input-label">Date</span>
+                                          <input type="date">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item item-text-wrap" id="profile-lesson-tab" ng-repeat="lessons in lesson">
+                                <div class="row row-color">
+                                    <div class="col-25">{{ lessons.start }}</div>
+                                    <div class="col-25">{{ lessons.description }}</div>
+                                    <div class="col-25">A 305</div>
+                                    <div class="col-25"><a class="item" href="#/tab/dash/{{lessons.id}}"><i class="icon ion-eye"></i></a></div>
+                                </div>
+                                <!-- <div class="row row-color">
+                                    <div class="col-25">10h - 12h</div>
+                                    <div class="col-25">Histoire</div>
+                                    <div class="col-25">B 201</div>
+                                    <div class="col-25"><a class="item" href=""><i class="icon ion-eye"></i></a></div>
+                                </div>
+                                <div class="row row-color">
+                                    <div class="col-25">14h - 15h</div>
+                                    <div class="col-25">Français</div>
+                                    <div class="col-25">A 201</div>
+                                    <div class="col-25"><a class="item" href=""><i class="icon ion-eye"></i></a></div>
+                                </div>
+                                <div class="row row-color">
+                                    <div class="col-25">15h - 18h</div>
+                                    <div class="col-25">EPS</div>
+                                    <div class="col-25">Gymnase</div>
+                                    <div class="col-25"><a class="item" href=""><i class="icon ion-eye"></i></a></div>
+                                </div> -->
+                            </div>
+                            <a href="" class="forgot-password">
+                                Voir toutes les leçons
+                            </a>
                         </div>
                     </div>
-                </div>  
+
+                    <!-- Tableau des devoirs -->
+
+                    <div id="profile-homework">
+                        <div class="card">
+                            <div class="item item-divider">
+                                Devoirs à faire
+                            </div>
+                            <div class="item item-text-wrap">
+                                <ion-slides options="data.sliderOptions" slider="data.sliderDelegate">
+                                    <ion-slide-page>
+                                        <h3>Pour Jeudi 27/03</h3>
+                                        <div class="row row-color">
+                                            <div class="col-25">Maths</div>
+                                            <div class="col-50">Exercise 6 et 7 page 155</div>
+                                            <div class="col-25"><a class="item" href=""><i class="icon ion-eye"></i></a></div>
+                                        </div>
+                                        <div class="row row-color">
+                                            <div class="col-25">Français</div>
+                                            <div class="col-50">- Lire le livre page 68 - Devoir mai...</div>
+                                            <div class="col-25"><a class="item" href=""><i class="icon ion-eye"></i></a></div>
+                                        </div>
+                                    </ion-slide-page>
+                                    <ion-slide-page>
+                                      <h3>Pour Vendredi 28/03</h3>
+                                        <div class="row row-color">
+                                            <div class="col-25">Maths</div>
+                                            <div class="col-50">Exercise 6 et 7 page 155</div>
+                                            <div class="col-25"><a class="item" href=""><i class="icon ion-eye"></i></a></div>
+                                        </div>
+                                        <div class="row row-color">
+                                            <div class="col-25">Français</div>
+                                            <div class="col-50">- Lire le livre page 68 - Devoir mai...</div>
+                                            <div class="col-25"><a class="item" href=""><i class="icon ion-eye"></i></a></div>
+                                        </div>
+                                        <div class="row row-color">
+                                            <div class="col-25">Français</div>
+                                            <div class="col-50">- Lire le livre page 68 - Devoir mai...</div>
+                                            <div class="col-25"><a class="item" href=""><i class="icon ion-eye"></i></a></div>
+                                        </div>
+                                    </ion-slide-page>
+                                    <ion-slide-page>
+                                      <h3>Pour Lundi 31/03</h3>
+                                    </ion-slide-page>
+                                </ion-slides>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+
+
+                <!-- Profile professeur -->
+                <div ng-if="currentUser.group.id == 2">
+                    
+                </div>
             </ion-content>
         </body>
     </html>

@@ -26,10 +26,27 @@ angular.module('starter.controllers', [])
 
 .controller('LoginCtrl', function($scope, $state, $ionicPopup, AuthService) {
     $scope.data = {};
+
+    $scope.submit = function () {
+    
+    var user = {
+      username: $scope.inputEmail,
+      password: $scope.inputPassword
+    }
+    var options = {
+      grant_type: "password",
+      scope: ""
+    } 
+    var data = OAuth.getAccessToken(user, options);
+    data.then(function(data) {
+        $window.location.reload();
+    });
+  }
  
     $scope.login = function(data) {
+        $Username =  $scope.data.username;
         AuthService.login($scope.data.username, $scope.data.password).then(function() {
-            $state.go('tab.profile', {});
+            $state.go('tab.profile', {$Username});
         }, function(err) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Login failed!',
@@ -39,16 +56,20 @@ angular.module('starter.controllers', [])
     };
 })
 
-
-.controller('DashCtrl', function($scope, UserService, $ionicPopup) {
-    UserService.getUser().success(function (data) {
-        $scope.user = data;
-    }).error(function(data) {
-        var alertPopup = $ionicPopup.alert({
-            title: 'Login failed!',
-            template: 'Please check your credentials!'
-        });
+.controller('ProfileCtrl', function($scope, UserService) {
+    UserService.getUser(function (data) {
+        $scope.currentUser = data;
+        $scope.imgUser = "img/ben.png";
     });
+
+    UserService.getLesson(function (data) {
+        $scope.lesson = data;
+    });
+
+    UserService.getHomework(function (data) {
+        $scope.homework = data;
+    });
+    
     UserService.getNotes().success(function (data) {
         $scope.allNotes = data;
     }).error(function(data) {
@@ -57,6 +78,37 @@ angular.module('starter.controllers', [])
             template: 'Please check your credentials!'
         });
     });
+
+
+
+    $scope.data = {};
+    $scope.data.currentPage = 0;
+
+    var setupSlider = function() {
+        //some options to pass to our slider
+        $scope.data.sliderOptions = {
+          initialSlide: 0,
+          direction: 'horizontal', //or vertical
+          speed: 300 //0.3s transition
+        };
+
+        //create delegate reference to link with slider
+        $scope.data.sliderDelegate = null;
+
+        //watch our sliderDelegate reference, and use it when it becomes available
+        $scope.$watch('data.sliderDelegate', function(newVal, oldVal) {
+          if (newVal != null) {
+            $scope.data.sliderDelegate.on('slideChangeEnd', function() {
+              $scope.data.currentPage = $scope.data.sliderDelegate.activeIndex;
+              //use $scope.$apply() to refresh any content external to the slider
+              $scope.$apply();
+            });
+          }
+        });
+    };
+
+    setupSlider();
+
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {
@@ -88,6 +140,46 @@ angular.module('starter.controllers', [])
     };
 })
 
+// SETTINGS
+.controller('AccountCtrl', function($scope, $ionicActionSheet, $state, AuthService) {
+    $scope.airplaneMode = true;
+    $scope.wifi = false;
+    $scope.bluetooth = true;
+    $scope.personalHotspot = true;
+
+    $scope.checkOpt1 = true;
+    $scope.checkOpt2 = true;
+    $scope.checkOpt3 = false;
+
+    $scope.radioChoice = 'B';
+    $scope.logout = function() {
+        AuthService.logout();
+    };
+
+    // Triggered on a the logOut button click
+    $scope.showLogOutMenu = function() {
+
+        // Show the action sheet
+        var hideSheet = $ionicActionSheet.show({
+            destructiveText: 'Logout',
+            titleText: 'Voulez vraiment vous déconnecter ?',
+            cancelText: 'Cancel',
+            cancel: function() {
+                // add cancel code..
+            },
+            buttonClicked: function(index) {
+
+                return true;
+            },
+            destructiveButtonClicked: function(){
+                $scope.logout();
+                $state.go('login', {});
+            }
+        });
+
+    };
+})
+
 .controller('ScheduleCtrl', function($scope, ScheduleService) {
     ScheduleService.get().success(function (data) {
         $scope.schedule = data;
@@ -101,4 +193,104 @@ angular.module('starter.controllers', [])
 
 .controller('NoteDetailCtrl', function($scope, $stateParams, UserService) {
     $scope.note = UserService.getNote($stateParams.noteMatter, $stateParams.noteId);
-});
+})
+
+.controller('lessonsId', [ '$scope', '$state', '$rootScope', '$http', '$filter', '$stateParams', function ($scope, $state, $rootScope, $http, $filter, $stateParams) {
+    $http({
+            method: 'GET',
+            url: "http://api.dev.smartfollow.lan/api/lessons/"+$stateParams.id
+        }).then(function successCallback(response) {
+            $scope.lesson = response.data;
+            console.log(response);
+        }, function errorCallback(response) {
+            console.log(response);
+    });
+
+    $scope.create = function () {
+        var file = {
+                    name: $("#name").val(),
+                    description: $("#description").val(),
+                    document: $("#document")[0].files[0]
+                };
+        $http({
+            method: 'POST',
+            url: "http://api.dev.smartfollow.lan/api/lessons/"+$stateParams.id+"/documents",
+            data: file
+        }).then(function successCallback(response) {
+            $state.reload();
+            console.log(response);
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
+    $scope.createHW = function () {
+        console.log($("#HWdescription").val());
+        var file = {
+                    description: $("#HWdescription").val()
+                };
+        $http({
+            method: 'POST',
+            url: "http://api.dev.smartfollow.lan/api/lessons/"+$stateParams.id+"/homeworks",
+            data: file
+        }).then(function successCallback(response) {
+            $state.reload();
+            console.log(response);
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
+    $scope.createExam = function () {
+        console.log($("#examDescription").val());
+        var file = {
+                    type: $("#examType").val(),
+                    min_mark: $("#examMin").val(),
+                    max_mark: $("#examMax").val(),
+                    description: $("#examDescription").val()
+                };
+        $http({
+            method: 'POST',
+            url: "http://api.dev.smartfollow.lan/api/lessons/"+$stateParams.id+"/exam",
+            data: file
+        }).then(function successCallback(response) {
+            $state.reload();
+            console.log(response);
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
+    $scope.evaluations = function (key, student) {
+        if ($("#student-"+key).find('.time-lesson').is(":hidden") && $("#student-"+key).find('.cross-lesson').is(":hidden"))
+        {
+            // Si en retard
+            $("#student-"+key).find('.time-lesson').show();
+            var file = {
+                    student_id: student.id
+                };
+            $http({
+            method: 'POST',
+            url: "http://api.dev.smartfollow.lan/api/lessons/"+$stateParams.id+"/evaluations",
+            data: file
+            }).then(function successCallback(response) {
+                console.log(response);
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+
+        }
+        else if ($("#student-"+key).find('.time-lesson').is(":hidden") && $("#student-"+key).find('.cross-lesson').is(":visible"))
+        {
+            // Annulation de l'absence
+            $("#student-"+key).find('.time-lesson').hide();
+            $("#student-"+key).find('.cross-lesson').hide();
+        }
+        else
+        {
+            // Si absent
+            $("#student-"+key).find('.time-lesson').hide();
+            $("#student-"+key).find('.cross-lesson').show();
+        }
+    };
+}]);

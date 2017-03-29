@@ -13,6 +13,6 @@ angular.module('starter.constants', [])
 
 .constant('API_NAME', { 
 	link: 'http://api.dev.smartfollow.lan',
-	secret: 'PS4RgoWprV8CCQTGTDfYq5eCfm0azNe1qva9oYMa',
+	secret: '2Xok5KYdMEDPW5jZPkLcyNTAGEhEPxRCWbAzpL2g',
 	id: '2'
 });

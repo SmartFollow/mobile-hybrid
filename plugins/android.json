@@ -44,6 +44,9 @@
         },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.ionicframework.app189104"
+        },
+        "cordova-plugin-datepicker": {
+            "PACKAGE_NAME": "com.ionicframework.app189104"
         }
     },
     "dependent_plugins": {}
