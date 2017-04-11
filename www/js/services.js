@@ -1,11 +1,10 @@
 angular.module('starter.services', [])
 
-.service('AuthService', function($q, $http, USER_ROLES, API_NAME) {
-    var LOCAL_TOKEN_KEY = 'yourTokenKey';
+.service('AuthService', function($q, $http, USER_ROLES, API_NAME, $window) {
     var username = '';
     var role = '';
     var authToken;
-    var link = API_NAME.link + '/oauth/token'; //'http://api.dev.smartfollow.org/oauth/token';
+    var link = API_NAME.link + '/oauth/token';
     var isAuth = false;
     var deferred = $q.defer();
     
@@ -16,7 +15,8 @@ angular.module('starter.services', [])
             scope : ''})
         .success(function(data, status, headers,config){
             console.log('data success');
-            storeUserCredentials(data.token + ".." + name)
+            storeUserCredentials(data.access_token);;
+            $window.sessionStorage.token = data.access_token;
             deferred.resolve('Login success.');
         })
         .error(function(data, status, headers,config){
@@ -26,35 +26,31 @@ angular.module('starter.services', [])
     }
     
     function loadUserCredentials() {
-        var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
+        var token = window.localStorage.getItem($window.sessionStorage.token);
         if (token) {
             useCredentials(token);
         }
     }
   
     function storeUserCredentials(token) {
-        window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
+        window.localStorage.setItem($window.sessionStorage.token);
         useCredentials(token);
     }
     
     function useCredentials(token) {
-        username = token.split("..")[1];
-        //onsole.log(username);
         isAuth = true;
         authToken = token;
-
-        // TODO Init Role 
         role = USER_ROLES.teacher;
-        // Set the token as header for your requests!
-        $http.defaults.headers.common['X-Auth-Token'] = token;
+        $http.defaults.headers.common.Authorization = "Bearer " + token;
     }
 
     function destroyUserCredentials() {
         authToken = undefined;
         username = '';
         isAuth = false;
-        $http.defaults.headers.common['X-Auth-Token'] = undefined;
-        window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+        $http.defaults.headers.common['Authorization'] = undefined;
+        window.localStorage.removeItem($window.sessionStorage.token);
+        $window.sessionStorage.clear();
     }
     
     var logout = function() {
@@ -70,26 +66,33 @@ angular.module('starter.services', [])
     return {
         login: login,
         logout: logout,
+        authToken: authToken,
         isAuthorized: isAuthorized,
         isAuthenticated: function() {return isAuthenticated;},
         username: function() {return username;},
         role: function() {return role;}
     };
-;
 })
 
-.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
+.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS, $window) {
   return {
+    request: function(config) {
+        config.headers = config.headers || {};
+        config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+        return config;
+      },
+      response: function(response) {
+        return response || $q.when(response);
+      },
     responseError: function (response) {
       $rootScope.$broadcast({
-        //401: AUTH_EVENTS.notAuthenticated,
         403: AUTH_EVENTS.notAuthorized
       }[response.status], response);
       return $q.reject(response);
     }
   };
 })
- 
+
 .config(function ($httpProvider) {
   $httpProvider.interceptors.push('AuthInterceptor');
 })
@@ -137,9 +140,7 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             $http({
                 method: 'GET',
-                url: 'http://api.dev.smartfollow.lan/api/users/4',
-                headers: {Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijk0Nzk4MGY0NjY1MzY4OTExYmQ3MjE2YzE0MDAwOTgzNjE2ZTlhY2YzZGM2ZWM0NGM3YTgxZjg4YzI3ZTE0YzhmZmZmNmMzNDFhODA5NzczIn0.eyJhdWQiOiIyIiwianRpIjoiOTQ3OTgwZjQ2NjUzNjg5MTFiZDcyMTZjMTQwMDA5ODM2MTZlOWFjZjNkYzZlYzQ0YzdhODFmODhjMjdlMTRjOGZmZmY2YzM0MWE4MDk3NzMiLCJpYXQiOjE0OTAyOTc4NzYsIm5iZiI6MTQ5MDI5Nzg3NiwiZXhwIjoxNTIxODMzODc2LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.gWBVNU5u_K61tKSGd5Z1Pk9ko18agQvvPt7acFX5_SW-PTuUypr5dHmQglSJARc9Hh9NIY77OMp0DY51d_BmEdV3Swe0iJT0etHpLE-6Ba_gGwXEPQL7eLe9HaVBlARuwyvUvYxNSp0SYdoTbneA3mV4OhatoECr8pAHupXEvYKo88sTz-EBoGIEo7IbJvSy2G4sdQqVvCzOE2MEbwYeHy2K3QT1_KihH6nioqMM7AXag3sUh3uHd2-yd3Wyb-msjw559hOdSRXlmeHFgseK2da6uW5xLxX9ENeEFpVvfy3t78TzaZ7_zrAeNJIFzJJ-S13WmEqTprc6e8NJWBQKO5gHvM4n1OV4wrAedMbOq_ZESpwWC_jxI-YGqmvvjlzzX8qzs0HFWFWlNM_NOYbS4PqDe42ZBQeVHKf3DG310vngM04mt50PZfHNdpLHByecHxjYQZbt-1CQUXw1Ow3sap06MXsPB8n2nI1ZqFGPCzJE5Dq2_hWIazUiqsCW7Xb2wjxdjOQ0Hq-FNQF8M600QzqPx8m5qsLY5hIRRmYwAw0NNTH7C2RLbRYNqtqax-QwkDzZOKUWgKPckbkr3QqUoeylLhjrwv_gbaM3V1azpehFBHmCi_oSyew9bAbpIOL18bUMG-bsWmaqksH5siUXDVAow8aMzXqMu9p3vnv8xxI"}
-
+                url: 'http://api.dev.smartfollow.lan/api/users/profile'
             }).then(function(res){
                 me.currentUser = res.data;
                 callback(me.currentUser);
@@ -151,9 +152,7 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             $http({
                 method: 'GET',
-                url: 'http://api.dev.smartfollow.lan/api/lessons',
-                headers: {Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijk0Nzk4MGY0NjY1MzY4OTExYmQ3MjE2YzE0MDAwOTgzNjE2ZTlhY2YzZGM2ZWM0NGM3YTgxZjg4YzI3ZTE0YzhmZmZmNmMzNDFhODA5NzczIn0.eyJhdWQiOiIyIiwianRpIjoiOTQ3OTgwZjQ2NjUzNjg5MTFiZDcyMTZjMTQwMDA5ODM2MTZlOWFjZjNkYzZlYzQ0YzdhODFmODhjMjdlMTRjOGZmZmY2YzM0MWE4MDk3NzMiLCJpYXQiOjE0OTAyOTc4NzYsIm5iZiI6MTQ5MDI5Nzg3NiwiZXhwIjoxNTIxODMzODc2LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.gWBVNU5u_K61tKSGd5Z1Pk9ko18agQvvPt7acFX5_SW-PTuUypr5dHmQglSJARc9Hh9NIY77OMp0DY51d_BmEdV3Swe0iJT0etHpLE-6Ba_gGwXEPQL7eLe9HaVBlARuwyvUvYxNSp0SYdoTbneA3mV4OhatoECr8pAHupXEvYKo88sTz-EBoGIEo7IbJvSy2G4sdQqVvCzOE2MEbwYeHy2K3QT1_KihH6nioqMM7AXag3sUh3uHd2-yd3Wyb-msjw559hOdSRXlmeHFgseK2da6uW5xLxX9ENeEFpVvfy3t78TzaZ7_zrAeNJIFzJJ-S13WmEqTprc6e8NJWBQKO5gHvM4n1OV4wrAedMbOq_ZESpwWC_jxI-YGqmvvjlzzX8qzs0HFWFWlNM_NOYbS4PqDe42ZBQeVHKf3DG310vngM04mt50PZfHNdpLHByecHxjYQZbt-1CQUXw1Ow3sap06MXsPB8n2nI1ZqFGPCzJE5Dq2_hWIazUiqsCW7Xb2wjxdjOQ0Hq-FNQF8M600QzqPx8m5qsLY5hIRRmYwAw0NNTH7C2RLbRYNqtqax-QwkDzZOKUWgKPckbkr3QqUoeylLhjrwv_gbaM3V1azpehFBHmCi_oSyew9bAbpIOL18bUMG-bsWmaqksH5siUXDVAow8aMzXqMu9p3vnv8xxI"}
-
+                url: 'http://api.dev.smartfollow.lan/api/lessons'
             }).then(function(res){
                 me.currentUser = res.data;
                 callback(me.currentUser);
@@ -165,9 +164,7 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             $http({
                 method: 'GET',
-                url: 'http://api.dev.smartfollow.lan/api/lessons/1/homeworks',
-                headers: {Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijk0Nzk4MGY0NjY1MzY4OTExYmQ3MjE2YzE0MDAwOTgzNjE2ZTlhY2YzZGM2ZWM0NGM3YTgxZjg4YzI3ZTE0YzhmZmZmNmMzNDFhODA5NzczIn0.eyJhdWQiOiIyIiwianRpIjoiOTQ3OTgwZjQ2NjUzNjg5MTFiZDcyMTZjMTQwMDA5ODM2MTZlOWFjZjNkYzZlYzQ0YzdhODFmODhjMjdlMTRjOGZmZmY2YzM0MWE4MDk3NzMiLCJpYXQiOjE0OTAyOTc4NzYsIm5iZiI6MTQ5MDI5Nzg3NiwiZXhwIjoxNTIxODMzODc2LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.gWBVNU5u_K61tKSGd5Z1Pk9ko18agQvvPt7acFX5_SW-PTuUypr5dHmQglSJARc9Hh9NIY77OMp0DY51d_BmEdV3Swe0iJT0etHpLE-6Ba_gGwXEPQL7eLe9HaVBlARuwyvUvYxNSp0SYdoTbneA3mV4OhatoECr8pAHupXEvYKo88sTz-EBoGIEo7IbJvSy2G4sdQqVvCzOE2MEbwYeHy2K3QT1_KihH6nioqMM7AXag3sUh3uHd2-yd3Wyb-msjw559hOdSRXlmeHFgseK2da6uW5xLxX9ENeEFpVvfy3t78TzaZ7_zrAeNJIFzJJ-S13WmEqTprc6e8NJWBQKO5gHvM4n1OV4wrAedMbOq_ZESpwWC_jxI-YGqmvvjlzzX8qzs0HFWFWlNM_NOYbS4PqDe42ZBQeVHKf3DG310vngM04mt50PZfHNdpLHByecHxjYQZbt-1CQUXw1Ow3sap06MXsPB8n2nI1ZqFGPCzJE5Dq2_hWIazUiqsCW7Xb2wjxdjOQ0Hq-FNQF8M600QzqPx8m5qsLY5hIRRmYwAw0NNTH7C2RLbRYNqtqax-QwkDzZOKUWgKPckbkr3QqUoeylLhjrwv_gbaM3V1azpehFBHmCi_oSyew9bAbpIOL18bUMG-bsWmaqksH5siUXDVAow8aMzXqMu9p3vnv8xxI"}
-
+                url: 'http://api.dev.smartfollow.lan/api/lessons/1/homeworks'
             }).then(function(res){
                 me.currentUser = res.data;
                 callback(me.currentUser);

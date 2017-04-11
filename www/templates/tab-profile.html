@@ -18,11 +18,11 @@
                       </pre-img>
                     </div>
                     <div class="user-name">{{currentUser.firstname + " " + currentUser.lastname}}</div>
-                    <div class="user-twitter">{{currentUser.group.name}}</div>
+                    <div class="user-twitter">{{group}}</div>
                   </div>
                 </div>
                 <!-- Profile etudiant -->
-                <div ng-if="currentUser.group.id == 4">
+                <div ng-if="group == 4">
 
                     <!-- Tableau des notes récentes -->
                     <div id="profile-notes">

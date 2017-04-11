@@ -24,41 +24,28 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('LoginCtrl', function($scope, $state, $ionicPopup, AuthService) {
+.controller('LoginCtrl', function($scope, $state, $ionicPopup, AuthService, $http) {
     $scope.data = {};
-
-    $scope.submit = function () {
-    
-    var user = {
-      username: $scope.inputEmail,
-      password: $scope.inputPassword
-    }
-    var options = {
-      grant_type: "password",
-      scope: ""
-    } 
-    var data = OAuth.getAccessToken(user, options);
-    data.then(function(data) {
-        $window.location.reload();
-    });
-  }
  
     $scope.login = function(data) {
-        $Username =  $scope.data.username;
-        AuthService.login($scope.data.username, $scope.data.password).then(function() {
-            $state.go('tab.profile', {$Username});
-        }, function(err) {
-            var alertPopup = $ionicPopup.alert({
-                title: 'Login failed!',
-                template: 'Please check your credentials!'
+        AuthService.login($scope.data.username, $scope.data.password)               
+           .success(function(data) {
+                $state.go('tab.profile', {});
+            })
+            .error(function(data, status) {
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Login failed!',
+                    template: 'Please check your credentials!'
+                });
             });
-        });
-    };
+        }
 })
+
 
 .controller('ProfileCtrl', function($scope, UserService) {
     UserService.getUser(function (data) {
         $scope.currentUser = data;
+        $scope.group = data.group_id;
         $scope.imgUser = "img/ben.png";
     });
 
@@ -78,36 +65,6 @@ angular.module('starter.controllers', [])
             template: 'Please check your credentials!'
         });
     });
-
-
-
-    $scope.data = {};
-    $scope.data.currentPage = 0;
-
-    var setupSlider = function() {
-        //some options to pass to our slider
-        $scope.data.sliderOptions = {
-          initialSlide: 0,
-          direction: 'horizontal', //or vertical
-          speed: 300 //0.3s transition
-        };
-
-        //create delegate reference to link with slider
-        $scope.data.sliderDelegate = null;
-
-        //watch our sliderDelegate reference, and use it when it becomes available
-        $scope.$watch('data.sliderDelegate', function(newVal, oldVal) {
-          if (newVal != null) {
-            $scope.data.sliderDelegate.on('slideChangeEnd', function() {
-              $scope.data.currentPage = $scope.data.sliderDelegate.activeIndex;
-              //use $scope.$apply() to refresh any content external to the slider
-              $scope.$apply();
-            });
-          }
-        });
-    };
-
-    setupSlider();
 
 })
 
