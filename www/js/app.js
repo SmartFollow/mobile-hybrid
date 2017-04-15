@@ -54,16 +54,47 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
-  
-  .state('tab.note-detail', {
-    url: '/dash/:noteId/:noteMatter',
+
+  .state('tab.all-notes', {
+    url: '/notes',
     views: {
       'menuContent': {
-        templateUrl: 'templates/note-detail.html',
-        controller: 'NoteDetailCtrl'
+        templateUrl: 'templates/all-notes.html',
+        controller: 'ProfileCtrl'
       }
     }
   })
+
+  .state('tab.lesson-details', {
+    url: '/lesson/:lessonId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/lesson-detail.html',
+        controller: 'LessonDetailCtrl'
+      }
+    }
+  })
+
+  .state('tab.all-lessons', {
+    url: '/lessons',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/all-lessons.html',
+        controller: 'ProfileCtrl'
+      }
+    }
+  })
+
+  .state('tab.doc-details', {
+    url: '/doc/:lessonId/:docId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/doc-detail.html',
+        controller: 'DocumentDetailCtrl'
+      }
+    }
+  })
+
   .state('tab.schedule', {
     url: '/schedule',
     views: {

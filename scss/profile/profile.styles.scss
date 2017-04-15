@@ -86,9 +86,15 @@
 
   #profile-notes {
 
+    .border-bottom
+    {
+      border-bottom: 1px solid #ddd !important;
+    }
+
     .col-25 {
-        height: 45px;
-        padding-top: 10px;
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
         text-align: center;
         color: #7c8d87;
     }
@@ -98,14 +104,10 @@
     }
 
     .col-50 {
-      height: 45px; 
-      padding-top: 3px;
+      margin: auto;
+      height: 100%;
       text-align: center;
       color: #7c8d87;
-    }
-
-    .col-25:last-child {
-        padding-top: 0px;
     }
 
     .row-color {
@@ -160,27 +162,42 @@
 
   #profile-lesson-tab {
 
-   .col-25 {
-        height: 35px;
-        padding-top: 10px;
-        text-align: center;
-        color: #7c8d87;
-
-        a {
-          height: 42px;
-          padding-top: 12px;
-        }
+    .lesson-link {
+      text-decoration: none;
     }
 
+   .col-25 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .col-10 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        padding-right: 10px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .col-20 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+
     .col-50 {
-      height: 45px; 
+      margin: auto;
+      height: 100%; 
       padding-top: 3px;
       text-align: center;
       color: #7c8d87;
-    }
-
-    .col-25:last-child {
-        padding-top: 0px;
     }
 
     .row-color {
@@ -202,23 +219,32 @@
 
   #profile-homework {
 
-    .col-25 {
-        height: 50px;
-        padding-top: 17px;
+   .col-90 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
         text-align: center;
         color: #7c8d87;
     }
 
-    .col-50 {
-      height: 50px; 
-      padding: 5px;
-      text-align: center;
-      color: #7c8d87;
+    .col-10 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        padding-right: 10px;
+        text-align: center;
+        color: #7c8d87;
     }
 
-    .col-25:last-child {
-        padding-top: 0px;
+    .doc-link {
+      text-decoration: none;
+      color: #7c8d87;
+
+      i {
+        font-size: 25px;
+      }
     }
+
 
     .row-color {
         background-color: #f5f5f5;
@@ -233,13 +259,13 @@
       color: white;
     }
 
-    h3 {
+    h2 {
       text-align: center;
       margin-bottom: 20px;
     }
 
     ion-slides{
-      height: 250px !important;
+      height: 300px !important;
     }
 
   }

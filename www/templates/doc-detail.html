@@ -4,10 +4,10 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{note.matter}}">
+<ion-view view-title="{{doc.name}}">
   <ion-content class="padding">
-    <p>{{note.name}}</p>
-    <p>{{note.note}}</p>
-    <p>{{note.comment}}</p>
+    <p>Description: {{doc.description}}</p>
+    <p>Path: {{doc.path}}</p>
+    <p>Filename: {{doc.filename}}</p>
   </ion-content>
 </ion-view>

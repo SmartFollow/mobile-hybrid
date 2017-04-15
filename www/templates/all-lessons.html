@@ -1,0 +1,21 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view class="profile-view" view-title="Toutes les leçons">
+  	<ion-content class="padding">
+		<div class="item item-text-wrap" id="profile-lesson-tab" ng-repeat="lessons in lesson">
+	        <div ng-if="lessons.student_class_id == currentUser.student_class.id" >
+	        <h3 class="pt-15">{{ lessons.subject.name }}</h3>
+	            <a class="lesson-link" href="#/tab/lesson/{{lessons.id}}"><div class="row row-color">
+	                <div class="col-25">{{ lessons.start | hours }}h-{{ lessons.end | hours }}h</div>
+	                <div class="col-50">{{ lessons.description }}</div>
+	                <div class="col-20">{{ lessons.reservation.room.identifier }}</div>
+	                <div class="col-10"><i class="icon ion-paperclip"></i></div>
+	            </div></a>
+	        </div>
+   		</div>
+  </ion-content>
+</ion-view>

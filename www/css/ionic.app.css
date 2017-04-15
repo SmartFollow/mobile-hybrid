@@ -9920,6 +9920,9 @@ a.button {
 .pt-4 {
   padding-top: 4px; }
 
+.pt-15 {
+  padding-top: 15px; }
+
 ion-side-menu .has-header {
   top: 44px; }
 
@@ -10070,20 +10073,21 @@ ion-side-menu .heading-item .message {
       padding: 6px 0px; }
   .profile-view .card {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); }
+  .profile-view #profile-notes .border-bottom {
+    border-bottom: 1px solid #ddd !important; }
   .profile-view #profile-notes .col-25 {
-    height: 45px;
-    padding-top: 10px;
+    margin: auto;
+    height: 100%;
+    padding: 15px 0px;
     text-align: center;
     color: #7c8d87; }
   .profile-view #profile-notes .item-text-wrap {
     border-bottom: none; }
   .profile-view #profile-notes .col-50 {
-    height: 45px;
-    padding-top: 3px;
+    margin: auto;
+    height: 100%;
     text-align: center;
     color: #7c8d87; }
-  .profile-view #profile-notes .col-25:last-child {
-    padding-top: 0px; }
   .profile-view #profile-notes .row-color {
     background-color: #f5f5f5; }
     .profile-view #profile-notes .row-color a {
@@ -10108,21 +10112,33 @@ ion-side-menu .heading-item .message {
       padding-top: 0px; }
   .profile-view #profile-lesson .item-text-wrap {
     border-bottom: none; }
+  .profile-view #profile-lesson-tab .lesson-link {
+    text-decoration: none; }
   .profile-view #profile-lesson-tab .col-25 {
-    height: 35px;
-    padding-top: 10px;
+    margin: auto;
+    height: 100%;
+    padding: 15px 0px;
     text-align: center;
     color: #7c8d87; }
-    .profile-view #profile-lesson-tab .col-25 a {
-      height: 42px;
-      padding-top: 12px; }
+  .profile-view #profile-lesson-tab .col-10 {
+    margin: auto;
+    height: 100%;
+    padding: 15px 0px;
+    padding-right: 10px;
+    text-align: center;
+    color: #7c8d87; }
+  .profile-view #profile-lesson-tab .col-20 {
+    margin: auto;
+    height: 100%;
+    padding: 15px 0px;
+    text-align: center;
+    color: #7c8d87; }
   .profile-view #profile-lesson-tab .col-50 {
-    height: 45px;
+    margin: auto;
+    height: 100%;
     padding-top: 3px;
     text-align: center;
     color: #7c8d87; }
-  .profile-view #profile-lesson-tab .col-25:last-child {
-    padding-top: 0px; }
   .profile-view #profile-lesson-tab .row-color {
     background-color: #f5f5f5;
     margin-bottom: 10px; }
@@ -10132,18 +10148,24 @@ ion-side-menu .heading-item .message {
     padding-left: 15px;
     padding-top: 10px;
     padding-bottom: 5px; }
-  .profile-view #profile-homework .col-25 {
-    height: 50px;
-    padding-top: 17px;
+  .profile-view #profile-homework .col-90 {
+    margin: auto;
+    height: 100%;
+    padding: 15px 0px;
     text-align: center;
     color: #7c8d87; }
-  .profile-view #profile-homework .col-50 {
-    height: 50px;
-    padding: 5px;
+  .profile-view #profile-homework .col-10 {
+    margin: auto;
+    height: 100%;
+    padding: 15px 0px;
+    padding-right: 10px;
     text-align: center;
     color: #7c8d87; }
-  .profile-view #profile-homework .col-25:last-child {
-    padding-top: 0px; }
+  .profile-view #profile-homework .doc-link {
+    text-decoration: none;
+    color: #7c8d87; }
+    .profile-view #profile-homework .doc-link i {
+      font-size: 25px; }
   .profile-view #profile-homework .row-color {
     background-color: #f5f5f5;
     margin-bottom: 10px; }
@@ -10152,11 +10174,11 @@ ion-side-menu .heading-item .message {
   .profile-view #profile-homework .item-divider {
     background-color: #E74D3D;
     color: white; }
-  .profile-view #profile-homework h3 {
+  .profile-view #profile-homework h2 {
     text-align: center;
     margin-bottom: 20px; }
   .profile-view #profile-homework ion-slides {
-    height: 250px !important; }
+    height: 300px !important; }
 
 .logocenter {
   margin: auto;

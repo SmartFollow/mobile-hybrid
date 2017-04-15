@@ -25,15 +25,7 @@ angular.module('starter.services', [])
         });
     }
     
-    function loadUserCredentials() {
-        var token = window.localStorage.getItem($window.sessionStorage.token);
-        if (token) {
-            useCredentials(token);
-        }
-    }
-  
     function storeUserCredentials(token) {
-        window.localStorage.setItem($window.sessionStorage.token);
         useCredentials(token);
     }
     
@@ -49,7 +41,6 @@ angular.module('starter.services', [])
         username = '';
         isAuth = false;
         $http.defaults.headers.common['Authorization'] = undefined;
-        window.localStorage.removeItem($window.sessionStorage.token);
         $window.sessionStorage.clear();
     }
     
@@ -99,40 +90,6 @@ angular.module('starter.services', [])
 
 
 .service('UserService', ['$http', '$q', 'API_NAME', function($http, $q, API_NAME) {  
-    var notes = 
-                [
-                    {
-                        "matter": "Math",
-                        "notes":[
-                            {
-                                "id": 1,
-                                "name": "Devoir maison",
-                                "note": "18/20",
-                                "comment": "Très bon travail.",
-                                "matter": "Math"
-                            },
-                            {
-                                "id": 2,
-                                "name": "Controle 12/09",
-                                "note": "11/20",
-                                "comment": "Quelques notions à revoir.",
-                                "matter": "Math"
-                            }
-                        ]
-                    },
-                    {
-                        "matter": "Fançais",
-                        "notes": [
-                            {
-                                "id": 3,
-                                "name": "Dictée",
-                                "note": "3/10",
-                                "comment": "Grammaire désatreuse.",
-                                "matter": "Francais"
-                            }
-                        ]
-                    }
-                ];
     var me = this;
     return {
         getUser: function(callback) {
@@ -146,13 +103,26 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             });
         },
-        getLesson: function(callback)
+        getLessons: function(callback)
         {
             if(me.currentUser)
                 callback(me.currentUser);
             $http({
                 method: 'GET',
                 url: 'http://api.dev.smartfollow.lan/api/lessons'
+            }).then(function(res){
+                me.currentUser = res.data;
+                callback(me.currentUser);
+            });
+        },
+
+        getLesson: function(lessonId, callback) 
+        {
+            if(me.currentUser)
+                callback(me.currentUser);
+            $http({
+                method: 'GET',
+                url: 'http://api.dev.smartfollow.lan/api/lessons/' + lessonId
             }).then(function(res){
                 me.currentUser = res.data;
                 callback(me.currentUser);
@@ -170,59 +140,19 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             });
         },
-        getNotes: function() {
-            var deferred = $q.defer();
-            var promise = deferred.promise;
-            var link = '';
-            
-            deferred.resolve(notes);
-            promise.success = function(fn) {
-                promise.then(fn);
-                return promise;
-            },
-            promise.error = function(fn) {
-                promise.then(null, fn);
-                return promise;
-            };
-            return promise;
+        getDocument: function(lessonId, docId, callback)
+        {
+            if(me.currentUser)
+                callback(me.currentUser);
+            $http({
+                method: 'GET',
+                url: 'http://api.dev.smartfollow.lan/api/lessons/' + lessonId + '/documents/' + docId
+            }).then(function(res){
+                me.currentUser = res.data;
+                callback(me.currentUser);
+            });
         },
-        getNote: function(matter, noteId) {
-            for (var i = 0; i < notes.length; i++) {
-                if (notes[i].matter === matter) {
-                    for (var j = 0; j < notes[i].notes.length; j++) {
-                        if (notes[i].notes[j].id === parseInt(noteId)) {
-                            return notes[i].notes[j];
-                        }
-                    }
-                }
-            }
-            return null;
-        }
     };
-/*
-        $http.get(link, {grant_type : 'password', client_id : '2', 
-            client_secret : 'BjEebk7a3NP9nXOswW2Y5nJ04V7aRLGjxKYUEV3C', 
-            username : name, password : pw,
-            scope : ''})
-        .success(function(data, status, headers,config){
-            console.log('data success');
-            deferred.resolve(data);
-        })
-        .error(function(data, status, headers,config){
-            console.log('data error');
-            deferred.reject('Wrong credentials.');
-        });
-        promise.success = function(fn) {
-            promise.then(fn);
-            return data;
-        }
-        promise.error = function(fn) {
-            promise.then(null, fn);
-            return promise;
-        }
-        return promise;
-        }
-    };*/
 }])
 
 .service('ScheduleService', function($q) {  

@@ -41,42 +41,43 @@ angular.module('starter.controllers', [])
         }
 })
 
-
 .controller('ProfileCtrl', function($scope, UserService) {
     UserService.getUser(function (data) {
         $scope.currentUser = data;
-        $scope.group = data.group_id;
-        $scope.imgUser = "img/ben.png";
+        $scope.imgUserStudent = "img/ben.png";
+        $scope.imgUserTeacher = "img/adam.jpg";
     });
 
-    UserService.getLesson(function (data) {
+
+    $scope.date_today = {
+        value: new Date()
+    };
+    function addDays(theDate, days) {
+        return new Date(theDate.getTime() + days*24*60*60*1000);
+    }
+    $scope.date = new Date();
+    $scope.date_plus_1 = addDays(new Date(), 1);
+    $scope.date_plus_2 = addDays(new Date(), 2);
+    $scope.date_plus_3 = addDays(new Date(), 3);
+    $scope.date_plus_4 = addDays(new Date(), 4);
+    $scope.date_plus_5 = addDays(new Date(), 5);
+    $scope.date_plus_6 = addDays(new Date(), 6);
+
+    UserService.getLessons(function (data) {
         $scope.lesson = data;
     });
 
     UserService.getHomework(function (data) {
-        $scope.homework = data;
-    });
-    
-    UserService.getNotes().success(function (data) {
-        $scope.allNotes = data;
-    }).error(function(data) {
-        var alertPopup = $ionicPopup.alert({
-            title: 'Login failed!',
-            template: 'Please check your credentials!'
-        });
+        $scope.homeworks = data;
     });
 
+    $scope.sliderOptions = {
+    pager: true,
+    autoHeight: true
+    };
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
-
     $scope.chats = Chats.all();
     $scope.remove = function(chat) {
         Chats.remove(chat);
@@ -148,106 +149,38 @@ angular.module('starter.controllers', [])
     });
 })
 
-.controller('NoteDetailCtrl', function($scope, $stateParams, UserService) {
-    $scope.note = UserService.getNote($stateParams.noteMatter, $stateParams.noteId);
+.controller('LessonDetailCtrl', function($scope, $stateParams, UserService) {
+    UserService.getLesson($stateParams.lessonId, function (data) {
+        $scope.lessons = data;
+    });
 })
 
-.controller('lessonsId', [ '$scope', '$state', '$rootScope', '$http', '$filter', '$stateParams', function ($scope, $state, $rootScope, $http, $filter, $stateParams) {
-    $http({
-            method: 'GET',
-            url: "http://api.dev.smartfollow.lan/api/lessons/"+$stateParams.id
-        }).then(function successCallback(response) {
-            $scope.lesson = response.data;
-            console.log(response);
-        }, function errorCallback(response) {
-            console.log(response);
+.controller('DocumentDetailCtrl', function($scope, $stateParams, UserService) {
+    UserService.getDocument($stateParams.lessonId, $stateParams.docId, function (data) {
+        $scope.doc = data;
     });
+})
 
-    $scope.create = function () {
-        var file = {
-                    name: $("#name").val(),
-                    description: $("#description").val(),
-                    document: $("#document")[0].files[0]
-                };
-        $http({
-            method: 'POST',
-            url: "http://api.dev.smartfollow.lan/api/lessons/"+$stateParams.id+"/documents",
-            data: file
-        }).then(function successCallback(response) {
-            $state.reload();
-            console.log(response);
-        }, function errorCallback(response) {
-            console.log(response);
-        });
-    };
 
-    $scope.createHW = function () {
-        console.log($("#HWdescription").val());
-        var file = {
-                    description: $("#HWdescription").val()
-                };
-        $http({
-            method: 'POST',
-            url: "http://api.dev.smartfollow.lan/api/lessons/"+$stateParams.id+"/homeworks",
-            data: file
-        }).then(function successCallback(response) {
-            $state.reload();
-            console.log(response);
-        }, function errorCallback(response) {
-            console.log(response);
-        });
-    };
+// Date filter
 
-    $scope.createExam = function () {
-        console.log($("#examDescription").val());
-        var file = {
-                    type: $("#examType").val(),
-                    min_mark: $("#examMin").val(),
-                    max_mark: $("#examMax").val(),
-                    description: $("#examDescription").val()
-                };
-        $http({
-            method: 'POST',
-            url: "http://api.dev.smartfollow.lan/api/lessons/"+$stateParams.id+"/exam",
-            data: file
-        }).then(function successCallback(response) {
-            $state.reload();
-            console.log(response);
-        }, function errorCallback(response) {
-            console.log(response);
-        });
-    };
+.filter('dayMonth', function dayMonth($filter){
+  return function(text){
+    var  tempdate = new Date(text.replace(/-/g,"/"));
+    return $filter('date')(tempdate, "dd-MM");
+  }
+})
 
-    $scope.evaluations = function (key, student) {
-        if ($("#student-"+key).find('.time-lesson').is(":hidden") && $("#student-"+key).find('.cross-lesson').is(":hidden"))
-        {
-            // Si en retard
-            $("#student-"+key).find('.time-lesson').show();
-            var file = {
-                    student_id: student.id
-                };
-            $http({
-            method: 'POST',
-            url: "http://api.dev.smartfollow.lan/api/lessons/"+$stateParams.id+"/evaluations",
-            data: file
-            }).then(function successCallback(response) {
-                console.log(response);
-            }, function errorCallback(response) {
-                console.log(response);
-            });
+.filter('dayMonthYear', function dayMonthYear($filter){
+  return function(text){
+    var  tempdate = new Date(text.replace(/-/g,"/"));
+    return $filter('date')(tempdate, "dd-MM-yyyy");
+  }
+})
 
-        }
-        else if ($("#student-"+key).find('.time-lesson').is(":hidden") && $("#student-"+key).find('.cross-lesson').is(":visible"))
-        {
-            // Annulation de l'absence
-            $("#student-"+key).find('.time-lesson').hide();
-            $("#student-"+key).find('.cross-lesson').hide();
-        }
-        else
-        {
-            // Si absent
-            $("#student-"+key).find('.time-lesson').hide();
-            $("#student-"+key).find('.cross-lesson').show();
-        }
-    };
-}]);
+.filter('hours', function hours($filter){
+  return function(text){
+    var  tempdate = new Date(text.replace(/-/g,"/"));
+    return $filter('date')(tempdate, "HH");
+  }
+});
