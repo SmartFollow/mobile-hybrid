@@ -23,6 +23,7 @@
                     <div class="user-twitter">{{ currentUser.student_class.name }}</div>
                   </div>
                 </div>
+
                 <!-- Profile etudiant -->
                 <div ng-if="currentUser.group.id == 4" class="pt-15">
 
@@ -53,10 +54,9 @@
                                 Voir toutes les notes
                             </a>
                         </div>
-                    </div> 
+                    </div>
 
                     <!-- Tableau des leçon du jour -->
-
                     <div id="profile-lesson">
                         <div class="card">
                             <div class="item item-divider">
@@ -64,27 +64,29 @@
                                     <div class="col-50 pt-4">Leçons du jour</div>
                                     <div class="col-50 right">
                                         <label class="item item-input">
-                                          <span class="input-label">Date</span>
-                                          <input type="date" name="input" ng-model="date_today.value" placeholder="yyyy-MM-dd" required />
+                                            <span class="input-label">Date</span>
+                                            <input type="date" id="dateInput" name="input" ng-model="date_today.value" placeholder="yyyy-MM-dd" required />
                                         </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="item item-text-wrap" id="profile-lesson-tab" ng-repeat="lessons in lesson">
-                            
-                                <div ng-if="lessons.student_class_id == currentUser.student_class.id" >
-                                <h3 class="pt-15">{{ lessons.subject.name }}</h3>
-                                    <a class="lesson-link" href="#/tab/lesson/{{lessons.id}}"><div class="row row-color">
-                                        <div class="col-25">{{ lessons.start | hours }}h-{{ lessons.end | hours }}h</div>
-                                        <div class="col-50">{{ lessons.description }}</div>
-                                        <div class="col-20">{{ lessons.reservation.room.identifier }}</div>
-                                        <div class="col-10"><i class="icon ion-paperclip"></i></div>
-                                    </div></a>
-                                </div>
+                            <span ng-repeat="lessons in lesson">
+                                <div ng-if="(lessons.student_class_id == currentUser.student_class.id) && ((date_today.value | date:'dd-MM-yyyy') == (lessons.start | dayMonthYear))" >
+                                    <div class="item item-text-wrap" id="profile-lesson-tab">
+                                        <h3 class="pt-15">{{ lessons.subject.name }}</h3>
+                                        <a class="lesson-link" href="#/tab/lesson/{{lessons.id}}">
+                                            <div class="row row-color">
+                                                <div class="col-25">{{ lessons.start | hours }}h-{{ lessons.end | hours }}h</div>
+                                                <div class="col-50">{{ lessons.description }}</div>
+                                                <div class="col-20">{{ lessons.reservation.room.identifier }}</div>
+                                            </div>
+                                        </a>
+                                    </div>
 
-                            </div>
+                                </div>
+                            </span>
                             <a href="#/tab/lessons" class="forgot-password">
-                                Voir toutes les leçons
+                            Voir toutes les leçons
                             </a>
                         </div>
                     </div>
@@ -184,13 +186,47 @@
                                 </ion-slides>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
 
 
                 <!-- Profile professeur -->
                 <div ng-if="currentUser.group.id == 2">
-                    
+                  
+                    <!-- Tableau des leçon du jour -->
+                    <div id="profile-lesson-teacher">
+                        <div class="card">
+                            <div class="item item-divider">
+                                <div class="row nopadding">
+                                    <div class="col-50 pt-4">Leçons du jour</div>
+                                    <div class="col-50 right">
+                                        <label class="item item-input">
+                                            <span class="input-label">Date</span>
+                                            <input type="date" id="dateInput" name="input" ng-model="date_today.value" placeholder="yyyy-MM-dd" required />
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <span ng-repeat="lessons in lesson">
+                                <div ng-if="(lessons.subject.teacher_id == currentUser.id) && ((date_today.value | date:'dd-MM-yyyy') == (lessons.start | dayMonthYear))" >
+                                    <div class="item item-text-wrap" id="profile-lesson-tab-teacher">
+                                        <h3 class="pt-15">{{ lessons.subject.name }}</h3>
+                                        <a class="lesson-link" href="#/tab/lesson/{{lessons.id}}">
+                                            <div class="row row-color">
+                                                <div class="col-25">{{ lessons.start | hours }}h-{{ lessons.end | hours }}h</div>
+                                                <div class="col-50">{{ lessons.description }}</div>
+                                                <div class="col-20">{{ lessons.reservation.room.identifier }}</div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </span>
+                            <a href="#/tab/lessons" class="forgot-password">
+                            Voir toutes les leçons
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </ion-content>
         </body>

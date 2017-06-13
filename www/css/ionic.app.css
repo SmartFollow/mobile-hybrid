@@ -9923,6 +9923,12 @@ a.button {
 .pt-15 {
   padding-top: 15px; }
 
+.pt-0 {
+  padding-top: 0px; }
+
+.pb-0 {
+  padding-bottom: 0px; }
+
 ion-side-menu .has-header {
   top: 44px; }
 
@@ -10029,7 +10035,7 @@ ion-side-menu .heading-item .message {
     color: #6891a2;
     float: right;
     text-decoration: none;
-    padding-right: 15px; }
+    padding: 10px; }
   .profile-view .forgot-password:hover,
   .profile-view .forgot-password:active,
   .profile-view .forgot-password:focus {
@@ -10179,6 +10185,53 @@ ion-side-menu .heading-item .message {
     margin-bottom: 20px; }
   .profile-view #profile-homework ion-slides {
     height: 300px !important; }
+  .profile-view #profile-lesson-teacher .nopadding {
+    padding: 0; }
+  .profile-view #profile-lesson-teacher .item-divider {
+    background-color: #E74D3D;
+    color: white; }
+  .profile-view #profile-lesson-teacher .item-input {
+    height: 30px; }
+    .profile-view #profile-lesson-teacher .item-input input {
+      padding-top: 0px; }
+  .profile-view #profile-lesson-teacher .item-text-wrap {
+    border-bottom: none; }
+  .profile-view #profile-lesson-tab-teacher .lesson-link {
+    text-decoration: none; }
+  .profile-view #profile-lesson-tab-teacher .col-25 {
+    margin: auto;
+    height: 100%;
+    padding: 15px 0px;
+    text-align: center;
+    color: #7c8d87; }
+  .profile-view #profile-lesson-tab-teacher .col-10 {
+    margin: auto;
+    height: 100%;
+    padding: 15px 0px;
+    padding-right: 10px;
+    text-align: center;
+    color: #7c8d87; }
+  .profile-view #profile-lesson-tab-teacher .col-20 {
+    margin: auto;
+    height: 100%;
+    padding: 15px 0px;
+    text-align: center;
+    color: #7c8d87; }
+  .profile-view #profile-lesson-tab-teacher .col-50 {
+    margin: auto;
+    height: 100%;
+    padding-top: 3px;
+    text-align: center;
+    color: #7c8d87; }
+  .profile-view #profile-lesson-tab-teacher .row-color {
+    background-color: #f5f5f5;
+    margin-bottom: 10px; }
+    .profile-view #profile-lesson-tab-teacher .row-color a {
+      background-color: #f5f5f5; }
+  .profile-view #profile-lesson-tab-teacher .myh2 {
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 5px; }
 
 .logocenter {
   margin: auto;

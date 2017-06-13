@@ -25,10 +25,10 @@
           <h2 class="greeting">{{currentUser.firstname + " " + currentUser.lastname}}</h2>
           <p class="message">{{currentUser.group.name}}</p>
         </ion-item>
-        <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.schedule">
+<!--         <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.schedule">
           <i class="icon ion-ios-calendar-outline"></i>
           <h2 class="menu-text">Planning</h2>
-        </ion-item>
+        </ion-item> -->
         <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.lessons">
           <i class="icon ion-ios-book"></i>
           <h2 class="menu-text">Cours</h2>
@@ -48,26 +48,25 @@
         
 
     </ion-list>
-    <ion-item class="notif">
+    <ion-item class="">
           <h2 class="menu-text">Evalutations</h2>
-          <div class="tabs tabs-icon-left">
+<div ng-repeat="evals in eval">
+ {{ evals.criterias.id }}
+</div>
+          <!-- <div class="tabs tabs-icon-left">
             <a class="tab-item">
               <i class="icon ion-star"></i>
               <span class="eval">12</span>
-            </a>
-            <a class="tab-item">
-              <i class="icon ion-ios-chatbubble"></i>
-              <span class="eval">3</span>
             </a>
             <a class="tab-item">
               <i class="icon ion-ios-paper"></i>
               <span class="eval">1</span>
             </a>
             <a class="tab-item">
-              <i class="icon ion-alert-circled"></i>
-              <span class="eval">0</span>
+              <i class="icon ion-ios-chatbubble"></i>
+              <span class="eval">3</span>
             </a>
-          </div>
+          </div> -->
         </ion-item>
     </ion-content>
   </ion-side-menu>

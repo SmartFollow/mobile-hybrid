@@ -52,6 +52,7 @@ angular.module('starter.controllers', [])
     $scope.date_today = {
         value: new Date()
     };
+
     function addDays(theDate, days) {
         return new Date(theDate.getTime() + days*24*60*60*1000);
     }
@@ -65,6 +66,10 @@ angular.module('starter.controllers', [])
 
     UserService.getLessons(function (data) {
         $scope.lesson = data;
+    });
+
+    UserService.getEvaluations(function (data) {
+        $scope.eval = data;
     });
 
     UserService.getHomework(function (data) {

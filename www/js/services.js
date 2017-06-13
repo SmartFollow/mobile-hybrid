@@ -115,7 +115,18 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             });
         },
-
+        getEvaluations: function(callback)
+        {
+            if(me.currentUser)
+                callback(me.currentUser);
+            $http({
+                method: 'GET',
+                url: 'http://api.dev.smartfollow.lan/api/evaluations'
+            }).then(function(res){
+                me.currentUser = res.data;
+                callback(me.currentUser);
+            });
+        },
         getLesson: function(lessonId, callback) 
         {
             if(me.currentUser)

@@ -75,8 +75,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.all-lessons', {
+  .state('tab.lessons', {
     url: '/lessons',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/all-lessons.html',
+        controller: 'ProfileCtrl'
+      }
+    }
+  })
+
+    .state('tab.all-lessons', {
+    url: '/all/lessons',
     views: {
       'menuContent': {
         templateUrl: 'templates/all-lessons.html',
