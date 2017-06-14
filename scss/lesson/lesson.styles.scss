@@ -1,0 +1,101 @@
+.lesson-view {
+	#lesson-homework {
+
+    .col-100 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .item-text-wrap {
+        border-bottom: none;
+    }
+
+  
+    .row-color {
+        background-color: #f5f5f5;
+
+        a {
+          background-color: #f5f5f5;
+        }
+    }
+
+    .item-divider {
+      background-color: $theme-color-1;
+      color: white;
+    }
+
+  }
+
+  	#lesson-document {
+
+  	.col-25 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .col-75 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .item-text-wrap {
+        border-bottom: none;
+    }
+
+  
+    .row-color {
+        background-color: #f5f5f5;
+
+        a {
+          background-color: #f5f5f5;
+        }
+    }
+
+    .item-divider {
+      background-color: $theme-color-1;
+      color: white;
+    }
+
+  }	
+
+  	#lesson-evaluation {
+
+    .col-100 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .item-text-wrap {
+        border-bottom: none;
+    }
+
+  
+    .row-color {
+        background-color: #f5f5f5;
+
+        a {
+          background-color: #f5f5f5;
+        }
+    }
+
+    .item-divider {
+      background-color: $theme-color-1;
+      color: white;
+    }
+
+  }
+
+
+}

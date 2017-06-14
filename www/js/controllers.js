@@ -157,6 +157,10 @@ angular.module('starter.controllers', [])
 .controller('LessonDetailCtrl', function($scope, $stateParams, UserService) {
     UserService.getLesson($stateParams.lessonId, function (data) {
         $scope.lessons = data;
+
+    });
+    UserService.getUser(function (data) {
+        $scope.currentUser = data;
     });
 })
 
@@ -171,21 +175,29 @@ angular.module('starter.controllers', [])
 
 .filter('dayMonth', function dayMonth($filter){
   return function(text){
-    var  tempdate = new Date(text.replace(/-/g,"/"));
+    var  tempdate = new Date(text);
     return $filter('date')(tempdate, "dd-MM");
   }
 })
 
+.filter('dayMonthYear2', function dayMonth($filter){
+  return function(text){
+    var  tempdate = new Date(text);
+    return $filter('date')(tempdate, "EEEE dd MMMM");
+  }
+})
+
+
 .filter('dayMonthYear', function dayMonthYear($filter){
   return function(text){
-    var  tempdate = new Date(text.replace(/-/g,"/"));
+    var  tempdate = new Date(text);
     return $filter('date')(tempdate, "dd-MM-yyyy");
   }
 })
 
 .filter('hours', function hours($filter){
   return function(text){
-    var  tempdate = new Date(text.replace(/-/g,"/"));
+    var  tempdate = new Date(text);
     return $filter('date')(tempdate, "HH");
   }
 });

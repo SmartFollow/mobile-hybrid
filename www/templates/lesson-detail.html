@@ -4,10 +4,95 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{lessons.id}}">
-  <ion-content class="padding">
+<ion-view view-title="{{ lessons.subject.name }}">
+  <ion-content class="padding lesson-view">
+    <p>{{lessons.start | dayMonthYear2 }}</p>
+    <p>{{lessons.start | hours }}h - {{lessons.end | hours }}h</p>
+    <p>{{lessons.evalutation}}</p>
     <p>{{lessons.description}}</p>
-    <p>{{lessons.start}}</p>
-    <p>{{lessons.end}}</p>
+
+     <!-- Profile etudiant -->
+    <div ng-if="currentUser.group.id == 4">
+
+	     <!-- Tableau des Devoirs -->
+	    <div id="lesson-homework">
+	        <div class="card">
+	            <div class="item item-divider">
+	                Devoirs
+	            </div>
+	            <div class="item-text-wrap">
+	                <div class="item" ng-repeat="homework in lessons.homeworks">
+	                    <div class="row row-color">
+	                        <div class="col-100">{{ homework.description }}</div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+
+
+	    <!-- Tableau des Documents -->
+	    <div id="lesson-document">
+	        <div class="card">
+	            <div class="item item-divider">
+	                Documents
+	            </div>
+	            <div ng-if="lessons.documents.length != 0" class="item-text-wrap">
+	                <div class="item" ng-repeat="doc in lessons.documents">
+	                    <div class="row row-color">
+	                        <div class="col-75">{{ doc.name }}</div>
+	                        <div class="col-25"><i class="icon ion-arrow-down-a"></i></div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div ng-if="lessons.documents.length == 0">
+	            <p class="padding ">Aucun documents pour cette leçon.</p>
+	            </div>
+	        </div>
+	    </div>
+
+	    <!-- Tableau des Evaluations -->
+	    <div id="lesson-evaluation">
+	        <div class="card">
+	            <div class="item item-divider">
+	                Evaluations
+	            </div>
+	            <span ng-repeat="eval in lessons.evaluations">
+		            <div ng-if="eval.student_id  == currentUser.id "> 
+		            	<div class="item item-text-wrap">
+		                    <div class="row row-color" ng-repeat="crit in eval.criteria">
+		                        <div class="col-100">{{ crit.name }}</div>
+		                    </div>
+		                </div>
+		            </div>
+	            </span>
+	        </div>
+	    </div>
+
+
+	</div>
+
+	<!-- Profile professeur -->
+    <div ng-if="currentUser.group.id == 2">
+
+    	<!-- Tableau des Evaluations -->
+	    <div id="lesson-evaluation">
+	        <div class="card">
+	            <div class="item item-divider">
+	                Evaluations
+	            </div>
+	            <span ng-repeat="eval in lessons.evaluations">
+	            		<p class="pl-10 pt-15">{{ eval.student.firstname }} {{ eval.student.lastname }}</p>
+		            	<div class="item ">
+		                    <div class="row row-color" ng-repeat="crit in eval.criteria">
+		                        <div class="col-100">{{ crit.name }}</div>
+		                    </div>
+		                </div>
+	            </span>
+	        </div>
+	    </div>
+
+
+    </div>
   </ion-content>
 </ion-view>
