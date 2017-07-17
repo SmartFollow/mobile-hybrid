@@ -9961,6 +9961,16 @@ ion-side-menu ion-item.item {
 ion-side-menu ion-item.item:first-child {
   border-top: none; }
 
+ion-side-menu .btn-rounded {
+  width: 100%;
+  border-radius: 50%; }
+
+ion-side-menu .txt-decoration-none {
+  text-decoration: none; }
+
+ion-side-menu .main-menu-bg {
+  background-color: #23262a; }
+
 ion-side-menu .scroll {
   height: 100%;
   background-color: #23262a !important; }
@@ -10019,18 +10029,6 @@ ion-side-menu .heading-item .greeting {
 
 ion-side-menu .heading-item .message {
   color: #999999; }
-
-.settings-view {
-  background-color: #EAEAEA !important; }
-  .settings-view .checkbox input, .settings-view .checkbox-icon {
-    margin-top: 40px; }
-  .settings-view .handle {
-    margin-top: 5px;
-    margin-left: 5px; }
-
-.toggle .handle {
-  top: 6.5px;
-  left: 7px; }
 
 .profile-view {
   background-color: #FFFFFF !important; }
@@ -10235,6 +10233,58 @@ ion-side-menu .heading-item .message {
     padding-left: 15px;
     padding-top: 10px;
     padding-bottom: 5px; }
+  .profile-view #profile-evaluations-student .border-bottom {
+    border-bottom: 1px solid #ddd !important; }
+  .profile-view #profile-evaluations-student .col-25 {
+    margin: auto;
+    height: 100%;
+    padding: 15px 0px;
+    text-align: center;
+    color: #7c8d87; }
+  .profile-view #profile-evaluations-student .col-50 {
+    margin: auto;
+    height: 100%;
+    text-align: center;
+    color: #7c8d87; }
+  .profile-view #profile-evaluations-student .row-color {
+    background-color: #f5f5f5; }
+    .profile-view #profile-evaluations-student .row-color a {
+      background-color: #f5f5f5; }
+  .profile-view #profile-evaluations-student .myh2 {
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 5px; }
+  .profile-view #profile-evaluations-student .note {
+    color: red; }
+  .profile-view #profile-evaluations-student .item-divider {
+    background-color: #E74D3D;
+    color: white; }
+  .profile-view #profile-evaluations-teacher .border-bottom {
+    border-bottom: 1px solid #ddd !important; }
+  .profile-view #profile-evaluations-teacher .col-25 {
+    margin: auto;
+    height: 100%;
+    padding: 15px 0px;
+    text-align: center;
+    color: #7c8d87; }
+  .profile-view #profile-evaluations-teacher .col-50 {
+    margin: auto;
+    height: 100%;
+    text-align: center;
+    color: #7c8d87; }
+  .profile-view #profile-evaluations-teacher .row-color {
+    background-color: #f5f5f5; }
+    .profile-view #profile-evaluations-teacher .row-color a {
+      background-color: #f5f5f5; }
+  .profile-view #profile-evaluations-teacher .myh2 {
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 5px; }
+  .profile-view #profile-evaluations-teacher .note {
+    color: red; }
+  .profile-view #profile-evaluations-teacher .item-divider {
+    background-color: #E74D3D;
+    color: white; }
 
 .logocenter {
   margin: auto;

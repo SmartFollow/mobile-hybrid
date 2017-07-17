@@ -166,59 +166,7 @@ angular.module('starter.services', [])
     };
 }])
 
-.service('ScheduleService', function($q) {  
-    var schedule = 
-    [
-        {
-            "matter": "Anglais",
-            "name": "Prétérit Simple",
-            "start": "8h",
-            "end": "9h",
-            "duration": "1h"
-        },
-        {
-            "matter": "Math",
-            "name": "Nombres combinatoire",
-            "start": "10h",
-            "end": "12h",
-            "duration": "2h"
-        },
-        {
-            "matter": "Physique",
-            "name": "Densité",
-            "start": "14h",
-            "end": "16h",
-            "duration": "2h"
-        },
-        {
-            "matter": "Sport",
-            "name": "Basket",
-            "start": "16h30",
-            "end": "17h",
-            "duration": "0h30"
-        }
-    ];
-    return {
-        get: function() {  
-            var deferred = $q.defer();
-            var promise = deferred.promise;
-            var link = '';
-            
-            deferred.resolve(schedule);
-            promise.success = function(fn) {
-                promise.then(fn);
-                return promise;
-            },
-            promise.error = function(fn) {
-                promise.then(null, fn);
-                return promise;
-            };
-            return promise;
-        }
-    }
-})
-            
-
+         
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

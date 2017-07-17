@@ -105,16 +105,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.schedule', {
-    url: '/schedule',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/tab-schedule.html',
-        controller: 'ScheduleCtrl'
-      }
-    }
-  })
-
   .state('tab.chats', {
       url: '/chats',
       views: {
@@ -135,12 +125,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
 
-  .state('tab.settings', {
-    url: '/settings',
+  .state('tab.evaluation', {
+    url: '/evaluation',
     views: {
       'menuContent': {
-        templateUrl: 'templates/tab-settings.html',
-        controller: 'AccountCtrl'
+        templateUrl: 'templates/tab-eval.html',
+        controller: 'ProfileCtrl'
       }
     }
   });

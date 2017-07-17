@@ -54,6 +54,20 @@ ion-side-menu
 
 	}
 
+	.btn-rounded {
+		width: 100%;
+    	border-radius: 50%;
+	}
+
+	.txt-decoration-none {
+		text-decoration: none 
+	}
+
+	.main-menu-bg
+	{
+		background-color: darken($main-menu-bg, 12);
+	}
+
 	.scroll {
 		height: 100%;
 		background-color: darken($main-menu-bg, 12) !important;

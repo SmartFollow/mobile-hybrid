@@ -41,33 +41,32 @@
           <i class="icon ion-ios-list"></i>
           <h2 class="menu-text">Notifications</h2>
         </ion-item>
-        <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.settings">
-          <i class="icon ion-gear-a"></i>
-          <h2 class="menu-text">Paramètres</h2>
+        <ion-item class="main-menu-bg">
+          <button class="button button-block button-assertive" ng-click="showLogOutMenu()">
+            <i class="icon ion-power"></i> Logout
+          </button>
         </ion-item>
-        
 
     </ion-list>
-    <ion-item class="">
-          <h2 class="menu-text">Evalutations</h2>
-<div ng-repeat="evals in eval">
- {{ evals.criterias.id }}
-</div>
-          <!-- <div class="tabs tabs-icon-left">
-            <a class="tab-item">
-              <i class="icon ion-star"></i>
-              <span class="eval">12</span>
-            </a>
-            <a class="tab-item">
-              <i class="icon ion-ios-paper"></i>
-              <span class="eval">1</span>
-            </a>
-            <a class="tab-item">
-              <i class="icon ion-ios-chatbubble"></i>
-              <span class="eval">3</span>
-            </a>
-          </div> -->
-        </ion-item>
+      <ion-item class="notif" nav-clear menu-close>
+          <a class="txt-decoration-none" href="#/tab/evaluation">
+            <h2 class="menu-text">Evalutations</h2>
+            <div class="tabs tabs-icon-left">
+              <a class="tab-item" href="#/tab/evaluation">
+                <i class="icon ion-star"></i>
+                <span class="eval">2</span>
+              </a>
+              <a class="tab-item" href="#/tab/evaluation">
+                <i class="icon ion-ios-paper"></i>
+                <span class="eval">2</span>
+              </a>
+              <a class="tab-item" href="#/tab/evaluation">
+                <i class="icon ion-ios-chatbubble"></i>
+                <span class="eval">0</span>
+              </a>
+            </div>
+          </a>
+      </ion-item>
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>

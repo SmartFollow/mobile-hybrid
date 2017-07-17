@@ -352,4 +352,99 @@
 
   }
 
+  #profile-evaluations-student {
+
+    .border-bottom
+    {
+      border-bottom: 1px solid #ddd !important;
+    }
+
+    .col-25 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .col-50 {
+      margin: auto;
+      height: 100%;
+      text-align: center;
+      color: #7c8d87;
+    }
+
+    .row-color {
+        background-color: #f5f5f5;
+
+        a {
+          background-color: #f5f5f5;
+        }
+    }
+
+    .myh2 {
+      padding-left: 15px;
+      padding-top: 10px;
+      padding-bottom: 5px;
+    }
+
+    .note {
+      color: red;
+    }
+
+    .item-divider {
+      background-color: $theme-color-1;
+      color: white;
+    }
+
+  }
+
+  #profile-evaluations-teacher {
+
+    .border-bottom
+    {
+      border-bottom: 1px solid #ddd !important;
+    }
+
+    .col-25 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .col-50 {
+      margin: auto;
+      height: 100%;
+      text-align: center;
+      color: #7c8d87;
+    }
+
+    .row-color {
+        background-color: #f5f5f5;
+
+        a {
+          background-color: #f5f5f5;
+        }
+    }
+
+    .myh2 {
+      padding-left: 15px;
+      padding-top: 10px;
+      padding-bottom: 5px;
+    }
+
+    .note {
+      color: red;
+    }
+
+    .item-divider {
+      background-color: $theme-color-1;
+      color: white;
+    }
+
+  }
+
+
 }
