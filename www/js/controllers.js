@@ -2,14 +2,14 @@ angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicPopup, $state, AuthService, AUTH_EVENTS) {
     $scope.username = AuthService.username();
- 
+
     $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
         var alertPopup = $ionicPopup.alert({
             title: 'Unauthorized!',
             template: 'You are not allowed to access this resource.'
         });
       });
- 
+
     $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
         AuthService.logout();
         $state.go('login');
@@ -18,7 +18,7 @@ angular.module('starter.controllers', [])
             template: 'Sorry, You have to login again.'
         });
       });
- 
+
     $scope.setCurrentUsername = function(name) {
         $scope.username = name;
     };
@@ -26,9 +26,9 @@ angular.module('starter.controllers', [])
 
 .controller('LoginCtrl', function($scope, $state, $ionicPopup, AuthService, $http) {
     $scope.data = {};
- 
+
     $scope.login = function(data) {
-        AuthService.login($scope.data.username, $scope.data.password)               
+        AuthService.login($scope.data.username, $scope.data.password)
            .success(function(data) {
                 $state.go('tab.profile', {});
             })
@@ -93,7 +93,6 @@ angular.module('starter.controllers', [])
                 // add cancel code..
             },
             buttonClicked: function(index) {
-
                 return true;
             },
             destructiveButtonClicked: function(){
@@ -140,14 +139,14 @@ angular.module('starter.controllers', [])
   return function(text){
     var  tempdate = new Date(text);
     return $filter('date')(tempdate, "dd-MM");
-  }
+  };
 })
 
 .filter('dayMonthYear2', function dayMonth($filter){
   return function(text){
     var  tempdate = new Date(text);
     return $filter('date')(tempdate, "EEEE dd MMMM");
-  }
+  };
 })
 
 
@@ -155,12 +154,12 @@ angular.module('starter.controllers', [])
   return function(text){
     var  tempdate = new Date(text);
     return $filter('date')(tempdate, "dd-MM-yyyy");
-  }
+  };
 })
 
 .filter('hours', function hours($filter){
   return function(text){
     var  tempdate = new Date(text);
     return $filter('date')(tempdate, "HH");
-  }
+  };
 });

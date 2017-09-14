@@ -7,10 +7,10 @@ angular.module('starter.services', [])
     var link = API_NAME.link + '/oauth/token';
     var isAuth = false;
     var deferred = $q.defer();
-    
+
     var login = function(name, pw) {
-        return $http.post(link, {grant_type : 'password', client_id : API_NAME.id, 
-            client_secret : API_NAME.secret, 
+        return $http.post(link, {grant_type : 'password', client_id : API_NAME.id,
+            client_secret : API_NAME.secret,
             username : name, password : pw,
             scope : ''})
         .success(function(data, status, headers,config){
@@ -24,11 +24,11 @@ angular.module('starter.services', [])
             deferred.reject('Wrong credentials.');
         });
     }
-    
+
     function storeUserCredentials(token) {
         useCredentials(token);
     }
-    
+
     function useCredentials(token) {
         isAuth = true;
         authToken = token;
@@ -43,7 +43,7 @@ angular.module('starter.services', [])
         $http.defaults.headers.common['Authorization'] = undefined;
         $window.sessionStorage.clear();
     }
-    
+
     var logout = function() {
         destroyUserCredentials();
     };
@@ -53,7 +53,7 @@ angular.module('starter.services', [])
         }
         return (isAuth && authorizedRoles.indexOf(role) !== -1);
     };
-    
+
     return {
         login: login,
         logout: logout,
@@ -89,7 +89,7 @@ angular.module('starter.services', [])
 })
 
 
-.service('UserService', ['$http', '$q', 'API_NAME', function($http, $q, API_NAME) {  
+.service('UserService', ['$http', '$q', 'API_NAME', function($http, $q, API_NAME) {
     var me = this;
     return {
         getUser: function(callback) {
@@ -127,7 +127,7 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             });
         },
-        getLesson: function(lessonId, callback) 
+        getLesson: function(lessonId, callback)
         {
             if(me.currentUser)
                 callback(me.currentUser);
@@ -162,11 +162,11 @@ angular.module('starter.services', [])
                 me.currentUser = res.data;
                 callback(me.currentUser);
             });
-        },
+        }
     };
 }])
 
-         
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 
