@@ -9932,6 +9932,11 @@ a.button {
 .pl-10 {
   padding-left: 10px; }
 
+.app-input-model {
+  border: 1px black solid;
+  background-color: #E74D3D !important;
+  width: 100%; }
+
 ion-side-menu .has-header {
   top: 44px; }
 

@@ -3,8 +3,8 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.constants'])
- 
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.constants', 'ngToast', 'ngAnimate', 'ionic-modal-select'])
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -28,13 +28,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-  
+
   .state('login', {
       url: '/login',
       templateUrl: 'templates/login.html',
       controller: 'LoginCtrl'
   })
-  
+
     // setup an abstract state for the tabs directive
   .state('tab', {
     url: '/tab',
@@ -84,7 +84,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
-
     .state('tab.all-lessons', {
     url: '/all/lessons',
     views: {
@@ -105,25 +104,75 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+
+  .state('tab.notifications', {
+    url: '/notifications',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tab-notifications.html',
+        controller: 'ProfileCtrl'
+      }
+    }
+  })
+
+   // CONVERSATION
   .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
+    url: '/chats',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tab-chats.html',
+        controller: 'ConversationCtrl as conversationCtrl'
       }
-    })
-    
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
+    },
+    resolve: {
+      getConversations: function (Conversation) {
+        return Conversation.getConversations();
       }
-    })
+    }
+  })
+
+  .state('tab.chat-detail', {
+    url: '/chats/:chatId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/chat-detail.html',
+        controller: 'ConversationDetailCtrl as convDetailCtrl'
+      }
+    },
+    resolve: {
+      getConversation: function (Conversation, $stateParams) {
+        return Conversation.getConversation($stateParams.chatId);
+      }
+    }
+  })
+
+  .state('tab.new-conversation', {
+    url: '/new/conversation',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/chat-new-conversation.html',
+        controller: 'NewConversationCtrl as newConversationCtrl'
+      }
+    },
+    resolve: {
+      conversation: function () {
+        return null;
+      },
+      getAllUsers: function (Conversation) {
+        return Conversation.getAllUsers();
+      }
+    }
+  })
+
+  .state('tab.new-message', {
+    url: '/new/message',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/chat-new-message.html',
+        controller: 'NewMessageCtrl'
+      }
+    }
+  })
 
   .state('tab.evaluation', {
     url: '/evaluation',
@@ -134,8 +183,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   });
-  
-  
+
+
   $urlRouterProvider.otherwise(function ($injector, $location) {
     var $state = $injector.get("$state");
     $state.go("login");

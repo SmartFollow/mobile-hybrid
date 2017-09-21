@@ -1,0 +1,14 @@
+<ion-view view-title="Notifications">
+  <ion-content>
+    <ion-list>
+      <item class="item-remove-animate item-icon-right" ng-repeat="notification in notifications">
+        <a class="item">
+          <div style="text-align: center;"><strong><span style="color:#F23800">{{notification.resource_link}}</span></strong></div>
+          <br>
+          <pre>{{notification.message}}</pre>
+          <p>{{'date : ' + notification.created_at}}</p>
+        </a>
+      </item>
+    </ion-list>
+  </ion-content>
+</ion-view>

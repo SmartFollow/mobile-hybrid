@@ -60,11 +60,11 @@
   #profile-background {
       background-color: #E74D3D;
   }
-  
+
   #chat-list {
       margin-left: 60px;
   }
-  
+
   .list-item-content {
     padding: 5px;
   }
@@ -138,4 +138,10 @@
 
 .pl-10 {
   padding-left: 10px;
+}
+
+.app-input-model {
+  border: 1px black solid;
+  background-color: $theme-color-1 !important;
+  width: 100%;
 }

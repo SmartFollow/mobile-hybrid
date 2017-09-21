@@ -76,6 +76,10 @@ angular.module('starter.controllers', [])
         $scope.homeworks = data;
     });
 
+    UserService.getNotifications(function (data) {
+      $scope.notifications = data;
+    });
+
     $scope.sliderOptions = {
     pager: true,
     autoHeight: true
@@ -104,18 +108,6 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
-    $scope.chats = Chats.all();
-    $scope.remove = function(chat) {
-        Chats.remove(chat);
-    };
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-    $scope.chat = Chats.get($stateParams.chatId);
-})
-
-
 .controller('LessonDetailCtrl', function($scope, $stateParams, UserService) {
     UserService.getLesson($stateParams.lessonId, function (data) {
         $scope.lessons = data;
@@ -132,6 +124,57 @@ angular.module('starter.controllers', [])
     });
 })
 
+
+// CONVERSATION
+.controller('ConversationDetailCtrl', function($scope, $stateParams, Conversation, getConversation) {
+  var vm = this;
+
+  vm.conversation = getConversation;
+  console.log(getConversation.participants);
+})
+
+.controller('ConversationCtrl', function($scope, Conversation, getConversations) {
+  var vm = this;
+
+  vm.conversations = getConversations;
+})
+
+.controller('NewConversationCtrl', function(conversation, Conversation, ngToast, getAllUsers, UserService, $state){
+  var vm = this;
+
+  vm.users = getAllUsers;
+  vm.isNew = !conversation;
+
+  UserService.getUser(function (data) {
+    vm.currentUser = data;
+  });
+
+  vm.newConversation = conversation || {};
+
+  var ids = [];
+
+  vm.add = function () {
+    vm.add.ongoing = true;
+    angular.forEach(vm.tags, function(tag, key) {
+      this.push(tag.id);
+    }, ids);
+    vm.newConversation.creator_id = vm.currentUser.id;
+    vm.newConversation.participants = ids;
+    ids = [];
+
+    Conversation[vm.isNew ? 'addConversation' : 'updateConversation'](vm.newConversation, vm.newConversation.id).then(function () {
+      vm.add.ongoing = false;
+      console.log("toast");
+      ngToast.create('Conversation bien sauvegardée');
+
+      $state.go('tab.chats', {},  {reload: true});
+    });
+  };
+})
+
+.controller('NewMessageCtrl', function($scope, $recipient, NewMessage) {
+
+})
 
 // Date filter
 
