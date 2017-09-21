@@ -10537,3 +10537,37 @@ ion-side-menu .heading-item .message {
 .lesson-view #lesson-evaluation .item-divider {
   background-color: #E74D3D;
   color: white; }
+
+.chats .conv-list {
+  padding-left: 0px !important; }
+  .chats .conv-list a {
+    padding-bottom: 0;
+    padding-left: 0px !important; }
+
+.chats .conv-settings {
+  margin-left: 5px;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: center; }
+  .chats .conv-settings a {
+    color: #E74D3D; }
+    .chats .conv-settings a i {
+      font-size: 32px; }
+
+.chats .msg-list {
+  padding: 8px !important;
+  font-size: 13px; }
+
+.chats .msg-creator {
+  color: #E74D3D;
+  font-size: 14px; }
+
+.chats .conv-button {
+  position: relative;
+  top: 25px;
+  width: 100%;
+  margin: auto;
+  text-align: center; }
+
+.chats .chat-footer {
+  height: 67px !important; }

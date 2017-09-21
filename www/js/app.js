@@ -140,6 +140,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     },
     resolve: {
+      message: function () {
+        return null;
+      },
       getConversation: function (Conversation, $stateParams) {
         return Conversation.getConversation($stateParams.chatId);
       }
@@ -164,15 +167,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.new-message', {
-    url: '/new/message',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/chat-new-message.html',
-        controller: 'NewMessageCtrl'
+    .state('tab.conversation-settings', {
+      url: '/chats/:chatId/settings',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/chat-settings.html',
+          controller: 'NewConversationCtrl as newConversationCtrl'
+        }
+      },
+      resolve: {
+        conversation: function (Conversation, $stateParams) {
+          return Conversation.getConversation($stateParams.chatId);
+        },
+        getAllUsers: function (Conversation) {
+          return Conversation.getAllUsers();
+        }
       }
-    }
-  })
+    })
 
   .state('tab.evaluation', {
     url: '/evaluation',

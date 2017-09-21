@@ -202,15 +202,30 @@ angular.module('starter.services', [])
         return res.data;
       }, $http.fallback);
     },
-    getConversation: function(chatId)
+    getConversation: function(convId)
     {
-      return $http.get(API_NAME.link + '/api/conversations/' + chatId).then(function (res) {
+      return $http.get(API_NAME.link + '/api/conversations/' + convId).then(function (res) {
         return res.data;
       }, $http.fallback);
     },
     addConversation: function (message) {
       return $http.post(API_NAME.link + '/api/conversations', message).then(function(res) {
         return res.data;
+      }, $http.fallback);
+    },
+    updateConversation: function (message, convId) {
+      return $http.put(API_NAME.link + '/api/conversations/' + convId, message).then(function(res) {
+        return res.data;
+      }, $http.fallback);
+    },
+    deleteConversation: function (convId) {
+      return $http.delete(API_NAME.link + '/api/conversations/' + convId).then(function(res) {
+        return res.data;
+      }, $http.fallback);
+    },
+    addMessage: function (message) {
+      return $http.post(API_NAME.link + '/api/messages', message).then(function (res) {
+          return res.data;
       }, $http.fallback);
     }
   };

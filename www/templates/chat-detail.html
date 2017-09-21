@@ -1,16 +1,47 @@
-<!--
-  This template loads for the 'tab.friend-detail' state (app.js)
-  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
-  The FriendsCtrl pulls data from the Friends service (service.js)
-  The Friends service returns an array of friend data
--->
-<ion-view view-title="{{convDetailCtrl.conversation.subject}}">
+<ion-view view-title="{{ convDetailCtrl.conversation.subject }}" class="chats">
   <ion-content class="padding">
     <ion-list>
-      <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-repeat="msg in convDetailCtrl.conversation.messages">
-        <p><strong><span style="color:#F23800">{{msg.creator.firstname}}</span></strong></p>
-        <pre><span style="color:#000000">{{msg.content}}</span></pre>
-      </ion-item>
+      <div ng-repeat="msg in convDetailCtrl.conversation.messages | orderBy: 'created_at'">
+        <span ng-if="msg.creator.id == convDetailCtrl.currentUser.id">
+          <p style="margin-top: 5px"><strong><span class="msg-creator">Vous</span></strong></p>
+        </span>
+        <span ng-if="msg.creator.id != convDetailCtrl.currentUser.id">
+          <p style="margin-top: 5px"><strong><span class="msg-creator">{{msg.creator.firstname}} {{msg.creator.lastname}}</span></strong></p>
+        </span>
+        <ion-item class="item-remove-animate item-icon-right msg-list" type="item-text-wrap">
+          <pre><span style="color:#000000">{{msg.content}}</span></pre>
+        </ion-item>
+      </div>
     </ion-list>
+
   </ion-content>
+  <ion-footer-bar class="chat-footer">
+    <span ng-if="convDetailCtrl.conversation.creator_id != convDetailCtrl.currentUser.id" style="width: 100%">
+      <div class="list">
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <input type="text" ng-model="convDetailCtrl.newMessage.content" placeholder="Nouveau message...">
+          </label>
+          <button class="button button-small" ng-click="convDetailCtrl.addMessage()">
+            Envoyer
+          </button>
+        </div>
+      </div>
+    </span>
+    <div class="row" style="padding: 0 !important;" ng-if="convDetailCtrl.conversation.creator_id == convDetailCtrl.currentUser.id">
+      <div class="col-md-10 list">
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <input type="text" ng-model="convDetailCtrl.newMessage.content" placeholder="Nouveau message...">
+          </label>
+          <button class="button button-small" ng-click="convDetailCtrl.addMessage()">
+            Envoyer
+          </button>
+        </div>
+      </div>
+      <div class="col-md-2 conv-settings">
+        <a href="#/tab/chats/{{convDetailCtrl.conversation.id}}/settings"><i class="icon ion-ios-settings-strong"></i></a>
+      </div>
+    </div>
+  </ion-footer-bar>
 </ion-view>

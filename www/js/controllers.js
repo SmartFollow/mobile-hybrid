@@ -126,36 +126,48 @@ angular.module('starter.controllers', [])
 
 
 // CONVERSATION
-.controller('ConversationDetailCtrl', function($scope, $stateParams, Conversation, getConversation) {
+.controller('ConversationDetailCtrl', function($scope, $stateParams, Conversation, getConversation, UserService, message, $window) {
   var vm = this;
 
+  UserService.getUser(function (data) {
+    vm.currentUser = data;
+  });
+
+  vm.isNew = !message;
+  vm.newMessage = message || {};
   vm.conversation = getConversation;
-  console.log(getConversation.participants);
+
+  vm.addMessage = function () {
+    vm.newMessage.creator_id = vm.currentUser.id;
+    vm.newMessage.conversation_id = vm.conversation.id;
+    Conversation.addMessage(vm.newMessage).then(function () {
+      $window.location.reload();
+    });
+  };
+
 })
 
-.controller('ConversationCtrl', function($scope, Conversation, getConversations) {
+.controller('ConversationCtrl', function($scope, Conversation, getConversations, $window) {
   var vm = this;
-
   vm.conversations = getConversations;
 })
 
-.controller('NewConversationCtrl', function(conversation, Conversation, ngToast, getAllUsers, UserService, $state){
+.controller('NewConversationCtrl', function(conversation, Conversation, ngToast, getAllUsers, UserService, $state, $timeout){
   var vm = this;
 
-  vm.users = getAllUsers;
   vm.isNew = !conversation;
+  vm.users = vm.isNew ? getAllUsers : getAllUsers;
 
   UserService.getUser(function (data) {
     vm.currentUser = data;
   });
 
   vm.newConversation = conversation || {};
-
   var ids = [];
 
   vm.add = function () {
     vm.add.ongoing = true;
-    angular.forEach(vm.tags, function(tag, key) {
+    angular.forEach(vm.newConversation.participants, function(tag, key) {
       this.push(tag.id);
     }, ids);
     vm.newConversation.creator_id = vm.currentUser.id;
@@ -164,16 +176,20 @@ angular.module('starter.controllers', [])
 
     Conversation[vm.isNew ? 'addConversation' : 'updateConversation'](vm.newConversation, vm.newConversation.id).then(function () {
       vm.add.ongoing = false;
-      console.log("toast");
       ngToast.create('Conversation bien sauvegardée');
-
-      $state.go('tab.chats', {},  {reload: true});
+      $timeout(function(){
+        $state.go('tab.chats', {}, { reload: true });
+      }, 200);
     });
   };
-})
 
-.controller('NewMessageCtrl', function($scope, $recipient, NewMessage) {
-
+  vm.delete = function () {
+    Conversation.deleteConversation(vm.newConversation.id).then(function () {
+      $timeout(function(){
+        $state.go('tab.chats', {}, { reload: true });
+      }, 200);
+    });
+  };
 })
 
 // Date filter
