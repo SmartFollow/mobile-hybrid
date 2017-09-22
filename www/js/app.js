@@ -163,6 +163,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       },
       getAllUsers: function (Conversation) {
         return Conversation.getAllUsers();
+      },
+      getAllConversations: function (Conversation) {
+        return Conversation.getConversations();
       }
     }
   })
@@ -181,6 +184,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         },
         getAllUsers: function (Conversation) {
           return Conversation.getAllUsers();
+        },
+        getAllConversations: function (Conversation) {
+          return Conversation.getConversations();
         }
       }
     })

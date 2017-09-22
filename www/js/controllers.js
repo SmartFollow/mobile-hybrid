@@ -24,8 +24,15 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('LoginCtrl', function($scope, $state, $ionicPopup, AuthService, $http) {
+.controller('LoginCtrl', function($scope, $state, $ionicPopup, AuthService, $http, $window) {
     $scope.data = {};
+
+    $scope.$on('$ionicView.enter', function () {
+      if (!localStorage.reloadForLogin) {
+        localStorage.setItem("reloadForLogin", "true");
+        $window.location.reload();
+      }
+    });
 
     $scope.login = function(data) {
         AuthService.login($scope.data.username, $scope.data.password)
@@ -38,7 +45,7 @@ angular.module('starter.controllers', [])
                     template: 'Please check your credentials!'
                 });
             });
-        }
+        };
 })
 
 .controller('ProfileCtrl', function($scope, UserService, $ionicActionSheet, AuthService, $state) {
@@ -91,7 +98,7 @@ angular.module('starter.controllers', [])
         // Show the action sheet
         var hideSheet = $ionicActionSheet.show({
             destructiveText: 'Logout',
-            titleText: 'Voulez vraiment vous déconnecter ?',
+            titleText: 'Voulez vous vraiment vous déconnecter ?',
             cancelText: 'Cancel',
             cancel: function() {
                 // add cancel code..
@@ -101,7 +108,8 @@ angular.module('starter.controllers', [])
             },
             destructiveButtonClicked: function(){
                 AuthService.logout();
-                $state.go('login', {});
+                localStorage.clear();
+                $state.go('login', {}, {reload: true});
             }
         });
 
@@ -150,13 +158,21 @@ angular.module('starter.controllers', [])
 .controller('ConversationCtrl', function($scope, Conversation, getConversations, $window) {
   var vm = this;
   vm.conversations = getConversations;
+
+  $scope.$on('$ionicView.enter', function () {
+    if (!localStorage.justOnce) {
+      localStorage.setItem("justOnce", "true");
+      $window.location.reload();
+    }
+  });
 })
 
-.controller('NewConversationCtrl', function(conversation, Conversation, ngToast, getAllUsers, UserService, $state, $timeout){
+.controller('NewConversationCtrl', function(conversation, Conversation, ngToast, getAllUsers, UserService, $state, $timeout, getAllConversations){
   var vm = this;
 
   vm.isNew = !conversation;
   vm.users = vm.isNew ? getAllUsers : getAllUsers;
+  vm.allConv = getAllConversations;
 
   UserService.getUser(function (data) {
     vm.currentUser = data;
@@ -176,18 +192,30 @@ angular.module('starter.controllers', [])
 
     Conversation[vm.isNew ? 'addConversation' : 'updateConversation'](vm.newConversation, vm.newConversation.id).then(function () {
       vm.add.ongoing = false;
-      ngToast.create('Conversation bien sauvegardée');
+
+      vm.refreshConversation();
+      localStorage.clear();
+      $state.go('tab.chats', {}, { reload: true });
+    });
+  };
+
+  vm.delete = function () {
+    Conversation.deleteConversation(vm.newConversation.id).then(function () {
+      vm.refreshConversation();
+      localStorage.clear();
       $timeout(function(){
         $state.go('tab.chats', {}, { reload: true });
       }, 200);
     });
   };
 
-  vm.delete = function () {
-    Conversation.deleteConversation(vm.newConversation.id).then(function () {
-      $timeout(function(){
-        $state.go('tab.chats', {}, { reload: true });
-      }, 200);
+  vm.refreshConversation = function (callback) {
+    Conversation.getConversations().then(function (res) {
+      console.log(res);
+      vm.allConv = res;
+      if (callback) {
+        callback();
+      }
     });
   };
 })

@@ -97,7 +97,7 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             $http({
                 method: 'GET',
-                url: 'http://api.dev.smartfollow.lan/api/users/profile'
+                url: API_NAME.link + '/api/users/profile'
             }).then(function(res){
                 me.currentUser = res.data;
                 callback(me.currentUser);
@@ -109,7 +109,7 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             $http({
                 method: 'GET',
-                url: 'http://api.dev.smartfollow.lan/api/lessons'
+                url: API_NAME.link + '/api/lessons'
             }).then(function(res){
                 me.currentUser = res.data;
                 callback(me.currentUser);
@@ -121,7 +121,7 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             $http({
                 method: 'GET',
-                url: 'http://api.dev.smartfollow.lan/api/evaluations'
+                url: API_NAME.link + '/api/evaluations'
             }).then(function(res){
                 me.currentUser = res.data;
                 callback(me.currentUser);
@@ -133,7 +133,7 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             $http({
                 method: 'GET',
-                url: 'http://api.dev.smartfollow.lan/api/lessons/' + lessonId
+                url: API_NAME.link + '/api/lessons/' + lessonId
             }).then(function(res){
                 me.currentUser = res.data;
                 callback(me.currentUser);
@@ -145,7 +145,7 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             $http({
                 method: 'GET',
-                url: 'http://api.dev.smartfollow.lan/api/lessons/1/homeworks'
+                url: API_NAME.link + '/api/lessons/1/homeworks'
             }).then(function(res){
                 me.currentUser = res.data;
                 callback(me.currentUser);
@@ -157,7 +157,7 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             $http({
                 method: 'GET',
-                url: 'http://api.dev.smartfollow.lan/api/lessons/' + lessonId + '/documents/' + docId
+                url: API_NAME.link + '/api/lessons/' + lessonId + '/documents/' + docId
             }).then(function(res){
                 me.currentUser = res.data;
                 callback(me.currentUser);
@@ -169,7 +169,7 @@ angular.module('starter.services', [])
             callback(me.currentUser);
           $http({
             method: 'GET',
-            url: 'http://api.dev.smartfollow.lan/api/notifications'
+            url: API_NAME.link + '/api/notifications'
           }).then(function(res){
             me.currentUser = res.data;
             callback(me.currentUser);
@@ -181,7 +181,7 @@ angular.module('starter.services', [])
             callback(me.currentUser);
           $http({
             method: 'GET',
-            url: 'http://api.dev.smartfollow.lan/api/notifications/' + notificationId
+            url: API_NAME.link + '/api/notifications/' + notificationId
           }).then(function(res){
             me.currentUser = res.data;
             callback(me.currentUser);
