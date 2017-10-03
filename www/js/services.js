@@ -175,18 +175,30 @@ angular.module('starter.services', [])
             callback(me.currentUser);
           });
         },
-        getNotification: function(notificationId, callback)
+        removeNotification: function (notificationId, callback)
         {
           if(me.currentUser)
             callback(me.currentUser);
           $http({
-            method: 'GET',
-            url: API_NAME.link + '/api/notifications/' + notificationId
+            method: 'DELETE',
+            url: API_NAME.linl + '/api/notifications/' + notificationId
           }).then(function(res){
             me.currentUser = res.data;
             callback(me.currentUser);
           });
         }
+        // getNotification: function(notificationId, callback)
+        // {
+        //   if(me.currentUser)
+        //     callback(me.currentUser);
+        //   $http({
+        //     method: 'GET',
+        //     url: API_NAME.link + '/api/notifications/' + notificationId
+        //   }).then(function(res){
+        //     me.currentUser = res.data;
+        //     callback(me.currentUser);
+        //   });
+        // }
     };
 }])
 

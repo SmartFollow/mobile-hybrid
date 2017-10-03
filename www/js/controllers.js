@@ -87,6 +87,13 @@ angular.module('starter.controllers', [])
       $scope.notifications = data;
     });
 
+    $scope.removeNotification = function(notificationId){
+      UserService.removeNotification(notificationId, function (data) {
+        $scope.notifications = data;
+        $state.reload();
+      });
+    };
+
     $scope.sliderOptions = {
     pager: true,
     autoHeight: true
