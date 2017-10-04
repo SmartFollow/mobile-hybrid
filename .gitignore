@@ -6,4 +6,4 @@ platforms/
 plugins/
 hooks/
 www/lib/*
-.idea/workspace.xml
+.idea/*
