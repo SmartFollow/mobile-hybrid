@@ -1,0 +1,32 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view class="profile-view" view-title="Toutes les notes">
+  <ion-content class="padding">
+  	<div id="profile-notes">
+	    <div class="item item-text-wrap border-bottom">
+	    	<div class="row ">
+	    		<div class="col-25">Date</div>
+	    		<div class="col-25">Note</div>
+	    		<div class="col-50">Commentaire</div>
+	    	</div>
+	    	<div ng-repeat="note in (filteredItems = (currentUser.marks | orderBy: '-created_at'))">
+	    		<h3 class="pt-15">{{ note.exam.lesson.subject.name }}</h3>
+	            <div class="row row-color">
+	                <div class="col-25">{{ note.created_at | dayMonth}}</div>
+	                <div ng-if="note.mark < (note.exam.max_mark / 2)" class="col-25 note">
+	                  {{note.mark}} / {{ note.exam.max_mark}}
+	                </div>
+	                <div ng-if="note.mark > (note.exam.max_mark / 2)" class="col-25">
+	                    {{note.mark}} / {{ note.exam.max_mark}}
+	                </div>
+	                <div class="col-50">{{note.comment}}</div>
+	            </div>
+            </div>
+	     </div>
+    </div>
+  </ion-content>
+</ion-view>

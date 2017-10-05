@@ -1,0 +1,72 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content class="post-size-14px">
+    <ion-nav-bar class="bar app-top-bar">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left" class="main-menu" expose-aside-when="large">
+    <img class="logo" ng-src="img/logo.png" height="25">
+    <ion-content class="has-header">
+      <ion-list>
+        <ion-item class="heading-item item item-avatar" nav-clear menu-close ui-sref="tab.profile">
+          <div class="user-image-container">
+            <pre-img ratio="_1_1" helper-class="rounded-image">
+              <img class="user-image" ng-if="currentUser.group.id == 4" ng-src="{{imgUserStudent}}" spinner-on-load>
+              <img class="user-image" ng-if="currentUser.group.id == 2" ng-src="{{imgUserTeacher}}" spinner-on-load>
+          	</pre-img>
+          </div>
+          <h2 class="greeting">{{currentUser.firstname + " " + currentUser.lastname}}</h2>
+          <p class="message">{{currentUser.group.name}}</p>
+        </ion-item>
+<!--         <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.schedule">
+          <i class="icon ion-ios-calendar-outline"></i>
+          <h2 class="menu-text">Planning</h2>
+        </ion-item> -->
+        <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.lessons">
+          <i class="icon ion-ios-book"></i>
+          <h2 class="menu-text">Cours</h2>
+        </ion-item>
+        <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.chats">
+          <i class="icon ion-ios-chatboxes"></i>
+          <h2 class="menu-text">Messagerie</h2>
+        </ion-item>
+        <ion-item class="item-icon-left" nav-clear menu-close ui-sref="tab.notifications">
+          <i class="icon ion-ios-list"></i>
+          <h2 class="menu-text">Notifications</h2>
+        </ion-item>
+        <ion-item class="main-menu-bg">
+          <button class="button button-block button-assertive" ng-click="showLogOutMenu()">
+            <i class="icon ion-power"></i> Logout
+          </button>
+        </ion-item>
+
+    </ion-list>
+      <ion-item class="notif" nav-clear menu-close>
+          <a class="txt-decoration-none" href="#/tab/evaluation">
+            <h2 class="menu-text">Evalutations</h2>
+            <div class="tabs tabs-icon-left">
+              <a class="tab-item" href="#/tab/evaluation">
+                <i class="icon ion-star"></i>
+                <span class="eval">2</span>
+              </a>
+              <a class="tab-item" href="#/tab/evaluation">
+                <i class="icon ion-ios-paper"></i>
+                <span class="eval">2</span>
+              </a>
+              <a class="tab-item" href="#/tab/evaluation">
+                <i class="icon ion-ios-chatbubble"></i>
+                <span class="eval">0</span>
+              </a>
+            </div>
+          </a>
+      </ion-item>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

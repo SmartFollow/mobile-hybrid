@@ -1,0 +1,450 @@
+.profile-view
+{
+  background-color: $profile-bg !important;
+
+    .forgot-password {
+      color: rgb(104, 145, 162);
+      float: right;
+      text-decoration: none;
+      padding: 10px;
+  }
+
+  .forgot-password:hover,
+  .forgot-password:active,
+  .forgot-password:focus{
+      color: rgb(12, 97, 33);
+  }
+
+  .profile-container
+  {
+    margin: 0px auto;
+    margin-top: 6vh;
+    text-align: center;
+  }
+
+  .user-image-container
+  {
+    width: $image-width;
+
+    .user-image
+    {
+      border-top: 1px solid $content-color;
+      padding: 8px;
+      background-color: $profile-bg;
+      width: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  .user-name
+  {
+    font-size: 20px;
+  }
+
+  .user-twitter
+  {
+    margin-top: 5px;
+  }
+
+  .top-content
+  {
+    border-bottom: 1px solid $content-color;
+    position: relative;
+    height: 20vh;
+    margin-bottom: 25vh;
+    background-color: $theme-color-1;
+  }
+
+  .user-background-image-outer
+  {
+    height: 20vh;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .bottom-content
+  {
+    padding: 0px;
+    background-color: $profile-bg;
+    min-height: 55vh;
+    position: relative;
+
+    .user-bio
+    {
+      text-align: center;
+      margin: 6px 30px;
+      padding: 6px 0px;
+    }
+  }
+
+  .card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+
+  #profile-notes {
+
+    .border-bottom
+    {
+      border-bottom: 1px solid #ddd !important;
+    }
+
+    .col-25 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .item-text-wrap {
+        border-bottom: none;
+    }
+
+    .col-50 {
+      margin: auto;
+      height: 100%;
+      text-align: center;
+      color: #7c8d87;
+    }
+
+    .row-color {
+        background-color: #f5f5f5;
+
+        a {
+          background-color: #f5f5f5;
+        }
+    }
+
+    .myh2 {
+      padding-left: 15px;
+      padding-top: 10px;
+      padding-bottom: 5px;
+    }
+
+    .note {
+      color: red;
+    }
+
+    .item-divider {
+      background-color: $theme-color-1;
+      color: white;
+    }
+
+  }
+
+  #profile-lesson {
+
+    .nopadding {
+      padding: 0;
+    }
+
+    .item-divider {
+      background-color: $theme-color-1;
+      color: white;
+    }
+
+    .item-input {
+      height: 30px;
+
+      input {
+          padding-top: 0px;
+        }
+    }
+
+    .item-text-wrap {
+        border-bottom: none;
+    }
+
+  }
+
+  #profile-lesson-tab {
+
+    .lesson-link {
+      text-decoration: none;
+    }
+
+   .col-25 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .col-10 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        padding-right: 10px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .col-20 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+
+    .col-50 {
+      margin: auto;
+      height: 100%;
+      padding-top: 3px;
+      text-align: center;
+      color: #7c8d87;
+    }
+
+    .row-color {
+        background-color: #f5f5f5;
+        margin-bottom: 10px;
+
+        a {
+          background-color: #f5f5f5;
+        }
+    }
+
+    .myh2 {
+      padding-left: 15px;
+      padding-top: 10px;
+      padding-bottom: 5px;
+    }
+
+  }
+
+  #profile-homework {
+
+   .col-90 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .col-10 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        padding-right: 10px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .doc-link {
+      text-decoration: none;
+      color: #7c8d87;
+
+      i {
+        font-size: 25px;
+      }
+    }
+
+
+    .row-color {
+        background-color: #f5f5f5;
+        margin-bottom: 10px;
+
+        a {
+          background-color: #f5f5f5;
+        }
+    }
+    .item-divider {
+      background-color: $theme-color-1;
+      color: white;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    ion-slides{
+      height: 300px !important;
+    }
+
+  }
+
+  #profile-lesson-teacher {
+
+    .nopadding {
+      padding: 0;
+    }
+
+    .item-divider {
+      background-color: $theme-color-1;
+      color: white;
+    }
+
+    .item-input {
+      height: 30px;
+
+      input {
+        padding-top: 0px;
+      }
+    }
+
+    .item-text-wrap {
+      border-bottom: none;
+    }
+
+  }
+
+  #profile-lesson-tab-teacher {
+
+    .lesson-link {
+      text-decoration: none;
+    }
+
+    .col-25 {
+      margin: auto;
+      height: 100%;
+      padding: 15px 0px;
+      text-align: center;
+      color: #7c8d87;
+    }
+
+    .col-10 {
+      margin: auto;
+      height: 100%;
+      padding: 15px 0px;
+      padding-right: 10px;
+      text-align: center;
+      color: #7c8d87;
+    }
+
+    .col-20 {
+      margin: auto;
+      height: 100%;
+      padding: 15px 0px;
+      text-align: center;
+      color: #7c8d87;
+    }
+
+
+    .col-50 {
+      margin: auto;
+      height: 100%;
+      padding-top: 3px;
+      text-align: center;
+      color: #7c8d87;
+    }
+
+    .row-color {
+      background-color: #f5f5f5;
+      margin-bottom: 10px;
+
+      a {
+        background-color: #f5f5f5;
+      }
+    }
+
+    .myh2 {
+      padding-left: 15px;
+      padding-top: 10px;
+      padding-bottom: 5px;
+    }
+
+  }
+
+  #profile-evaluations-student {
+
+    .border-bottom
+    {
+      border-bottom: 1px solid #ddd !important;
+    }
+
+    .col-25 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .col-50 {
+      margin: auto;
+      height: 100%;
+      text-align: center;
+      color: #7c8d87;
+    }
+
+    .row-color {
+        background-color: #f5f5f5;
+
+        a {
+          background-color: #f5f5f5;
+        }
+    }
+
+    .myh2 {
+      padding-left: 15px;
+      padding-top: 10px;
+      padding-bottom: 5px;
+    }
+
+    .note {
+      color: red;
+    }
+
+    .item-divider {
+      background-color: $theme-color-1;
+      color: white;
+    }
+
+  }
+
+  #profile-evaluations-teacher {
+
+    .border-bottom
+    {
+      border-bottom: 1px solid #ddd !important;
+    }
+
+    .col-25 {
+        margin: auto;
+        height: 100%;
+        padding: 15px 0px;
+        text-align: center;
+        color: #7c8d87;
+    }
+
+    .col-50 {
+      margin: auto;
+      height: 100%;
+      text-align: center;
+      color: #7c8d87;
+    }
+
+    .row-color {
+        background-color: #f5f5f5;
+
+        a {
+          background-color: #f5f5f5;
+        }
+    }
+
+    .myh2 {
+      padding-left: 15px;
+      padding-top: 10px;
+      padding-bottom: 5px;
+    }
+
+    .note {
+      color: red;
+    }
+
+    .item-divider {
+      background-color: $theme-color-1;
+      color: white;
+    }
+
+  }
+
+
+}

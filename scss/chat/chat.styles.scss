@@ -1,0 +1,45 @@
+.chats {
+  .conv-list {
+    padding-left: 0px !important;
+    a {
+      padding-bottom: 0;
+      padding-left: 0px !important;
+    }
+  }
+
+  .conv-settings {
+    margin-left: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+
+    a{
+      color: $theme-color-1;
+      i {
+        font-size: 32px;
+      }
+    }
+  }
+
+  .msg-list {
+    padding: 8px !important;
+    font-size: 13px;
+  }
+
+  .msg-creator {
+    color: $theme-color-1;
+    font-size: 14px;
+  }
+
+  .conv-button {
+    position: relative;
+    top: 25px;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+  }
+
+  .chat-footer {
+    height: 67px !important;
+  }
+}

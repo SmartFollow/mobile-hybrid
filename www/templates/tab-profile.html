@@ -1,0 +1,234 @@
+<ion-view class="profile-view" view-title="Profile">
+    <html ng-app="ionic.example">
+        <head>
+            <meta charset="utf-8">
+            <title>Profile</title>
+            <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+            <link href="http://code.ionicframework.com/0.9.25/css/ionic.min.css" rel="stylesheet">
+            <script src="http://code.ionicframework.com/0.9.25/js/ionic.bundle.min.js"></script>
+        </head>
+        <body ng-controller="ProfileCtrl">
+            <ion-content has-header="true">
+                <div class="top-content row">
+                  <div class="profile-container">
+                    <div class="user-image-container">
+                      <pre-img ratio="_1_1" helper-class="rounded-image">
+                        <img class="user-image" ng-if="currentUser.group.id == 4" ng-src="{{ imgUserStudent }}" spinner-on-load>
+                        <img class="user-image" ng-if="currentUser.group.id == 2" ng-src="{{ imgUserTeacher }}" spinner-on-load>
+                      </pre-img>
+                    </div>
+                    <div class="user-name">{{currentUser.firstname + " " + currentUser.lastname}}</div>
+                    <div class="user-twitter">{{ currentUser.group.name }}</div>
+                    <div class="user-twitter">{{ currentUser.student_class.name }}</div>
+                  </div>
+                </div>
+
+                <!-- Profile etudiant -->
+                <div ng-if="currentUser.group.id == 4" class="pt-15">
+
+                    <!-- Tableau des notes récentes -->
+                    <div id="profile-notes">
+                        <div class="card">
+                            <div class="item item-divider">
+                                Dernieres notes
+                            </div>
+                            <div class="item item-text-wrap">
+
+                                <div ng-repeat="note in (filteredItems = (currentUser.marks | orderBy: '-created_at' | limitTo: 2))">
+                                    <h3 class="pt-15">{{ note.exam.lesson.subject.name }}</h3>
+                                    <div class="row row-color">
+                                        <div class="col-25">{{ note.created_at | dayMonth}}</div>
+                                        <div ng-if="note.mark < (note.exam.max_mark / 2)" class="col-25 note">
+                                          {{note.mark}} / {{ note.exam.max_mark}}
+                                        </div>
+                                        <div ng-if="note.mark > (note.exam.max_mark / 2)" class="col-25">
+                                            {{note.mark}} / {{ note.exam.max_mark}}
+                                        </div>
+                                        <div class="col-50">{{note.comment}}</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <a href="#/tab/notes" class="forgot-password">
+                                Voir toutes les notes
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Tableau des leçon du jour -->
+                    <div id="profile-lesson">
+                        <div class="card">
+                            <div class="item item-divider">
+                                <div class="row nopadding">
+                                    <div class="col-50 pt-4">Leçons du jour</div>
+                                    <div class="col-50 right">
+                                        <label class="item item-input">
+                                            <span class="input-label">Date</span>
+                                            <input type="date" id="dateInput" name="input" ng-model="date_today.value" placeholder="yyyy-MM-dd" required />
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <span ng-repeat="lessons in lesson">
+                                <div ng-if="(lessons.student_class_id == currentUser.student_class.id) && ((date_today.value | date:'dd-MM-yyyy') == (lessons.start | dayMonthYear))" >
+                                    <div class="item item-text-wrap" id="profile-lesson-tab">
+                                        <h3 class="pt-15">{{ lessons.subject.name }}</h3>
+                                        <a class="lesson-link" href="#/tab/lesson/{{lessons.id}}">
+                                            <div class="row row-color">
+                                                <div class="col-25">{{ lessons.start | hours }}h-{{ lessons.end | hours }}h</div>
+                                                <div class="col-50">{{ lessons.description }}</div>
+                                                <div class="col-20">{{ lessons.reservation.room.identifier }}</div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </span>
+                            <a href="#/tab/lessons" class="forgot-password">
+                            Voir toutes les leçons
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Tableau des devoirs -->
+                    <div id="profile-homework">
+                        <div class="card">
+                            <div class="item item-divider">
+                                Devoirs à faire
+                            </div>
+                            <div class="item item-text-wrap">
+                                <ion-slides options="sliderOptions" slider="data.sliderDelegate">
+                                    <ion-slide-page>
+                                        <h2>Pour : {{ date | date:'EEEE dd MMMM' }}</h2>
+                                        <div ng-repeat="homework in homeworks">
+                                            <div ng-if="(date | date:'dd-MM-yyyy') == (homework.lesson.start | dayMonthYear)">
+                                                <h3 class="pt-15">{{ homework.lesson.subject.name }}</h3>
+                                                <div class="row row-color">
+                                                    <div class="col-90">{{ homework.description }}</div>
+                                                    <div class="col-10" ng-if="homework.document_id != Null"><a class="doc-link" href="#/tab/doc/{{homework.lesson_id}}/{{homework.document_id}}"><i class="icon ion-paperclip"></i></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ion-slide-page>
+                                    <ion-slide-page>
+                                        <h2>Pour : {{ date_plus_1 | date:'EEEE dd MMMM' }}</h2>
+                                        <div ng-repeat="homework in homeworks">
+                                            <div ng-if="(date_plus_1 | date:'dd-MM-yyyy') == (homework.lesson.start | dayMonthYear)">
+                                                <h3 class="pt-15">{{ homework.lesson.subject.name }}</h3>
+                                                <div class="row row-color">
+                                                    <div class="col-90">{{ homework.description }}</div>
+                                                    <div class="col-10" ng-if="homework.document_id != Null"><a class="doc-link" href="#/tab/doc/{{homework.lesson_id}}/{{homework.document_id}}"><i class="icon ion-paperclip"></i></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ion-slide-page>
+                                    <ion-slide-page>
+                                        <h2>Pour : {{ date_plus_2 | date:'EEEE dd MMMM' }}</h2>
+                                        <div ng-repeat="homework in homeworks">
+                                            <div ng-if="(date_plus_2 | date:'dd-MM-yyyy') == (homework.lesson.start | dayMonthYear)">
+                                                <h3 class="pt-15">{{ homework.lesson.subject.name }}</h3>
+                                                <div class="row row-color">
+                                                    <div class="col-90">{{ homework.description }}</div>
+                                                    <div class="col-10" ng-if="homework.document_id != Null"><a class="doc-link" href="#/tab/doc/{{homework.lesson_id}}/{{homework.document_id}}"><i class="icon ion-paperclip"></i></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ion-slide-page>
+                                    <ion-slide-page>
+                                        <h2>Pour : {{ date_plus_3 | date:'EEEE dd MMMM' }}</h2>
+                                        <div ng-repeat="homework in homeworks">
+                                            <div ng-if="(date_plus_3 | date:'dd-MM-yyyy') == (homework.lesson.start | dayMonthYear)">
+                                                <h3 class="pt-15">{{ homework.lesson.subject.name }}</h3>
+                                                <div class="row row-color">
+                                                    <div class="col-90">{{ homework.description }}</div>
+                                                    <div class="col-10" ng-if="homework.document_id != Null"><a class="doc-link" href="#/tab/doc/{{homework.lesson_id}}/{{homework.document_id}}"><i class="icon ion-paperclip"></i></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ion-slide-page>
+                                    <ion-slide-page>
+                                        <h2>Pour : {{ date_plus_4 | date:'EEEE dd MMMM' }}</h2>
+                                        <div ng-repeat="homework in homeworks">
+                                            <div ng-if="(date_plus_4 | date:'dd-MM-yyyy') == (homework.lesson.start | dayMonthYear)">
+                                                <h3 class="pt-15">{{ homework.lesson.subject.name }}</h3>
+                                                <div class="row row-color">
+                                                    <div class="col-90">{{ homework.description }}</div>
+                                                    <div class="col-10" ng-if="homework.document_id != Null"><a class="doc-link" href="#/tab/doc/{{homework.lesson_id}}/{{homework.document_id}}"><i class="icon ion-paperclip"></i></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ion-slide-page>
+                                    <ion-slide-page>
+                                        <h2>Pour : {{ date_plus_5 | date:'EEEE dd MMMM' }}</h2>
+                                        <div ng-repeat="homework in homeworks">
+                                            <div ng-if="(date_plus_5 | date:'dd-MM-yyyy') == (homework.lesson.start | dayMonthYear)">
+                                                <h3 class="pt-15">{{ homework.lesson.subject.name }}</h3>
+                                                <div class="row row-color">
+                                                    <div class="col-90">{{ homework.description }}</div>
+                                                    <div class="col-10" ng-if="homework.document_id != Null"><a class="doc-link" href="#/tab/doc/{{homework.lesson_id}}/{{homework.document_id}}"><i class="icon ion-paperclip"></i></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ion-slide-page>
+                                    <ion-slide-page>
+                                        <h2>Pour : {{ date_plus_6 | date:'EEEE dd MMMM' }}</h2>
+                                        <div ng-repeat="homework in homeworks">
+                                            <div ng-if="(date_plus_6 | date:'dd-MM-yyyy') == (homework.lesson.start | dayMonthYear)">
+                                                <h3 class="pt-15">{{ homework.lesson.subject.name }}</h3>
+                                                <div class="row row-color">
+                                                    <div class="col-90">{{ homework.description }}</div>
+                                                    <div class="col-10" ng-if="homework.document_id != Null"><a class="doc-link" href="#/tab/doc/{{homework.lesson_id}}/{{homework.document_id}}"><i class="icon ion-paperclip"></i></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ion-slide-page>
+                                </ion-slides>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Profile professeur -->
+                <div ng-if="currentUser.group.id == 2">
+                  
+                    <!-- Tableau des leçon du jour -->
+                    <div id="profile-lesson-teacher">
+                        <div class="card">
+                            <div class="item item-divider">
+                                <div class="row nopadding">
+                                    <div class="col-50 pt-4">Leçons du jour</div>
+                                    <div class="col-50 right">
+                                        <label class="item item-input">
+                                            <span class="input-label">Date</span>
+                                            <input type="date" id="dateInput" name="input" ng-model="date_today.value" placeholder="yyyy-MM-dd" required />
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <span ng-repeat="lessons in lesson">
+                                <div ng-if="(lessons.subject.teacher_id == currentUser.id) && ((date_today.value | date:'dd-MM-yyyy') == (lessons.start | dayMonthYear))" >
+                                    <div class="item item-text-wrap" id="profile-lesson-tab-teacher">
+                                        <h3 class="pt-15">{{ lessons.subject.name }}</h3>
+                                        <a class="lesson-link" href="#/tab/lesson/{{lessons.id}}">
+                                            <div class="row row-color">
+                                                <div class="col-25">{{ lessons.start | hours }}h-{{ lessons.end | hours }}h</div>
+                                                <div class="col-50">{{ lessons.description }}</div>
+                                                <div class="col-20">{{ lessons.reservation.room.identifier }}</div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </span>
+                            <a href="#/tab/lessons" class="forgot-password">
+                            Voir toutes les leçons
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </ion-content>
+        </body>
+    </html>
+</ion-view>

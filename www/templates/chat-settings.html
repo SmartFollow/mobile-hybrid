@@ -1,0 +1,31 @@
+<ion-view view-title="Modifier une conversation">
+  <ion-content class="padding">
+    <h3>Modifier</h3>
+    <form name="newConvForm">
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Nom de la conversation" ng-model="newConversationCtrl.newConversation.subject">
+        </label>
+      </div>
+
+      <div class="list">
+        <button class="button button-stable" multiple="true" modal-select ng-model="newConversationCtrl.newConversation.participants" options="newConversationCtrl.users" modal-title="Selectionnez des participants">
+          Selectionnez les participants<br>
+          <div class="option">
+            {{option.firstname}} {{ option.lastname }}
+          </div>
+        </button>
+      </div>
+      <b>Participants :</b><span ng-repeat="tag in newConversationCtrl.newConversation.participants"> {{ tag.firstname }} </span>
+
+      <div class="list" style="text-align: center;">
+        <button id="create" class="button button-block button-assertive" type="submit" ng-click="newConversationCtrl.add()">Modifier la conversation</button>
+      </div>
+    </form><br><br>
+
+    <h3>Supprimer</h3>
+    <div class="list" style="text-align: center;">
+      <button id="delete" class="button button-block button-assertive" type="submit" ng-click="newConversationCtrl.delete()">Supprimer la conversation</button>
+    </div>
+  </ion-content>
+</ion-view>

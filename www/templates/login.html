@@ -1,0 +1,23 @@
+<ion-view class="login-view auth-view" view-title="">
+  <ion-content class="padding" scroll="false">
+    <div class="card card-container">
+      <form name="myForm" ng-submit="submit()" class="form-signin" novalidate>
+          <label class="item item-input item-stacked-label">
+              <input type="text" name="username" class="form-control" required placeholder="Email" ng-model="data.username" ng-required='true'>
+          </label>
+          <label class="item item-input item-stacked-label">
+              <input type="password" name="password" class="form-control" placeholder="Mot de passe" ng-model="data.password" ng-minlength="6" ng-required='true'>
+          </label>
+          <div id="remember" class="checkbox">
+              <label>
+                  <input type="checkbox" value="remember-me"> Remember me
+              </label>
+          </div>
+         <button class="button button-block button-calm btn btn-signin" ng-disabled="myForm.$invalid" ng-click="login()">Login</button>                    
+      </form>
+      <a href="#" class="forgot-password">
+        Forgot the password?
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

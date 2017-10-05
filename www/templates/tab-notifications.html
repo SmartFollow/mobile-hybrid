@@ -1,0 +1,16 @@
+<ion-view view-title="Notifications">
+  <ion-content>
+    <ion-list>
+      <item class="item-remove-animate item-icon-right" ng-repeat="notification in notifications | orderBy: 'updated_at -desc'">
+        <a class="item" style="border-radius: 5px; padding: 4px; margin: 2px">
+          <div style="text-align: center;"><strong><span style="color:#F23800">{{notification.resource_link}}</span></strong></div>
+          <br><pre>{{notification.message}}</pre>
+          <br><p>Reçu le : {{'date : ' + notification.created_at | dayMonth}} à {{'date : ' + notification.created_at | hours}}h</p>
+          <button name="removeNotification" ng-click="removeNotification(notification.id)" class = "button button-block" style="color:#F23800; background-color:#F2F2F2; font-weight: bold; font-size: 14px">
+            Supprimer
+          </button>
+        </a>
+      </item>
+    </ion-list>
+  </ion-content>
+</ion-view>
