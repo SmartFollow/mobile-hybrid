@@ -13,6 +13,8 @@ Modifier le fichier www/js/constant.js
   
   En changeant "Link" par le lien de votre API smartfollow (local ou non)
   et le "Secret" par celui du client.
+  
+  - lancer l'application avec la commande : ionic serve
 
 Si vous modifiez le scss dans le dossier scss/ lancez la commande "gulp default" pour recompiler le css.
 
