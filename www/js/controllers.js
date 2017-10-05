@@ -174,7 +174,7 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('NewConversationCtrl', function(conversation, Conversation, ngToast, getAllUsers, UserService, $state, $timeout, getAllConversations){
+.controller('NewConversationCtrl', function(conversation, Conversation, getAllUsers, UserService, $state, $timeout, getAllConversations){
   var vm = this;
 
   vm.isNew = !conversation;

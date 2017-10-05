@@ -16,13 +16,10 @@ $dark:                            #444 !default;
 */
 
 // The path for our ionicons font files, relative to the built CSS in www/css
-$ionicons-font-path: "../lib/ionic/fonts" !default;
+$ionicons-font-path: "../ionic/release/fonts" !default;
 
 // Include all of Ionic
-@import "www/lib/ionic/scss/ionic";
-
-// Include Bourbon
-@import "www/lib/bourbon/app/assets/stylesheets/_bourbon";
+@import "www/ionic/scss/ionic";
 
 // Include all scss
 @import "scss/variables";
