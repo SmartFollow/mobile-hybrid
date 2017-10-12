@@ -29,7 +29,7 @@ angular.module('starter', ['ionic', 'ionic.cloud','starter.controllers', 'starte
     }
     if(window.cordova){
       var push = new Ionic.Push({
-        "debug": true,
+        "debug": false,
         "onNotification": function(notification) {
           //Do something when you receive a notification
           console.log(notification);

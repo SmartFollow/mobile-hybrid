@@ -22,6 +22,6 @@ Pour déployer sur IOS et Android :
 
  - npm install -g cordova
  - cordova add platform android or ios
- - ionic build android or ios
- - ionic run android or ios
+ - ionic cordova build android or ios
+ - ionic cordova run android or ios
 
