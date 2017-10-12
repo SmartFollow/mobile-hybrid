@@ -10574,6 +10574,8 @@ ion-side-menu .heading-item .message {
 
 .notif-view h3 {
   font-size: 15px;
+  font-weight: bold;
+  color: #666;
   padding: 5px 5px; }
 
 .notif-view .new-notif {

@@ -3,7 +3,16 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.constants', 'ngAnimate', 'ionic-modal-select'])
+angular.module('starter', ['ionic', 'ionic.cloud','starter.controllers', 'starter.services', 'starter.constants', 'ngAnimate', 'ionic-modal-select'])
+
+
+.config(function($ionicCloudProvider) {
+  $ionicCloudProvider.init({
+    "core": {
+      "app_id": "a0280805"
+    }
+  });
+})
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -17,6 +26,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
+    }
+    if(window.cordova){
+      var push = new Ionic.Push({
+        "debug": true,
+        "onNotification": function(notification) {
+          //Do something when you receive a notification
+          console.log(notification);
+        }
+      });
+
+      var callback = function(pushToken) {
+        //Save the token specified to the device
+        //this token is saved in the Ionic.io database
+        push.saveToken(pushToken.token);
+      };
+
+      //register you device to your app notification system
+      push.register(callback);
     }
   });
 })

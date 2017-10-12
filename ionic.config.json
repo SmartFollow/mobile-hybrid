@@ -1,6 +1,6 @@
 {
   "name": "SmartFollow",
-  "app_id": "",
+  "app_id": "a0280805",
   "gulpStartupTasks": [
     "sass",
     "watch"
@@ -10,6 +10,9 @@
     "!www/lib/**/*",
     "!www/**/*.map"
   ],
-  "integrations": {},
-  "type": "ionic1"
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic1",
+  "dev_push": true
 }
