@@ -104,13 +104,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-
+  // NOTIFICATIONS
   .state('tab.notifications', {
     url: '/notifications',
     views: {
       'menuContent': {
         templateUrl: 'templates/tab-notifications.html',
-        controller: 'ProfileCtrl'
+        controller: 'NotificationCtrl as notifCtrl'
+      }
+    },
+    resolve: {
+      getNotifications: function (Notification) {
+        return Notification.getNotifications();
       }
     }
   })

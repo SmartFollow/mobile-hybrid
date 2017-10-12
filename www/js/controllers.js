@@ -83,17 +83,6 @@ angular.module('starter.controllers', [])
         $scope.homeworks = data;
     });
 
-    UserService.getNotifications(function (data) {
-      $scope.notifications = data;
-    });
-
-    $scope.removeNotification = function(notificationId){
-      UserService.removeNotification(notificationId, function (data) {
-        $scope.notifications = data;
-        $state.reload();
-      });
-    };
-
     $scope.sliderOptions = {
     pager: true,
     autoHeight: true
@@ -139,6 +128,19 @@ angular.module('starter.controllers', [])
     });
 })
 
+// NOTIFICATION
+.controller('NotificationCtrl', function (Notification, getNotifications, $window) {
+  var vm = this;
+
+  vm.notifications = getNotifications;
+  console.log(vm.notifications);
+  vm.readNotif = function (notifId) {
+    Notification.readNotification(notifId).then(function () {
+      $window.location.reload();
+    })
+  };
+
+})
 
 // CONVERSATION
 .controller('ConversationDetailCtrl', function($scope, $stateParams, Conversation, getConversation, UserService, message, $window) {
@@ -248,6 +250,13 @@ angular.module('starter.controllers', [])
   return function(text){
     var  tempdate = new Date(text);
     return $filter('date')(tempdate, "dd-MM-yyyy");
+  };
+})
+
+.filter('dayMonthYear2', function dayMonthYear($filter){
+  return function(text){
+    var  tempdate = new Date(text);
+    return $filter('date')(tempdate, "dd / MM / yyyy");
   };
 })
 

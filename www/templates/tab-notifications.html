@@ -1,16 +1,46 @@
-<ion-view view-title="Notifications">
+<ion-view class="notif-view" view-title="Notifications">
   <ion-content>
     <ion-list>
-      <item class="item-remove-animate item-icon-right" ng-repeat="notification in notifications | orderBy: 'updated_at -desc'">
-        <a class="item" style="border-radius: 5px; padding: 4px; margin: 2px">
-          <div style="text-align: center;"><strong><span style="color:#F23800">{{notification.resource_link}}</span></strong></div>
-          <br><pre>{{notification.message}}</pre>
-          <br><p>Reçu le : {{'date : ' + notification.created_at | dayMonth}} à {{'date : ' + notification.created_at | hours}}h</p>
-          <button name="removeNotification" ng-click="removeNotification(notification.id)" class = "button button-block" style="color:#F23800; background-color:#F2F2F2; font-weight: bold; font-size: 14px">
-            Supprimer
-          </button>
-        </a>
-      </item>
+      <h3>Nouvelles notifications</h3>
+      <span ng-repeat="notification in notifCtrl.notifications | orderBy: 'updated_at -desc'">
+        <ion-item ng-show="notification.pivot.read_at == null" class="item-remove-animate item-icon-right new-notif">
+          <div class="row" style="padding-top: 0px;">
+            <div class="col-md-3 notif-icon">
+              <i class="ion-ios-bell-outline"></i>
+            </div>
+            <div class="col-md-8 notif-content">
+              <span class="notif-date">{{'date : ' + notification.created_at | dayMonthYear2}} à {{'date : ' + notification.created_at | hours}}h</span><br>
+              <strong><span class="notif-title">{{notification.resource_link}}</span></strong><br>
+              <pre>{{notification.message}}</pre>
+            </div>
+            <div class="col-md-1 notif-btn">
+              <button name="readAt" ng-click="notifCtrl.readNotif(notification.id)" class="button button-block button-assertive notif-ok">
+                OK
+              </button>
+            </div>
+          </div>
+        </ion-item>
+      </span>
+      <h3>Notifications archivées</h3>
+      <span ng-repeat="notification in notifCtrl.notifications | orderBy: 'updated_at -desc'">
+        <ion-item ng-show="notification.pivot.read_at != null" class="item-remove-animate item-icon-right read-notif">
+          <div class="row" style="padding-top: 0px;">
+            <div class="col-md-3 notif-icon">
+              <i class="ion-checkmark"></i>
+            </div>
+            <div class="col-md-8 notif-content">
+              <span class="notif-date">{{'date : ' + notification.created_at | dayMonthYear2}} à {{'date : ' + notification.created_at | hours}}h</span><br>
+              <strong><span class="notif-title">{{notification.resource_link}}</span></strong><br>
+              <pre>{{notification.message}}</pre>
+            </div>
+            <div class="col-md-1 notif-btn">
+              <button disabled name="readAt" ng-click="notifCtrl.readNotif(notification.id)" class="button button-block button-assertive notif-ok">
+                OK
+              </button>
+            </div>
+          </div>
+        </ion-item>
+      </span>
     </ion-list>
   </ion-content>
 </ion-view>

@@ -162,45 +162,24 @@ angular.module('starter.services', [])
                 me.currentUser = res.data;
                 callback(me.currentUser);
             });
-        },
-        getNotifications: function(callback)
-        {
-          if(me.currentUser)
-            callback(me.currentUser);
-          $http({
-            method: 'GET',
-            url: API_NAME.link + '/api/notifications'
-          }).then(function(res){
-            me.currentUser = res.data;
-            callback(me.currentUser);
-          });
-        },
-        removeNotification: function (notificationId, callback)
-        {
-          if(me.currentUser)
-            callback(me.currentUser);
-          $http({
-            method: 'DELETE',
-            url: API_NAME.linl + '/api/notifications/' + notificationId
-          }).then(function(res){
-            me.currentUser = res.data;
-            callback(me.currentUser);
-          });
         }
-        // getNotification: function(notificationId, callback)
-        // {
-        //   if(me.currentUser)
-        //     callback(me.currentUser);
-        //   $http({
-        //     method: 'GET',
-        //     url: API_NAME.link + '/api/notifications/' + notificationId
-        //   }).then(function(res){
-        //     me.currentUser = res.data;
-        //     callback(me.currentUser);
-        //   });
-        // }
     };
 }])
+
+.factory('Notification', function ($http, API_NAME) {
+  return {
+    getNotifications: function () {
+      return $http.get(API_NAME.link + '/api/notifications').then(function (res) {
+        return res.data;
+      }, $http.fallback);
+    },
+    readNotification: function (notificationId) {
+      return $http.put(API_NAME.link + '/api/notifications/' + notificationId + '/read').then(function (res) {
+        return res.data;
+      }, $http.fallback);
+    }
+  }
+})
 
 .factory('Conversation', function ($http, API_NAME) {
   return {
