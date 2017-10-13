@@ -48,13 +48,12 @@ angular.module('starter.controllers', [])
         };
 })
 
-.controller('ProfileCtrl', function($scope, UserService, $ionicActionSheet, AuthService, $state) {
+.controller('ProfileCtrl', function($scope, UserService, $ionicActionSheet, AuthService, $state, API_NAME) {
+
+    $scope.avatarLinkApi = API_NAME.link;
     UserService.getUser(function (data) {
         $scope.currentUser = data;
-        $scope.imgUserStudent = "img/ben.png";
-        $scope.imgUserTeacher = "img/adam.jpg";
     });
-
 
     $scope.date_today = {
         value: new Date()
@@ -164,9 +163,11 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ConversationCtrl', function($scope, Conversation, getConversations, $window) {
+.controller('ConversationCtrl', function($scope, Conversation, getConversations, $window, API_NAME) {
   var vm = this;
   vm.conversations = getConversations;
+  vm.avatarLinkApi = API_NAME.link;
+
 
   $scope.$on('$ionicView.enter', function () {
     if (!localStorage.justOnce) {
