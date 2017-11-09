@@ -6,3 +6,4 @@ platforms/
 hooks/
 www/lib/*
 .idea/*
+www/js/constants.js

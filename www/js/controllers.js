@@ -74,6 +74,11 @@ angular.module('starter.controllers', [])
         $scope.lesson = data;
     });
 
+    UserService.getUserAccessRules(function (data) {
+      $scope.accessRules = data;
+      console.log(data);
+    });
+
     UserService.getEvaluations(function (data) {
         $scope.evaluations = data;
     });
@@ -118,6 +123,10 @@ angular.module('starter.controllers', [])
     });
     UserService.getUser(function (data) {
         $scope.currentUser = data;
+    });
+
+    UserService.getUserAccessRules(function (data) {
+      $scope.accessRules = data;
     });
 })
 

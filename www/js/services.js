@@ -103,6 +103,16 @@ angular.module('starter.services', [])
                 callback(me.currentUser);
             });
         },
+        getUserAccessRules: function (callback) {
+            $http({
+              method: 'GET',
+              url: API_NAME.link + "/api/users/profile/access-rules"
+            }).then(function successCallback(response) {
+              callback(response.data);
+            }, function errorCallback(response) {
+              console.log(response);
+            });
+        },
         getLessons: function(callback)
         {
             if(me.currentUser)
