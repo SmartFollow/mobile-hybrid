@@ -87,6 +87,10 @@ angular.module('starter.controllers', [])
         $scope.homeworks = data;
     });
 
+    UserService.getExams(function (data) {
+        $scope.exams = data;
+    })
+
     $scope.sliderOptions = {
     pager: true,
     autoHeight: true
@@ -140,7 +144,7 @@ angular.module('starter.controllers', [])
 .controller('NotificationCtrl', function (Notification, getNotifications, $window) {
   var vm = this;
 
-  vm.notifications = getNotifications;
+  vm.notifications = getNotifications.self_notifications;
   console.log(vm.notifications);
   vm.readNotif = function (notifId) {
     Notification.readNotification(notifId).then(function () {

@@ -172,6 +172,17 @@ angular.module('starter.services', [])
                 me.currentUser = res.data;
                 callback(me.currentUser);
             });
+        },
+        getExams: function (lessonId, callback) {
+          if(me.currentUser)
+            callback(me.currentUser);
+          $http({
+            method: 'GET',
+            url: API_NAME.link + '/api/lessons/' + lessonId + '/exams'
+          }).then(function(res){
+            me.currentUser = res.data;
+            callback(me.currentUser);
+          });
         }
     };
 }])
