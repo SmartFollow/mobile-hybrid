@@ -18,7 +18,7 @@ angular.module('starter.constants', [])
 // });
 
 .constant('API_NAME', {
-  link: 'http://api.dev.smartfollow.lan',
-  secret: '2Xok5KYdMEDPW5jZPkLcyNTAGEhEPxRCWbAzpL2g',
+  link: 'http://api.dev.smartfollow.org',
+  secret: 'fpWbyzAyOqQgugwnNZKIzxnbLuF5E5ZBK3Puf2IK',
   id: '2'
 });

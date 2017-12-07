@@ -93,7 +93,7 @@ angular.module('starter', ['ionic', 'ionic.cloud','starter.controllers', 'starte
   })
 
   .state('tab.lesson-details', {
-    url: '/lesson/:lessonId',
+    url: '/lesson/{id:int}',
     views: {
       'menuContent': {
         templateUrl: 'templates/lesson-detail.html',

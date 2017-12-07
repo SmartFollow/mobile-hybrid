@@ -1,0 +1,225 @@
+<ion-view view-title="{{ lesson.subject.name }}">
+  <ion-content class="main">
+    <div class="page-block">
+      <!-- General lesson info -->
+      <div class="row">
+        <div class="table-display">
+          <div class="col-40 table-cell-display">
+            <dl>
+              <dt>Professeur</dt>
+              <dd>
+                <span id="teacher">{{ lesson.subject.teacher.firstname }} {{ lesson.subject.teacher.lastname }}</span>
+              </dd>
+
+              <dt>Classe</dt>
+              <dd>
+                {{ lesson.student_class.name }}
+              </dd>
+
+              <dt>Matière</dt>
+              <dd>
+                <span id="title">{{ lesson.subject.name }}</span>
+              </dd>
+
+              <dt ng-if-start="lesson.reservation">Salle</dt>
+              <dd ng-if-end>
+                <span id="room">{{ lesson.reservation.room.identifier }}</span>
+              </dd>
+
+              <dt>Date</dt>
+              <dd>
+                Du {{ lesson.start | date: "dd/MM/yyyy 'à' HH'h'mm" }}
+                au {{ lesson.end | date: "dd/MM/yyyy 'à' HH'h'mm" }}
+              </dd>
+            </dl>
+          </div>
+
+          <div class="col-20 table-cell-display"></div>
+
+          <div class="col-40 linked-data">
+            <!-- Documents -->
+            <span class="data-title"><strong>Documents liés au cours :</strong></span>
+            <ul class="list">
+              <li class="item" ng-repeat="(key, document) in lesson.documents">
+                <a href="{{ config.apiUrl + document.path}}"
+                   download="{{document.filename}}.{{document.extension}}">
+                  <span class="glyphicon glyphicon-download-alt data-icon"></span>
+                </a>
+                <a data-toggle="modal" data-target="#modal-file-{{key}}">
+                  <span class="glyphicon glyphicon-eye-open data-icon"></span>
+                </a>
+                <a ng-click="editDocument(document, 'modal')"
+                   ng-if="accessRules.includes('documents.update')">
+                  <span class="glyphicon glyphicon-pencil data-icon"></span>
+                </a>
+                <a ng-click="deleteDocument(document)" ng-if="accessRules.includes('documents.destroy')">
+                  <span class="glyphicon glyphicon-remove data-icon"></span>
+                </a>
+
+                <div class="pull-right">
+                  {{ document.name }}
+                  <span class="glyphicon glyphicon-file data-icon"></span>
+                  <span class="glyphicon glyphicon-time data-icon" title="{{document.updated_at}}"></span>
+                </div>
+              </li>
+              <a data-toggle="modal" data-target="#modal-upload"
+                 ng-if="accessRules.includes('documents.store')">
+                <li class="item text-center">
+                  <div class="pull-left">
+                    <span class="ion-plus-circled"></span>
+                  </div>
+                  Ajouter un document
+                </li>
+              </a>
+              <li class="item text-center"
+                  ng-if="!accessRules.includes('documents.store') && lesson.documents.length == 0">
+                Aucun document à afficher
+              </li>
+            </ul>
+
+            <!-- Homeworks -->
+            <span class="data-title">
+						<strong>Devoirs à la maison :</strong>
+					</span>
+            <ul class="list">
+              <li class="item" ng-repeat="(key, homework) in lesson.homeworks">
+                <a data-toggle="modal" data-target="#modal-homework-{{key}}">
+                  <span class="glyphicon glyphicon-eye-open data-icon"></span>
+                </a>
+                <a ng-click="editHW(homework, 'modal')" ng-if="accessRules.includes('homeworks.update')">
+                  <span class="glyphicon glyphicon-pencil data-icon"></span>
+                </a>
+                <a ng-click="deleteHW(homework)" ng-if="accessRules.includes('homeworks.destroy')">
+                  <span class="glyphicon glyphicon-remove data-icon"></span>
+                </a>
+
+                <div class="pull-right">
+                  Devoir à la maison n°{{ key + 1 }}
+                  <span class="glyphicon glyphicon-file data-icon"></span>
+                  <span class="glyphicon glyphicon-time data-icon"
+                        title="{{ homework.updated_at }}"></span>
+                </div>
+              </li>
+              <a data-toggle="modal" data-target="#modal-upload-homework"
+                 ng-if="accessRules.includes('homeworks.store')">
+                <li class="item text-center">
+                  <div class="pull-left">
+                    <span class="ion-plus-circled"></span>
+                  </div>
+                  Ajouter un devoir à la maison
+                </li>
+              </a>
+              <li class="item text-center"
+                  ng-if="!accessRules.includes('homeworks.store') && lesson.homeworks.length == 0">
+                Aucun devoir à afficher
+              </li>
+            </ul>
+
+            <!-- Exam -->
+            <span class="data-title">
+						<strong>Examen :</strong>
+					</span>
+            <ul class="list">
+              <li class="item"
+                  ng-if="lesson.exam && (lesson.exam.type == 'home' || accessRules.includes('exams.index'))">
+                <a data-toggle="modal" data-target="#modal-exam-1">
+                  <span class="glyphicon glyphicon-eye-open data-icon"></span>
+                </a>
+                <a ng-click="editExam()" ng-if="accessRules.includes('exams.update')">
+                  <span class="glyphicon glyphicon-pencil data-icon"></span>
+                </a>
+                <a ng-click="deleteExam()" ng-if="accessRules.includes('exams.destroy')">
+                  <span class="glyphicon glyphicon-remove data-icon"></span>
+                </a>
+                <a data-toggle="modal" data-target="#modal-exam-mark"
+                   ng-if="accessRules.includes('marks.store')">
+                  <span class="glyphicon glyphicon-check data-icon"></span>
+                </a>
+
+                <div class="pull-right">
+                  Examen
+                  <span class="glyphicon glyphicon-file data-icon"></span>
+                  <span class="glyphicon glyphicon-time data-icon" title="{{ lesson.exam.updated_at }}"></span>
+                </div>
+              </li>
+              <a data-toggle="modal" data-target="#modal-upload-exam"
+                 ng-if="!lesson.exam && accessRules.includes('exams.store')">
+                <li class="item text-center">
+                  <div class="pull-left">
+                    <span class="ion-plus-circled"></span>
+                  </div>
+                  Ajouter un examen
+                </li>
+              </a>
+              <li class="item text-center"
+                  ng-if="!accessRules.includes('exams.store') && (!lesson.exam || (lesson.exam.type != 'home' && !accessRules.includes('exams.index')))">
+                Aucun examen à afficher
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row legend">Déroulement du cours</div>
+    <div class="row breadcrumb-container" ng-if="accessRules.includes('evaluations.store')">
+      <ol class="breadcrumb">
+        <li data-toggle="tab" href="#rollcall" class="clickable" ng-class="{active: tabId == 1}" ng-click="tabClick(1)">Appel</li>
+        <li data-toggle="tab" href="#lesson" class="clickable" ng-class="{active: tabId == 2}" ng-click="tabClick(2)">Cours</li>
+        <li data-toggle="tab" href="#end" class="clickable" ng-class="{active: tabId == 3}" ng-click="tabClick(3)">Fin</li>
+      </ol>
+    </div>
+
+    <!-- Students list -->
+    <div class="row student-list" ng-if="accessRules.includes('evaluations.store')">
+      <div class="col-90">
+        <div id="rollcall" ng-show="tabId == 1">
+          <div class="row img-profile-list">
+            <div class="col-20 user-image-container"
+                 ng-click="updateStatus(student)"
+                 ng-repeat="student in lesson.student_class.students | orderBy: ['lastname', 'firstname']">
+              <div ng-show="student.lesson_evaluation.absence && student.lesson_evaluation.absence != null"
+                   class="evaluation-absent ion-close"></div>
+              <div ng-show="student.lesson_evaluation.delay && student.lesson_evaluation.delay != null"
+                   class="evaluation-delay ion-clock"></div>
+              <div ng-show="student.inUpdate" class="evaluation-loading">
+                <div class="align-helper"></div><img src="../img/loading.gif" alt="Mise à jour de l'évaluation" />
+              </div>
+
+              <pre-img ratio="_1_1" helper-class="rounded-image">
+                <img class="user-image" ng-src="{{ config.link + student.avatar }}" spinner-on-load>
+              </pre-img>
+              <span>{{student.firstname}} {{student.lastname}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="lesson" ng-show="tabId == 2">
+          <div class="row img-profile-list">
+            <div class="col-20 user-image-container" ng-click="displayCriteria(); $event.stopPropagation();"
+                 ng-repeat="student in lesson.student_class.students | orderBy: ['lastname', 'firstname']">
+              <div ng-show="student.lesson_evaluation.absence" class="evaluation-absent glyphicon ion-close"></div>
+              <div ng-show="student.lesson_evaluation.delay" class="evaluation-delay glyphicon ion-clock"></div>
+              <div ng-show="student.inUpdate" class="evaluation-loading">
+                <div class="align-helper"></div><img src="../img/loading.gif" alt="Mise à jour de l'évaluation" />
+              </div>
+
+              <pre-img ratio="_1_1" helper-class="rounded-image">
+                <img class="user-image" ng-src="{{ config.link + student.avatar }}" spinner-on-load>
+              </pre-img>
+              <span>{{student.firstname}} {{student.lastname}}</span>
+
+              <div class="criteria-container" ng-class="{displayBlock: dispCriteria == true}" ng-show="(!student.lesson_evaluation || !student.lesson_evaluation.absence)">
+                <button ng-repeat="criterion in criteria"
+                        ng-click="updateEvaluationCriterion(student, criterion, 1)"
+                        class="btn btn-{{ { positive: 'success', negative: 'danger' }[criterion.impact] }}">
+                  {{ criterion.name }} ({{ criterionFromEvaluation(student.lesson_evaluation, criterion).pivot.value || 0 }})
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
