@@ -63,6 +63,7 @@
   color: $dark-background-text-color;
   font-size: 1.5em;
   line-height: 60px;
+  justify-content: center;
   text-align: center;
   background: $theme-darker-background;
   z-index: 500;
@@ -174,7 +175,7 @@
     position: relative;
     padding: 10px;
     .user-image {
-      max-width: 115px;
+      max-width: 130px;
       width: 100%;
       border-radius: 50%;
     }
@@ -189,8 +190,8 @@
     .evaluation-delay
     {
       font-size: 7em;
-      padding-top: 15px;
-      padding-left: 25px;
+      padding-top: 25px;
+      padding-left: 40px;
       z-index: 100;
       position: absolute;
       top: 0;

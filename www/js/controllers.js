@@ -77,7 +77,6 @@ angular.module('starter.controllers', [])
 
     UserService.getUserAccessRules(function (data) {
       $scope.accessRules = data;
-      console.log(data);
     });
 
     UserService.getEvaluations(function (data) {
@@ -131,7 +130,7 @@ angular.module('starter.controllers', [])
   .controller('NotificationCtrl', function (Notification, getNotifications, $window) {
     var vm = this;
 
-    vm.notifications = getNotifications;
+    vm.notifications = getNotifications.self_notifications;
     console.log(vm.notifications);
     vm.readNotif = function (notifId) {
       Notification.readNotification(notifId).then(function () {

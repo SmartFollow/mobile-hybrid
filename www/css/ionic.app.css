@@ -10542,6 +10542,7 @@ ion-side-menu .heading-item .message {
   color: #ffffff;
   font-size: 1.5em;
   line-height: 60px;
+  justify-content: center;
   text-align: center;
   background: #c0392b;
   z-index: 500;
@@ -10633,7 +10634,7 @@ ion-side-menu .heading-item .message {
     position: relative;
     padding: 10px; }
     .student-list .user-image-container .user-image {
-      max-width: 115px;
+      max-width: 130px;
       width: 100%;
       border-radius: 50%; }
     .student-list .user-image-container span {
@@ -10643,8 +10644,8 @@ ion-side-menu .heading-item .message {
     .student-list .user-image-container .evaluation-absent,
     .student-list .user-image-container .evaluation-delay {
       font-size: 7em;
-      padding-top: 15px;
-      padding-left: 25px;
+      padding-top: 25px;
+      padding-left: 40px;
       z-index: 100;
       position: absolute;
       top: 0;
