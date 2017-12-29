@@ -219,6 +219,57 @@
             </div>
           </div>
         </div>
+
+        <div id="end" ng-show="tabId == 3">
+          <div class="page-block">
+            <table class="table evaluations-summary">
+              <thead>
+              <tr>
+                <th style="width: 50px;"></th>
+                <th>Étudiant</th>
+                <th>Statut</th>
+                <th>Critères</th>
+                <th>Commentaire</th>
+              </tr>
+              </thead>
+              <tbody class="vertically-aligned">
+              <tr ng-repeat="student in lesson.student_class.students | orderBy: ['lastname', 'firstname']">
+                <td><img ng-src="{{ config.link + student.avatar }}" alt="Photo de profil" class="end-img" /></td>
+                <td>{{ student.firstname }} <strong>{{ student.lastname }}</strong></td>
+                <td>
+									<span ng-class="student.lesson_evaluation.absence ? 'text-danger' : student.lesson_evaluation.delay ? 'text-warning' : 'text-success'">
+										<span ng-show="student.lesson_evaluation.absence" class="glyphicon glyphicon-remove"></span>
+										<span ng-show="student.lesson_evaluation.delay" class="glyphicon glyphicon-time"></span>
+
+										{{ student.lesson_evaluation.absence ? 'Absent' : student.lesson_evaluation.delay ? 'En retard' : 'Présent' }}
+									</span>
+                </td>
+                <td>
+									<span ng-repeat="(idx, criterion) in student.lesson_evaluation.criteria"
+                        ng-class="{ positive: 'text-success', negative: 'text-danger', neutral: 'text-info'}[criterion.impact]">
+										<span ng-if="idx > 0" class="text-muted">/</span>
+										{{ criterion.name }} ({{ criterion.pivot.value}})
+									</span>
+                  <span ng-if="!student.lesson_evaluation.criteria || student.lesson_evaluation.criteria.length == 0">-</span>
+                </td>
+                <td>
+                  <div class="item item-input-inset">
+                    <label class="item-input-wrapper">
+                      <input type="text" ng-model="student.lesson_evaluation.comment" placeholder="Ajouter un commentaire sur l'élève" class="form-control" ng-disabled="student.inUpdate" />
+                    </label>
+                    <button class="btn btn-default" type="button" ng-disabled="student.inUpdate" ng-click="updateComment(student)">
+                      <img src="../img/loading.gif" ng-if="student.inUpdate" alt="Mise à jour de l'évaluation" />
+                      {{ !student.inUpdate ? 'Envoyer' : '' }}
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </ion-content>
