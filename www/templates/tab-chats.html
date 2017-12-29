@@ -2,7 +2,7 @@
     <ion-content>
       <ion-list>
         <ion-item class="item-remove-animate item-avatar item-icon-right conv-list" ng-repeat="conversation in conversationCtrl.conversations" type="item-text-wrap" href="#/tab/chats/{{conversation.id}}">
-          <img ng-src="{{conversationCtrl.avatarLinkApi}}{{conversation.creator.avatar}}"> <!--{{conversation.creator_id.face}}-->
+          <img ng-src="{{conversationCtrl.avatarLinkApi}}{{conversation.participants[0].avatar}}"> <!--{{conversation.creator_id.face}}-->
           <span style="margin-left:60px;">
             <span ng-repeat="participant in conversation.participants">
               <span style="font-size: 16px;"> {{participant.firstname}} | </span>
