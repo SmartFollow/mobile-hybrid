@@ -283,6 +283,52 @@ angular.module('starter.services', [])
     };
   }])
 
+  .factory('HomeworkFactory', ['$http', 'API_NAME', '$rootScope', function ($http, API_NAME, $rootScope) {
+    return {
+      storeHomework: function (lessonId, data, callback, errorCallback) {
+        $http({
+          method: 'POST',
+          url: API_NAME.link + "/api/lessons/" + lessonId + "/homeworks",
+          data: data
+        }).then(function successCallback(response) {
+          callback(response.data);
+        }, function (response) {
+          if (errorCallback)
+            errorCallback(response.data);
+          else
+            $rootScope.globalAlerts.push({ type: 'danger', text: 'Erreur lors du traitement de votre requête' });
+        });
+      },
+      updateHomework: function (lessonId, homeworkId, data, callback, errorCallback) {
+        $http({
+          method: 'PUT',
+          url: API_NAME.link + "/api/lessons/" + lessonId + "/homeworks/" + homeworkId,
+          data: data
+        }).then(function successCallback(response) {
+          callback(response.data);
+        }, function (response) {
+          if (errorCallback)
+            errorCallback(response.data);
+          else
+            $rootScope.globalAlerts.push({ type: 'danger', text: 'Erreur lors du traitement de votre requête' });
+        });
+      },
+      deleteHomework: function (lessonId, homeworkId, callback, errorCallback) {
+        $http({
+          method: 'DELETE',
+          url: API_NAME.link + "/api/lessons/" + lessonId + "/homeworks/" + homeworkId
+        }).then(function successCallback(response) {
+          callback(response.data);
+        }, function (response) {
+          if (errorCallback)
+            errorCallback(response.data);
+          else
+            $rootScope.globalAlerts.push({ type: 'danger', text: 'Erreur lors du traitement de votre requête' });
+        });
+      }
+    };
+  }])
+
   .factory('Notification', function ($http, API_NAME) {
     return {
       getNotifications: function () {

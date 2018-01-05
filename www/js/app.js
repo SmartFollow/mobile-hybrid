@@ -121,6 +121,11 @@ angular.module('starter', ['ionic', 'ionic.cloud','starter.controllers', 'starte
     }
   })
 
+  .state('homeworks.delete', {
+    url: '/lessons/{lessonId:int}/homeworks/{id:int}/delete',
+    controller: 'HomeworkController@delete'
+  })
+
   .state('tab.doc-details', {
     url: '/doc/:lessonId/:docId',
     views: {

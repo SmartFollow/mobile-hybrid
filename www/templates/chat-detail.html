@@ -17,7 +17,7 @@
   </ion-content>
   <ion-footer-bar class="chat-footer">
     <span ng-if="convDetailCtrl.conversation.creator_id != convDetailCtrl.currentUser.id" style="width: 100%">
-      <div class="list">
+      <div class="list w100">
         <div class="item item-input-inset">
           <label class="item-input-wrapper">
             <input type="text" ng-model="convDetailCtrl.newMessage.content" placeholder="Nouveau message...">
@@ -29,7 +29,7 @@
       </div>
     </span>
     <div class="row" style="padding: 0 !important;" ng-if="convDetailCtrl.conversation.creator_id == convDetailCtrl.currentUser.id">
-      <div class="col-md-10 list">
+      <div class="col-md-10 list w100">
         <div class="item item-input-inset">
           <label class="item-input-wrapper">
             <input type="text" ng-model="convDetailCtrl.newMessage.content" placeholder="Nouveau message...">

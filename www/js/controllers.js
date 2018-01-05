@@ -229,7 +229,7 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('LessonDetailCtrl', function ($scope, $window, $stateParams, UserService, API_NAME, $state, $rootScope, $http, $filter, EvaluationFactory) {
+  .controller('LessonDetailCtrl', function ($scope, $window, HomeworkFactory, $ionicModal, $stateParams, UserService, API_NAME, $state, $rootScope, $http, $filter, EvaluationFactory) {
 
     $scope.config = API_NAME;
 
@@ -245,6 +245,49 @@ angular.module('starter.controllers', [])
       if ($scope.lesson.subject.teacher)
         $scope.lesson.subject.teacher.avatar = API_NAME.link + $scope.lesson.subject.teacher.avatar;
     });
+
+    $ionicModal.fromTemplateUrl('templates/modal-exam.html', {
+      id: '1', // We need to use and ID to identify the modal that is firing the event!
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.oModal1 = modal;
+    });
+
+    // Modal 2
+    $ionicModal.fromTemplateUrl('templates/modal-homework-create.html', {
+      id: '2', // We need to use and ID to identify the modal that is firing the event!
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.oModal2 = modal;
+    });
+
+    $ionicModal.fromTemplateUrl('templates/modal-homework-info.html', {
+      id: '3', // We need to use and ID to identify the modal that is firing the event!
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.oModal3 = modal;
+    });
+
+    $scope.openModal = function(index, homework) {
+      if (homework) $scope.homeworkToShow = homework;
+      if (index === 1) $scope.oModal1.show();
+      else if (index === 2) $scope.oModal2.show();
+      else $scope.oModal3.show();
+    };
+
+    $scope.closeModal = function(index) {
+      if (index === 1) $scope.oModal1.hide();
+      else if (index === 2) $scope.oModal2.hide();
+      else $scope.oModal3.hide();
+    };
+
+
 
     /**
      * Updating the status (present / absent / delay) of a student
@@ -389,13 +432,43 @@ angular.module('starter.controllers', [])
       $scope.showDocument = document;
     };
 
+    $scope.deleteHomework = function (lessonId, id) {
+      HomeworkFactory.deleteHomework(lessonId, id, function () {
+        $window.location.reload();
+      });
+    };
+
+    $scope.createHomework = {};
+
+    $scope.storeHomework = function (lessonId) {
+      HomeworkFactory.storeHomework(lessonId, {
+        description: $scope.createHomework.description,
+        document_id: $scope.createHomework.document_id
+      }, function (homework) {
+        $scope.createHomework = {};
+
+        $scope.lesson.homeworks.push(homework);
+      });
+    };
+
+    $scope.updateHomework = function (lessonId) {
+      HomeworkFactory.updateHomework(lessonId, $scope.homeworkToShow.id, {
+        description: $scope.homeworkToShow.description,
+        document_id: $scope.homeworkToShow.document_id || undefined
+      }, function (homework) {
+        $scope.homeworkToShow = homework;
+
+        $scope.lesson.homeworks[$scope.lesson.homeworks.findIndex(e => e.id == homework.id)] = homework;
+      });
+    };
+
     $scope.tabId = 1;
     $scope.tabClick = function (nb) {
-        $scope.tabId = nb;
+      $scope.tabId = nb;
     };
 
     $scope.dispCriteria = false;
-    $scope.displayCriteria = function() {
+    $scope.displayCriteria = function () {
       $window.onclick = null;
       $scope.dispCriteria = true;
 

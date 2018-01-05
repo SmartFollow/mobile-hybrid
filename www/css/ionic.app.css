@@ -9962,6 +9962,9 @@ a.button {
   float: right;
   padding-right: 15px; }
 
+.w100 {
+  width: 100%; }
+
 ion-side-menu .has-header {
   top: 44px; }
 
@@ -10725,6 +10728,58 @@ table.table {
 .end-img {
   border-radius: 50%;
   height: 50px; }
+
+.download-icon {
+  cursor: pointer;
+  font-size: 18px;
+  color: #4d4d4d; }
+
+.transparent {
+  background-color: transparent !important; }
+
+.close-modal {
+  position: absolute;
+  right: 0px;
+  top: 5px;
+  font-size: 1.8em;
+  text-align: center;
+  z-index: 10;
+  background-color: #f5f5f5;
+  border-radius: 30px;
+  width: 26px;
+  cursor: pointer;
+  line-height: 0px;
+  border: 1px solid #ddd; }
+
+/* Fix modal backdrop for smaller devices */
+.modal {
+  width: auto !important;
+  overflow: auto !important; }
+
+@media (max-width: 679px) {
+  .active .modal-backdrop-bg {
+    opacity: .5; }
+  .modal-backdrop-bg {
+    -webkit-transition: opacity 300ms ease-in-out;
+    transition: opacity 300ms ease-in-out;
+    background-color: #000;
+    opacity: 0; } }
+
+.margin-right-10 {
+  margin-right: 10px; }
+
+.displayMobile {
+  display: none; }
+
+@media (max-width: 750px) {
+  .displayTablet {
+    display: none; }
+  .displayMobile {
+    display: inherit; }
+    .displayMobile .lesson-info-mobile {
+      width: 100%;
+      margin: auto;
+      text-align: center; } }
 
 .chats .conv-list {
   padding-left: 0px !important; }
