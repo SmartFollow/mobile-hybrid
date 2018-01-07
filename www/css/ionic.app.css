@@ -9825,6 +9825,12 @@ a.button {
   background-position: 50% 20%;
   text-align: center; }
 
+.ion-navicon:before {
+  content: "\f20e" !important; }
+
+.button-clear.button-clear {
+  color: #b2b2b2 !important; }
+
 #content {
   position: relative;
   height: 900px;
@@ -9922,6 +9928,9 @@ a.button {
 
 .pt-15 {
   padding-top: 15px; }
+
+.pb-15 {
+  padding-bottom: 15px; }
 
 .pt-0 {
   padding-top: 0px; }
@@ -10027,7 +10036,8 @@ ion-side-menu .notif {
     background-size: 100% 0px;
     border: 0; }
   ion-side-menu .notif .eval {
-    color: #FFFFFF; }
+    color: #FFFFFF;
+    font-size: 12px; }
 
 ion-side-menu .item-avatar img:first-child {
   position: absolute;
@@ -10087,6 +10097,12 @@ ion-side-menu .heading-item .message {
       max-width: 200px;
       width: 100%;
       border-radius: 50%; }
+  .profile-view .user-image-difficulties {
+    border: none;
+    padding: 8px;
+    max-width: 120px;
+    width: 100%;
+    border-radius: 50%; }
   .profile-view .user-name {
     font-size: 20px; }
   .profile-view .user-twitter {
@@ -10319,6 +10335,83 @@ ion-side-menu .heading-item .message {
   .profile-view #profile-evaluations-teacher .item-divider {
     background-color: #E74D3D;
     color: white; }
+  .profile-view .margLeft-right {
+    margin-left: 15px;
+    margin-right: 15px; }
+  .profile-view .block .simpleLink {
+    color: #6891a2;
+    text-decoration: none; }
+  .profile-view .block .item-divider {
+    background-color: #E74D3D;
+    color: white; }
+  .profile-view .block .list-group {
+    padding-left: 0;
+    margin-bottom: 10px;
+    margin-top: 10px; }
+    .profile-view .block .list-group .list-group-item:first-child {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px; }
+    .profile-view .block .list-group .list-group-item-success {
+      color: #3c763d;
+      background-color: #dff0d8; }
+    .profile-view .block .list-group .list-group-item-danger {
+      color: #a94442;
+      background-color: #f2dede; }
+    .profile-view .block .list-group .list-group-item {
+      position: relative;
+      display: block;
+      padding: 10px 15px;
+      margin-bottom: -1px;
+      border: 1px solid #ddd; }
+  .profile-view .block .badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #777;
+    border-radius: 10px; }
+  .profile-view .block h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px; }
+    .profile-view .block h2.text-left {
+      margin-top: 15px;
+      text-align: left; }
+  .profile-view .block table.table {
+    border-collapse: collapse;
+    width: 100%;
+    background: #fff;
+    margin-bottom: 0; }
+    .profile-view .block table.table td, .profile-view .block table.table th {
+      padding: 0.75em 1.5em;
+      color: #7c8d87;
+      border: none; }
+    .profile-view .block table.table th {
+      background-color: white;
+      font-weight: bold;
+      color: #000;
+      white-space: nowrap; }
+    .profile-view .block table.table tbody tr:nth-child(2n-1) {
+      background-color: #f5f5f5;
+      transition: all .125s ease-in-out; }
+    .profile-view .block table.table tbody tr:hover {
+      background-color: rgba(231, 76, 60, 0.3); }
+    .profile-view .block table.table tbody tr .icons {
+      font-size: 19px; }
+    .profile-view .block table.table tbody tr.success .icons {
+      color: green; }
+    .profile-view .block table.table tbody tr.info .icons {
+      color: dodgerblue; }
+    .profile-view .block table.table tbody tr.warning .icons {
+      color: orange; }
+    .profile-view .block table.table tbody tr.danger .icons {
+      color: red; }
 
 .logocenter {
   margin: auto;
@@ -10682,14 +10775,20 @@ ion-side-menu .heading-item .message {
       border-radius: 4px;
       padding: 2.5px 5px;
       z-index: 200;
-      display: none; }
+      display: none;
+      height: 140px; }
       .student-list .user-image-container .criteria-container button {
         width: 100%;
-        margin: 2.5px 0; }
+        margin: 2.5px 0;
+        height: 29.6%; }
       .student-list .user-image-container .criteria-container .btn-success {
-        background-color: #5cb85c; }
+        background-color: #5cb85c;
+        border: none;
+        color: white; }
       .student-list .user-image-container .criteria-container .btn-danger {
-        background-color: #d9534f; }
+        background-color: #d9534f;
+        border: none;
+        color: white; }
     .student-list .user-image-container .displayBlock {
       display: block; }
 
@@ -10778,8 +10877,9 @@ table.table {
     display: inherit; }
     .displayMobile .lesson-info-mobile {
       width: 100%;
-      margin: auto;
-      text-align: center; } }
+      margin: auto; }
+  .modal {
+    width: 100% !important; } }
 
 .chats .conv-list {
   padding-left: 0px !important; }

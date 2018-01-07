@@ -9,6 +9,14 @@
   text-align: center;
 }
 
+.ion-navicon:before {
+  content: "\f20e" !important;
+}
+
+.button-clear.button-clear {
+  color: #b2b2b2 !important;
+}
+
 #content {
   position: relative;
   height: 900px;
@@ -131,6 +139,10 @@
 
 .pt-15 {
   padding-top: 15px;
+}
+
+.pb-15 {
+  padding-bottom: 15px;
 }
 
 .pt-0 {

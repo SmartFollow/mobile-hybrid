@@ -225,18 +225,24 @@
       padding: 2.5px 5px;
       z-index: 200;
       display: none;
+      height: 140px;
 
       button {
         width: 100%;
         margin: 2.5px 0;
+        height: 29.6%;
       }
 
       .btn-success {
         background-color: #5cb85c;
+        border: none;
+        color: white;
       }
 
       .btn-danger {
         background-color: #d9534f;
+        border: none;
+        color: white;
       }
     }
 
@@ -358,7 +364,10 @@ table.table {
     .lesson-info-mobile {
       width: 100%;
       margin: auto;
-      text-align: center;
     }
+  }
+
+  .modal {
+    width: 100% !important;
   }
 }

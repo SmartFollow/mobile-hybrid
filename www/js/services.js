@@ -332,7 +332,7 @@ angular.module('starter.services', [])
   .factory('Notification', function ($http, API_NAME) {
     return {
       getNotifications: function () {
-        return $http.get(API_NAME.link + '/api/notifications').then(function (res) {
+        return $http.get(API_NAME.link + '/api/notifications?type=unread').then(function (res) {
           return res.data;
         }, $http.fallback);
       },

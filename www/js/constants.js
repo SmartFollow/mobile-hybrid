@@ -10,12 +10,6 @@ angular.module('starter.constants', [])
   student: 'student_role',
   admin: 'admin_role'
 })
-//
-// .constant('API_NAME', {
-//   link: 'http://api.eip.mmo-trick.org',
-//   secret: 'IT1tAxoBLlzOJeE5gOoNqq2LOZws1EV5rfc7tZW2',
-//   id: '2'
-// });
 
 .constant('API_NAME', {
   link: 'http://api.dev.smartfollow.org',

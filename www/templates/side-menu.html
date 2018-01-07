@@ -44,25 +44,40 @@
         </ion-item>
 
       </ion-list>
-      <ion-item class="notif" nav-clear menu-close>
-        <a class="txt-decoration-none" href="#/tab/evaluation">
+      <ion-item class="notif" nav-clear menu-close ng-if="accessRules.includes('criteria.summary.received') && (currentUser.criteria_sums.length > 0 || currentUser.criteria_averages.length > 0)">
+        <a class="txt-decoration-none">
           <h2 class="menu-text">Evalutations</h2>
           <div class="tabs tabs-icon-left">
-            <a class="tab-item" href="#/tab/evaluation">
-              <i class="icon ion-star"></i>
-              <span class="eval">2</span>
+            <a class="tab-item" ng-repeat="criterion_avg in currentUser.criteria_averages">
+              <span class="eval">{{ criterion_avg.criterion.name | acronym | uppercase }}</span>
+              <span class="eval">(<b>{{ criterion_avg.average | number: 1 }}</b>)</span>
             </a>
-            <a class="tab-item" href="#/tab/evaluation">
-              <i class="icon ion-ios-paper"></i>
-              <span class="eval">2</span>
+            <a class="tab-item" ng-repeat="criterion_sum in currentUser.criteria_sums">
+              <span class="eval">{{ criterion_sum.criterion.name | acronym | uppercase }}</span>
+              <span class="eval">(<b>{{ criterion_sum.sum | number: 0 }}</b>)</span>
             </a>
-            <a class="tab-item" href="#/tab/evaluation">
-              <i class="icon ion-ios-chatbubble"></i>
-              <span class="eval">0</span>
-            </a>
+
           </div>
         </a>
       </ion-item>
+
+      <ion-item class="notif" nav-clear menu-close ng-if="accessRules.includes('criteria.summary.given') && (currentUser.given_criteria_sums.length > 0 || currentUser.given_criteria_averages.length > 0)">
+        <a class="txt-decoration-none">
+          <h2 class="menu-text">Evalutations</h2>
+          <div class="tabs tabs-icon-left">
+            <a class="tab-item" ng-repeat="criterion_avg in currentUser.given_criteria_averages">
+              <span class="eval">{{ criterion_avg.criterion.name | acronym | uppercase }}</span>
+              <span class="eval">(<b>{{ criterion_avg.average | number: 1 }}</b>)</span>
+            </a>
+            <a class="tab-item" ng-repeat="criterion_sum in currentUser.given_criteria_sums">
+              <span class="eval">{{ criterion_sum.criterion.name | acronym | uppercase }}</span>
+              <span class="eval">(<b>{{ criterion_sum.sum | number: 0 }}</b>)</span>
+            </a>
+
+          </div>
+        </a>
+      </ion-item>
+
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>

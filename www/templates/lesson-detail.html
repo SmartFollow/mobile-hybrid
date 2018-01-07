@@ -63,10 +63,12 @@
               <ul class="list">
                 <li class="item text-center" ng-repeat="(key, homework) in lesson.homeworks">
                   <div class="pull-left">
-                    <a ng-click="openModal(3, homework)" class="margin-right-10" data-toggle="modal" data-target="#modal-homework-show" ng-if="accessRules.includes('homeworks.show')">
+                    <a ng-click="openModal(3, homework)" class="margin-right-10"
+                       ng-if="accessRules.includes('homeworks.show')">
                       <span class="ion-eye download-icon"></span>
                     </a>
-                    <a ng-click="deleteHomework(lesson.id, homework.id)" ng-if="accessRules.includes('homeworks.destroy')">
+                    <a ng-click="deleteHomework(lesson.id, homework.id)"
+                       ng-if="accessRules.includes('homeworks.destroy')">
                       <span class="ion-android-delete download-icon"></span>
                     </a>
                   </div>
@@ -89,7 +91,8 @@
               <!-- Exam -->
               <span class="data-title"><strong>Examen :</strong></span>
               <ul class="list">
-                <li class="item text-center" ng-if="lesson.exam && (lesson.exam.type == 'home' || accessRules.includes('exams.index'))">
+                <li class="item text-center"
+                    ng-if="lesson.exam && (lesson.exam.type == 'home' || accessRules.includes('exams.index'))">
                   <div class="pull-left">
                     <a ng-click="openModal(1)">
                       <span class="ion-eye download-icon"></span>
@@ -109,9 +112,15 @@
       <div class="row legend">Déroulement du cours</div>
       <div class="row breadcrumb-container" ng-if="accessRules.includes('evaluations.store')">
         <ol class="breadcrumb">
-          <li data-toggle="tab" href="#rollcall" class="clickable" ng-class="{active: tabId == 1}" ng-click="tabClick(1)">Appel</li>
-          <li data-toggle="tab" href="#lesson" class="clickable" ng-class="{active: tabId == 2}" ng-click="tabClick(2)">Cours</li>
-          <li data-toggle="tab" href="#end" class="clickable" ng-class="{active: tabId == 3}" ng-click="tabClick(3)">Fin</li>
+          <li data-toggle="tab" href="#rollcall" class="clickable" ng-class="{active: tabId == 1}"
+              ng-click="tabClick(1)">Appel
+          </li>
+          <li data-toggle="tab" href="#lesson" class="clickable" ng-class="{active: tabId == 2}" ng-click="tabClick(2)">
+            Cours
+          </li>
+          <li data-toggle="tab" href="#end" class="clickable" ng-class="{active: tabId == 3}" ng-click="tabClick(3)">
+            Fin
+          </li>
         </ol>
       </div>
 
@@ -128,7 +137,8 @@
                 <div ng-show="student.lesson_evaluation.delay && student.lesson_evaluation.delay != null"
                      class="evaluation-delay ion-clock"></div>
                 <div ng-show="student.inUpdate" class="evaluation-loading">
-                  <div class="align-helper"></div><img src="../img/loading.gif" alt="Mise à jour de l'évaluation" />
+                  <div class="align-helper"></div>
+                  <img src="../img/loading.gif" alt="Mise à jour de l'évaluation"/>
                 </div>
 
                 <pre-img ratio="_1_1" helper-class="rounded-image">
@@ -146,7 +156,8 @@
                 <div ng-show="student.lesson_evaluation.absence" class="evaluation-absent glyphicon ion-close"></div>
                 <div ng-show="student.lesson_evaluation.delay" class="evaluation-delay glyphicon ion-clock"></div>
                 <div ng-show="student.inUpdate" class="evaluation-loading">
-                  <div class="align-helper"></div><img src="../img/loading.gif" alt="Mise à jour de l'évaluation" />
+                  <div class="align-helper"></div>
+                  <img src="../img/loading.gif" alt="Mise à jour de l'évaluation"/>
                 </div>
 
                 <pre-img ratio="_1_1" helper-class="rounded-image">
@@ -154,11 +165,13 @@
                 </pre-img>
                 <span>{{student.firstname}} {{student.lastname}}</span>
 
-                <div class="criteria-container" ng-class="{displayBlock: dispCriteria == true}" ng-show="(!student.lesson_evaluation || !student.lesson_evaluation.absence)">
+                <div class="criteria-container" ng-class="{displayBlock: dispCriteria == true}"
+                     ng-show="(!student.lesson_evaluation || !student.lesson_evaluation.absence)">
                   <button ng-repeat="criterion in criteria"
                           ng-click="updateEvaluationCriterion(student, criterion, 1)"
                           class="btn btn-{{ { positive: 'success', negative: 'danger' }[criterion.impact] }}">
-                    {{ criterion.name }} ({{ criterionFromEvaluation(student.lesson_evaluation, criterion).pivot.value || 0 }})
+                    {{ criterion.name }} ({{ criterionFromEvaluation(student.lesson_evaluation, criterion).pivot.value
+                    || 0 }})
                   </button>
                 </div>
               </div>
@@ -179,10 +192,11 @@
                 </thead>
                 <tbody class="vertically-aligned">
                 <tr ng-repeat="student in lesson.student_class.students | orderBy: ['lastname', 'firstname']">
-                  <td><img ng-src="{{ config.link + student.avatar }}" alt="Photo de profil" class="end-img" /></td>
+                  <td><img ng-src="{{ config.link + student.avatar }}" alt="Photo de profil" class="end-img"/></td>
                   <td>{{ student.firstname }} <strong>{{ student.lastname }}</strong></td>
                   <td>
-									<span ng-class="student.lesson_evaluation.absence ? 'text-danger' : student.lesson_evaluation.delay ? 'text-warning' : 'text-success'">
+									<span
+                    ng-class="student.lesson_evaluation.absence ? 'text-danger' : student.lesson_evaluation.delay ? 'text-warning' : 'text-success'">
 										<span ng-show="student.lesson_evaluation.absence" class="glyphicon glyphicon-remove"></span>
 										<span ng-show="student.lesson_evaluation.delay" class="glyphicon glyphicon-time"></span>
 
@@ -200,10 +214,13 @@
                   <td>
                     <div class="item item-input-inset">
                       <label class="item-input-wrapper">
-                        <input type="text" ng-model="student.lesson_evaluation.comment" placeholder="Ajouter un commentaire sur l'élève" class="form-control" ng-disabled="student.inUpdate" />
+                        <input type="text" ng-model="student.lesson_evaluation.comment"
+                               placeholder="Ajouter un commentaire sur l'élève" class="form-control"
+                               ng-disabled="student.inUpdate"/>
                       </label>
-                      <button class="btn btn-default" type="button" ng-disabled="student.inUpdate" ng-click="updateComment(student)">
-                        <img src="../img/loading.gif" ng-if="student.inUpdate" alt="Mise à jour de l'évaluation" />
+                      <button class="btn btn-default" type="button" ng-disabled="student.inUpdate || !student.lesson_evaluation.comment"
+                              ng-click="updateComment(student)">
+                        <img src="../img/loading.gif" ng-if="student.inUpdate" alt="Mise à jour de l'évaluation"/>
                         {{ !student.inUpdate ? 'Envoyer' : '' }}
                       </button>
                     </div>
@@ -220,36 +237,103 @@
     <div class="displayMobile">
       <div class="page-block">
         <!-- General lesson info -->
-            <div class="lesson-info-mobile">
-              <dl>
-                <dt>Professeur</dt>
-                <dd>
-                  <span id="teacher">{{ lesson.subject.teacher.firstname }} {{ lesson.subject.teacher.lastname }}</span>
-                </dd>
+        <div class="lesson-info-mobile">
+          <dl>
+            <dt>Professeur</dt>
+            <dd>
+              <span id="teacher">{{ lesson.subject.teacher.firstname }} {{ lesson.subject.teacher.lastname }}</span>
+            </dd>
 
-                <dt>Classe</dt>
-                <dd>
-                  {{ lesson.student_class.name }}
-                </dd>
+            <dt>Classe</dt>
+            <dd>
+              {{ lesson.student_class.name }}
+            </dd>
 
-                <dt>Matière</dt>
-                <dd>
-                  <span id="title">{{ lesson.subject.name }}</span>
-                </dd>
+            <dt>Matière</dt>
+            <dd>
+              <span id="title">{{ lesson.subject.name }}</span>
+            </dd>
 
-                <dt ng-if-start="lesson.reservation">Salle</dt>
-                <dd ng-if-end>
-                  <span id="room">{{ lesson.reservation.room.identifier }}</span>
-                </dd>
+            <dt ng-if-start="lesson.reservation">Salle</dt>
+            <dd ng-if-end>
+              <span id="room">{{ lesson.reservation.room.identifier }}</span>
+            </dd>
 
-                <dt>Date</dt>
-                <dd>
-                  Du {{ lesson.start | date: "dd/MM/yyyy 'à' HH'h'mm" }}
-                  au {{ lesson.end | date: "dd/MM/yyyy 'à' HH'h'mm" }}
-                </dd>
-              </dl>
-            </div>
-          </div>
+            <dt>Date</dt>
+            <dd>
+              Du {{ lesson.start | date: "dd/MM/yyyy 'à' HH'h'mm" }}
+              au {{ lesson.end | date: "dd/MM/yyyy 'à' HH'h'mm" }}
+            </dd>
+          </dl>
+        </div>
+
+        <div class="linked-data lesson-info-mobile">
+          <!-- Documents -->
+          <span class=""><strong>Documents liés au cours :</strong></span>
+          <ul class="list">
+            <li class="item text-center" ng-repeat="(key, document) in lesson.documents">
+              <div class="pull-left">
+                <a href="{{ config.link + document.path}}"
+                   download="{{document.filename}}.{{document.extension}}">
+                  <span class="ion-arrow-down-a download-icon"></span>
+                </a>
+              </div>
+              {{ document.name }}
+            </li>
+            <li class="item text-center"
+                ng-if="lesson.documents.length == 0">
+              Aucun document à afficher
+            </li>
+          </ul>
+
+          <!-- Homeworks -->
+          <span class=""><strong>Devoirs à la maison :</strong></span>
+          <ul class="list">
+            <li class="item text-center" ng-repeat="(key, homework) in lesson.homeworks">
+              <div class="pull-left">
+                <a ng-click="openModal(3, homework)" class="margin-right-10"
+                   ng-if="accessRules.includes('homeworks.show')">
+                  <span class="ion-eye download-icon"></span>
+                </a>
+                <a ng-click="deleteHomework(lesson.id, homework.id)" ng-if="accessRules.includes('homeworks.destroy')">
+                  <span class="ion-android-delete download-icon"></span>
+                </a>
+              </div>
+              Devoir à la maison n°{{ key + 1 }}
+            </li>
+            <a ng-if="accessRules.includes('homeworks.store')" ng-click="openModal(2)">
+              <li class="item text-center">
+                <div class="pull-left">
+                  <span class="ion-plus-circled"></span>
+                </div>
+                Ajouter un devoir à la maison
+              </li>
+            </a>
+            <li class="item text-center"
+                ng-if="!accessRules.includes('homeworks.store') && lesson.homeworks.length == 0">
+              Aucun devoir à afficher
+            </li>
+          </ul>
+
+          <!-- Exam -->
+          <span class=""><strong>Examen :</strong></span>
+          <ul class="list">
+            <li class="item text-center"
+                ng-if="lesson.exam && (lesson.exam.type == 'home' || accessRules.includes('exams.index'))">
+              <div class="pull-left">
+                <a ng-click="openModal(1)">
+                  <span class="ion-eye download-icon"></span>
+                </a>
+              </div>
+              Examen <span ng-if="lesson.exam.description"> : {{lesson.exam.description}}</span>
+            </li>
+            <li class="item text-center"
+                ng-if="(!lesson.exam || (lesson.exam.type != 'home' && !accessRules.includes('exams.index')))">
+              Aucun examen à afficher
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <!-- Modals -->
@@ -272,12 +356,15 @@
               <dd>{{ lesson.exam.min_mark }} &rarr; {{ lesson.exam.max_mark }}</dd>
 
               <dt class="pt-15">Type</dt>
-              <dd>{{ { home: 'Devoir maison', class: 'Devoir surveillé', surprise: 'Devoir surprise' }[lesson.exam.type] }}</dd>
+              <dd>{{ { home: 'Devoir maison', class: 'Devoir surveillé', surprise: 'Devoir surprise' }[lesson.exam.type]
+                }}
+              </dd>
 
               <dt class="pt-15">Document lié</dt>
               <dd>
                 <div ng-if="lesson.exam.document">
-                  <embed ng-src="{{ (config.link + lesson.exam.document.path) | trusted }}" width="100%" height="450" type="application/pdf">
+                  <embed ng-src="{{ (config.link + lesson.exam.document.path) | trusted }}" width="100%" height="450"
+                         type="application/pdf">
                 </div>
                 <em ng-if="!lesson.exam.document">Aucun document lié</em>
               </dd>
@@ -323,19 +410,22 @@
             <form>
               <div class="item item-input">
                 <label class="input-label">Description<bR> du devoir</label>
-                <textarea name="description" ng-model="createHomework.description" class="form-control" rows="3"></textarea>
+                <textarea name="description" ng-model="createHomework.description" class="form-control"
+                          rows="3"></textarea>
               </div>
 
               <label class="item item-input item-select">
                 <div class="input-label">
                   Document lié (optionnel)
                 </div>
-                <select name="document_id" class="form-control" ng-model="createHomework.document_id" ng-options="document.id as document.name for document in lesson.documents">
+                <select name="document_id" class="form-control" ng-model="createHomework.document_id"
+                        ng-options="document.id as document.name for document in lesson.documents">
                   <option value="">-- Aucun document lié --</option>
                 </select>
               </label>
               <div class="item item-button">
-                <button class="btn btn-primary" ng-click="storeHomework(lesson.id); closeModal(2);">Ajouter le devoir</button>
+                <button class="btn btn-primary" ng-click="storeHomework(lesson.id); closeModal(2);">Ajouter le devoir
+                </button>
               </div>
             </form>
           </div>
@@ -348,25 +438,31 @@
         <div class="card">
           <i class="icon ion-ios-close close-modal" ng-click="closeModal(3)"></i>
           <div class="item item-divider">
-            <h2>Editer le devoir maison</h2>
+            <h2 ng-if="accessRules.includes('homeworks.update')">Editer le devoir maison</h2>
           </div>
           <div class="item item-text-wrap">
             <form>
               <div class="item item-input">
                 <label class="input-label">Description<bR> du devoir</label>
-                <textarea name="description" ng-model="homeworkToShow.description" class="form-control" rows="3"></textarea>
+                <textarea ng-if="accessRules.includes('homeworks.update')" name="description"
+                          ng-model="homeworkToShow.description" class="form-control" rows="3"></textarea>
+                <span ng-if="!accessRules.includes('homeworks.update')">{{ homeworkToShow.description }}</span>
               </div>
 
-              <label class="item item-input item-select">
+              <label ng-if="accessRules.includes('homeworks.update')" class="item item-input item-select">
                 <div class="input-label">
                   Document lié (optionnel)
                 </div>
-                <select name="document_id" class="form-control" ng-model="homeworkToShow.document_id" ng-options="document.id as document.name for document in lesson.documents">
+                <select name="document_id" class="form-control" ng-model="homeworkToShow.document_id"
+                        ng-options="document.id as document.name for document in lesson.documents">
                   <option value="">-- Aucun document lié --</option>
                 </select>
               </label>
+
               <div class="item item-button">
-                <button class="btn btn-primary" ng-click="updateHomework(lesson.id); closeModal(3);">Modifier le devoir</button>
+                <button class="btn btn-primary" ng-if="accessRules.includes('homeworks.update')"
+                        ng-click="updateHomework(lesson.id); closeModal(3);">Modifier le devoir
+                </button>
               </div>
             </form>
           </div>

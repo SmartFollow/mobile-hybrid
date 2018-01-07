@@ -1,4 +1,8 @@
 <ion-view view-title="Chats" class="chats" ng-init="conversationCtrl.load()">
+  <ion-nav-buttons side="left">
+    <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+    </button>
+  </ion-nav-buttons>
     <ion-content>
       <ion-list>
         <ion-item class="item-remove-animate item-avatar item-icon-right conv-list" ng-repeat="conversation in conversationCtrl.conversations" type="item-text-wrap" href="#/tab/chats/{{conversation.id}}">

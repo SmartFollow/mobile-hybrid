@@ -3,12 +3,12 @@ angular.module('starter.controllers', [])
   .controller('AppCtrl', function ($scope, $ionicPopup, $state, AuthService, AUTH_EVENTS) {
     $scope.username = AuthService.username();
 
-    $scope.$on(AUTH_EVENTS.notAuthorized, function (event) {
-      var alertPopup = $ionicPopup.alert({
-        title: 'Unauthorized!',
-        template: 'You are not allowed to access this resource.'
-      });
-    });
+    // $scope.$on(AUTH_EVENTS.notAuthorized, function (event) {
+    //   var alertPopup = $ionicPopup.alert({
+    //     title: 'Unauthorized!',
+    //     template: 'You are not allowed to access this resource.'
+    //   });
+    // });
 
     $scope.$on(AUTH_EVENTS.notAuthenticated, function (event) {
       AuthService.logout();
@@ -53,7 +53,28 @@ angular.module('starter.controllers', [])
     $scope.avatarLinkApi = API_NAME.link;
     UserService.getUser(function (data) {
       $scope.currentUser = data;
+
+      // Generating alert messages
+      if (angular.isDefined($scope.currentUser.alerts))
+        $scope.currentUser.alerts.forEach(function (alert) {
+          var message = "Vos " + alert.criterion.name.toLowerCase() + (alert.criterion.name[alert.criterion.name.length - 1] == 's' ? '' : 's');
+          if (alert.previous_student_value !== null) {
+            message +=  " ont ";
+            message += (alert.student_value >= alert.previous_student_value ? 'augmenté' : 'baissé') + " depuis la dernière évaluation, ";
+          }
+          else {
+            message +=  " sont ";
+            message += (alert.student_value >= alert.class_value ? 'supérieurs' : 'inférieurs') + " à votre classe, ";
+          }
+          message += { success: 'félicitations', info: 'continuez ainsi', warning: 'attention', danger: 'attention' }[alert.type] + " !";
+
+          alert.message = message;
+        });
+
+      console.log(data);
     });
+
+
 
     $scope.date_today = {
       value: new Date()
@@ -131,10 +152,12 @@ angular.module('starter.controllers', [])
     var vm = this;
 
     vm.notifications = getNotifications.self_notifications;
-    console.log(vm.notifications);
-    vm.readNotif = function (notifId) {
+    vm.readNotif = function (notifId, notif) {
       Notification.readNotification(notifId).then(function () {
-        $window.location.reload();
+        var i = vm.notifications.indexOf(notif);
+        if (i !== -1) {
+          vm.notifications.splice(i, 1);
+        }
       })
     };
 
@@ -151,12 +174,14 @@ angular.module('starter.controllers', [])
     vm.isNew = !message;
     vm.newMessage = message || {};
     vm.conversation = getConversation;
+    console.log(vm.conversation);
 
     vm.addMessage = function () {
       vm.newMessage.creator_id = vm.currentUser.id;
       vm.newMessage.conversation_id = vm.conversation.id;
       Conversation.addMessage(vm.newMessage).then(function () {
-        $window.location.reload();
+        vm.conversation.messages.push(vm.newMessage);
+        vm.newMessage = {};
       });
     };
 
@@ -521,4 +546,10 @@ angular.module('starter.controllers', [])
       var tempdate = new Date(text);
       return $filter('date')(tempdate, "HH");
     };
+  })
+
+  .filter('acronym', function () {
+    return function (str) {
+      return str.split(' ').map(e => e[0]).join('');
+    }
   });
