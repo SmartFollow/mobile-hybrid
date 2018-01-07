@@ -7,7 +7,7 @@
  * npm install
  * bower install
 
-2. Modifier le fichier www/js/constant.js
+2. Modifier le fichier www/js/constant.js :
   
   ```
   .constant('API_NAME', {
@@ -16,10 +16,8 @@
   	id: '2'
   });
   ```
-  
-  En remplacant "link" par le lien de votre API smartfollow et le "secret" par celui du client.
-  
-  * lancer l'application avec la commande : ionic serve
+  * Remplacer "link" par le lien de votre API smartfollow et le "secret" par celui du client.
+  * Lancer l'application avec la commande : `ionic serve`
 
 3. Si vous modifiez le scss dans le dossier scss/ lancez la commande "gulp default" pour recompiler le css.
 
