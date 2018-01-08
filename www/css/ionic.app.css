@@ -10080,6 +10080,8 @@ ion-side-menu .heading-item .message {
     float: right;
     text-decoration: none;
     padding: 10px; }
+  .profile-view .dateInput {
+    padding-right: 0px !important; }
   .profile-view .forgot-password:hover,
   .profile-view .forgot-password:active,
   .profile-view .forgot-password:focus {

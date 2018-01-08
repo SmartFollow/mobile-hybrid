@@ -12,7 +12,7 @@ angular.module('starter.constants', [])
 })
 
 .constant('API_NAME', {
-  link: 'http://api.dev.smartfollow.org',
+  link: 'http://api.eip.mmo-trick.org',
   secret: 'fpWbyzAyOqQgugwnNZKIzxnbLuF5E5ZBK3Puf2IK',
   id: '2'
 });

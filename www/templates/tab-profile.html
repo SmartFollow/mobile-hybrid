@@ -64,8 +64,7 @@
               <div class="col-50 right">
                 <label class="item item-input">
                   <span class="input-label">Date</span>
-                  <input type="date" id="dateInput" name="input" ng-model="date_today.value" placeholder="yyyy-MM-dd"
-                         required/>
+                  <input type="date" id="dateInput" class="dateInput" name="input" ng-model="date_today.value" placeholder="yyyy-MM-dd" required/>
                 </label>
               </div>
             </div>
@@ -130,12 +129,11 @@
         Elèves en difficultés
       </div>
       <div class="row img-profile-list">
-        <a class="col-20 text-center block-img-profile"
-           ng-repeat="difficulty in profile.assigned_difficulties | limitTo: 5">
+        <a class="col-20 text-center block-img-profile" ng-repeat="difficulty in currentUser.assigned_difficulties | limitTo: 5">
           <pre-img ratio="_1_1" helper-class="rounded-image">
-            <img class="user-image-difficulties" ng-src="{{ avatarLinkApi + currentUser.avatar }}" spinner-on-load>
+            <img class="user-image-difficulties" ng-src="{{ avatarLinkApi + difficulty.student.avatar }}" spinner-on-load>
           </pre-img>
-          <span>{{ difficulty.student.firstname }} {{ difficulty.student.lastname }}</span>
+          <span>{{ difficulty.student.firstname }}<br> {{ difficulty.student.lastname }}</span>
         </a>
       </div>
       <div class="pt-15 pb-15 text-center" ng-if="currentUser.assigned_difficulties.length == 0">
