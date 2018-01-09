@@ -338,65 +338,67 @@
 
     <!-- Modals -->
     <script id="templates/modal-exam.html" type="text/ng-template">
-      <div class="modal transparent">
-        <div class="card">
-          <i class="icon ion-ios-close close-modal" ng-click="closeModal(1)"></i>
-          <div class="item item-divider">
-            <h2>Voir l'examen</h2>
-          </div>
-          <div class="item item-text-wrap">
-            <dl class="spaced no-bottom-margin">
-              <dt>Description</dt>
-              <dd>
-                {{ lesson.exam.description }}
-                <em ng-if="!lesson.exam.description">Aucune description</em>
-              </dd>
+        <div class="modal transparent">
+          <ion-content>
+          <div class="card">
+            <i class="icon ion-ios-close close-modal" ng-click="closeModal(1)"></i>
+            <div class="item item-divider">
+              <h2>Voir l'examen</h2>
+            </div>
+            <div class="item item-text-wrap">
+              <dl class="spaced no-bottom-margin">
+                <dt>Description</dt>
+                <dd>
+                  {{ lesson.exam.description }}
+                  <em ng-if="!lesson.exam.description">Aucune description</em>
+                </dd>
 
-              <dt class="pt-15">Fourchette des notes</dt>
-              <dd>{{ lesson.exam.min_mark }} &rarr; {{ lesson.exam.max_mark }}</dd>
+                <dt class="pt-15">Fourchette des notes</dt>
+                <dd>{{ lesson.exam.min_mark }} &rarr; {{ lesson.exam.max_mark }}</dd>
 
-              <dt class="pt-15">Type</dt>
-              <dd>{{ { home: 'Devoir maison', class: 'Devoir surveillé', surprise: 'Devoir surprise' }[lesson.exam.type]
-                }}
-              </dd>
+                <dt class="pt-15">Type</dt>
+                <dd>{{ { home: 'Devoir maison', class: 'Devoir surveillé', surprise: 'Devoir surprise' }[lesson.exam.type]
+                  }}
+                </dd>
 
-              <dt class="pt-15">Document lié</dt>
-              <dd>
-                <div ng-if="lesson.exam.document">
-                  <embed ng-src="{{ (config.link + lesson.exam.document.path) | trusted }}" width="100%" height="450"
-                         type="application/pdf">
-                </div>
-                <em ng-if="!lesson.exam.document">Aucun document lié</em>
-              </dd>
-            </dl>
-            <br>
-            <br>
-            <table class="table">
-              <thead>
-              <tr>
-                <th>Étudiant</th>
-                <th style="width: 160px;">Note</th>
-                <th>Commentaire</th>
-              </tr>
-              </thead>
-              <tbody class="vertically-aligned">
-              <tr ng-repeat="student in lesson.student_class.students | orderBy: ['lastname', 'firstname'] ">
-                <td>{{ student.firstname }} <strong>{{ student.lastname }}</strong></td>
-                <td>
-                  <div class="text-center">
-                    {{ student.exam_mark.mark }} / {{ lesson.exam.max_mark }}
+                <dt class="pt-15">Document lié</dt>
+                <dd>
+                  <div ng-if="lesson.exam.document">
+                    <embed ng-src="{{ (config.link + lesson.exam.document.path) | trusted }}" width="100%" height="450"
+                           type="application/pdf">
                   </div>
-                </td>
-                <td>
-                  {{ student.exam_mark.comment}}
-                </td>
-              </tr>
-              </tbody>
-            </table>
+                  <em ng-if="!lesson.exam.document">Aucun document lié</em>
+                </dd>
+              </dl>
+              <br>
+              <br>
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>Étudiant</th>
+                  <th style="width: 160px;">Note</th>
+                  <th>Commentaire</th>
+                </tr>
+                </thead>
+                <tbody class="vertically-aligned">
+                <tr ng-repeat="student in lesson.student_class.students | orderBy: ['lastname', 'firstname'] ">
+                  <td>{{ student.firstname }} <strong>{{ student.lastname }}</strong></td>
+                  <td>
+                    <div class="text-center">
+                      {{ student.exam_mark.mark }} / {{ lesson.exam.max_mark }}
+                    </div>
+                  </td>
+                  <td>
+                    {{ student.exam_mark.comment}}
+                  </td>
+                </tr>
+                </tbody>
+              </table>
 
+            </div>
           </div>
+          </ion-content>
         </div>
-      </div>
     </script>
 
     <script id="templates/modal-homework-create.html" type="text/ng-template">

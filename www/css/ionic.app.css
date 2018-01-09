@@ -10081,6 +10081,7 @@ ion-side-menu .heading-item .message {
     text-decoration: none;
     padding: 10px; }
   .profile-view .dateInput {
+    padding-top: 10px !important;
     padding-right: 0px !important; }
   .profile-view .forgot-password:hover,
   .profile-view .forgot-password:active,
@@ -10882,6 +10883,9 @@ table.table {
       margin: auto; }
   .modal {
     width: 100% !important; } }
+
+.scroll {
+  padding-bottom: 30px !important; }
 
 .chats .conv-list {
   padding-left: 0px !important; }

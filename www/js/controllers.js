@@ -205,13 +205,13 @@ angular.module('starter.controllers', [])
     var vm = this;
 
     vm.isNew = !conversation;
-    vm.users = vm.isNew ? getAllUsers : getAllUsers;
     vm.allConv = getAllConversations;
 
     UserService.getUser(function (data) {
       vm.currentUser = data;
     });
 
+    vm.users = vm.isNew ? getAllUsers.users : getAllUsers.users;
     vm.newConversation = conversation || {};
     var ids = [];
 
