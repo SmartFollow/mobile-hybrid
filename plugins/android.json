@@ -9,7 +9,17 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.ionicframework.app189104"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.ionicframework.app189104"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "cordova-plugin-compat": {
+      "PACKAGE_NAME": "com.ionicframework.app189104"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.ionicframework.app189104"
+    }
+  }
 }

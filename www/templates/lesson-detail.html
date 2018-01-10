@@ -45,10 +45,11 @@
               <ul class="list">
                 <li class="item text-center" ng-repeat="(key, document) in lesson.documents">
                   <div class="pull-left">
-                    <a href="{{ config.link + document.path}}"
-                       download="{{document.filename}}.{{document.extension}}">
-                      <span class="ion-arrow-down-a download-icon"></span>
-                    </a>
+                    <!--<a href="{{ config.link + document.path}}"-->
+                       <!--download="{{document.filename}}.{{document.extension}}">-->
+                      <!--<span class="ion-arrow-down-a download-icon"></span>-->
+                    <!--</a>-->
+                    <div ng-click="fileDownload(document)"><span class="ion-arrow-down-a download-icon"></span></div>
                   </div>
                   {{ document.name }}
                 </li>
@@ -273,10 +274,11 @@
           <ul class="list">
             <li class="item text-center" ng-repeat="(key, document) in lesson.documents">
               <div class="pull-left">
-                <a href="{{ config.link + document.path}}"
-                   download="{{document.filename}}.{{document.extension}}">
-                  <span class="ion-arrow-down-a download-icon"></span>
-                </a>
+                <!--<a href="{{ config.link + document.path}}"-->
+                   <!--download="{{document.filename}}.{{document.extension}}">-->
+                  <!--<span class="ion-arrow-down-a download-icon"></span>-->
+                <!--</a>-->
+                <div ng-click="fileDownload(document)"><span class="ion-arrow-down-a download-icon"></span></div>
               </div>
               {{ document.name }}
             </li>

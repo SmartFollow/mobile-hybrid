@@ -254,7 +254,7 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('LessonDetailCtrl', function ($scope, $window, HomeworkFactory, $ionicModal, $stateParams, UserService, API_NAME, $state, $rootScope, $http, $filter, EvaluationFactory) {
+  .controller('LessonDetailCtrl', function ($scope, $cordovaFileTransfer, $window, HomeworkFactory, $ionicModal, $stateParams, UserService, API_NAME, $state, $rootScope, $http, $filter, EvaluationFactory) {
 
     $scope.config = API_NAME;
 
@@ -313,6 +313,30 @@ angular.module('starter.controllers', [])
     };
 
 
+    $scope.fileDownload = function(document) {
+      var url = $scope.config.link + document.path;
+      console.log(url);
+      var filename = document.filename + '.' + document.extension;
+
+      var targetPath = cordova.file.externalRootDirectory + filename;
+
+      $cordovaFileTransfer.download(url, targetPath, {}, true).then(function(result) {
+        //console.log('Success');
+        $scope.hasil = 'Save file on ' + targetPath + ' success!';
+        $scope.mywallpaper = targetPath;
+        alert('Your download is completed');
+      }, function(error) {
+        //console.log('Error downloading file');
+        $scope.hasil = 'Error downloading file...';
+        alert('Your download is failed');
+      }, function(progress) {
+        console.log('progress');
+        $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+        // var downcountString = $scope.downloadProgress.toFixed();
+        // console.log('downcountString');
+        // $scope.downloadCount = downcountString;
+      });
+    };
 
     /**
      * Updating the status (present / absent / delay) of a student
