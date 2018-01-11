@@ -9831,6 +9831,13 @@ a.button {
 .button-clear.button-clear {
   color: #b2b2b2 !important; }
 
+.platform-android .action-sheet-cancel {
+  display: block !important; }
+
+.action-sheet-wrapper {
+  width: 300px !important;
+  bottom: 30px !important; }
+
 #content {
   position: relative;
   height: 900px;
@@ -10081,7 +10088,7 @@ ion-side-menu .heading-item .message {
     text-decoration: none;
     padding: 10px; }
   .profile-view .dateInput {
-    padding-top: 10px !important;
+    padding-top: 7px !important;
     padding-right: 0px !important; }
   .profile-view .forgot-password:hover,
   .profile-view .forgot-password:active,

@@ -349,11 +349,12 @@ angular.module('starter.controllers', [])
         $cordovaFileTransfer.download(url, targetPath, {}, true).then(function(result) {
           $scope.hasil = 'Save file on ' + targetPath + ' success!';
           $scope.mywallpaper = targetPath;
-          alert('Your download is completed ! Saved in : ', targetPath);
+          alert('Your download is completed ! Saved in : ' + targetPath);
         }, function(error) {
           console.log(error);
-          $scope.hasil = 'Error downloading file...';
           alert('Your download is failed');
+          $scope.checkDownload(document);
+          $scope.hasil = 'Error downloading file...';
         }, function(progress) {
           console.log('progress');
           $scope.downloadProgress = (progress.loaded / progress.total) * 100;
