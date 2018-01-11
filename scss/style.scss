@@ -17,6 +17,15 @@
   color: #b2b2b2 !important;
 }
 
+.platform-android .action-sheet-cancel {
+  display: block !important;
+}
+
+.action-sheet-wrapper {
+  width: 300px !important;
+  bottom: 30px !important;
+}
+
 #content {
   position: relative;
   height: 900px;

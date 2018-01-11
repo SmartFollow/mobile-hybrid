@@ -9,6 +9,7 @@
     "@ionic/cloud": "^0.16.0",
     "bluebird": "^3.5.1",
     "cordova-android": "^6.2.3",
+    "cordova-plugin-android-permissions": "^0.10.0",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-file": "^4.3.3",
     "cordova-plugin-file-transfer": "^1.6.1",
@@ -46,7 +47,8 @@
         "SENDER_ID": "SMARTFOLLOW"
       },
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-file-transfer": {}
+      "cordova-plugin-file-transfer": {},
+      "cordova-plugin-android-permissions": {}
     },
     "platforms": [
       "android"

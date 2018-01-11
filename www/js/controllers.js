@@ -122,7 +122,7 @@ angular.module('starter.controllers', [])
 
       // Show the action sheet
       var hideSheet = $ionicActionSheet.show({
-        destructiveText: 'Logout',
+        destructiveText: 'Oui',
         titleText: 'Voulez vous vraiment vous déconnecter ?',
         cancelText: 'Cancel',
         cancel: function () {
@@ -221,8 +221,9 @@ angular.module('starter.controllers', [])
         this.push(tag.id);
       }, ids);
       vm.newConversation.creator_id = vm.currentUser.id;
-      vm.newConversation.participants = ids;
+      vm.newConversation.participants = vm.newConversation.id ? vm.newConversation.participants : ids;
       ids = [];
+
 
       Conversation[vm.isNew ? 'addConversation' : 'updateConversation'](vm.newConversation, vm.newConversation.id).then(function () {
         vm.add.ongoing = false;
@@ -313,29 +314,52 @@ angular.module('starter.controllers', [])
     };
 
 
+    $scope.checkDownload = function (document) {
+      var permissions = cordova.plugins.permissions;
+      permissions.hasPermission(permissions.READ_EXTERNAL_STORAGE, checkPermissionCallback, null);
+
+      function checkPermissionCallback(status) {
+        if (!status.hasPermission) {
+          var errorCallback = function () {
+            console.warn('Storage permission is not turned on');
+          };
+          permissions.requestPermission(
+            permissions.READ_EXTERNAL_STORAGE,
+            function (status) {
+              if (!status.hasPermission) {
+                errorCallback();
+              } else {
+                $scope.fileDownload(document);
+              }
+            },
+            errorCallback);
+        }
+      }
+    };
+
     $scope.fileDownload = function(document) {
       var url = $scope.config.link + document.path;
       console.log(url);
       var filename = document.filename + '.' + document.extension;
+      window.requestFileSystem(window.LocalFileSystem.PERSISTENT, 0, function(fs)
+      {
+        var targetPath = fs.root.toURL() + 'Download/' + filename;
+        console.log(targetPath);
 
-      var targetPath = cordova.file.externalRootDirectory + filename;
-
-      $cordovaFileTransfer.download(url, targetPath, {}, true).then(function(result) {
-        //console.log('Success');
-        $scope.hasil = 'Save file on ' + targetPath + ' success!';
-        $scope.mywallpaper = targetPath;
-        alert('Your download is completed');
-      }, function(error) {
-        //console.log('Error downloading file');
-        $scope.hasil = 'Error downloading file...';
-        alert('Your download is failed');
-      }, function(progress) {
-        console.log('progress');
-        $scope.downloadProgress = (progress.loaded / progress.total) * 100;
-        // var downcountString = $scope.downloadProgress.toFixed();
-        // console.log('downcountString');
-        // $scope.downloadCount = downcountString;
+        $cordovaFileTransfer.download(url, targetPath, {}, true).then(function(result) {
+          $scope.hasil = 'Save file on ' + targetPath + ' success!';
+          $scope.mywallpaper = targetPath;
+          alert('Your download is completed ! Saved in : ', targetPath);
+        }, function(error) {
+          console.log(error);
+          $scope.hasil = 'Error downloading file...';
+          alert('Your download is failed');
+        }, function(progress) {
+          console.log('progress');
+          $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+        });
       });
+
     };
 
     /**
