@@ -1,0 +1,272 @@
+<ion-view class="profile-view" view-title="Profile">
+  <html ng-app="ionic.example">
+  <head>
+    <meta charset="utf-8">
+    <title>Profil</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <link href="http://code.ionicframework.com/0.9.25/css/ionic.min.css" rel="stylesheet">
+    <script src="http://code.ionicframework.com/0.9.25/js/ionic.bundle.min.js"></script>
+  </head>
+  <body ng-controller="ProfileCtrl">
+  <ion-content has-header="true">
+    <div class="top-content row">
+      <div class="profile-container">
+        <div class="user-image-container">
+          <pre-img ratio="_1_1" helper-class="rounded-image">
+            <img class="user-image" ng-src="{{avatarLinkApi}}{{currentUser.avatar}}" spinner-on-load>
+          </pre-img>
+        </div>
+        <div class="user-name">{{currentUser.firstname + " " + currentUser.lastname}}</div>
+        <div class="user-twitter">{{ currentUser.group.name }}</div>
+        <div class="user-twitter">{{ currentUser.student_class.name }}</div>
+      </div>
+    </div>
+
+    <!-- Tableau des notes récentes -->
+    <div ng-if="accessRules.includes('marks.self.index')" class="pt-15">
+      <div id="profile-notes">
+        <div class="card">
+          <div class="item item-divider">
+            Dernieres notes
+          </div>
+          <div class="item item-text-wrap">
+
+            <div ng-repeat="note in (filteredItems = (currentUser.marks | orderBy: '-created_at' | limitTo: 2))">
+              <h3 class="pt-15">{{ note.exam.lesson.subject.name }}</h3>
+              <div class="row row-color">
+                <div class="col-25">{{ note.created_at | dayMonth}}</div>
+                <div ng-if="note.mark < (note.exam.max_mark / 2)" class="col-25 note">
+                  {{note.mark}} / {{ note.exam.max_mark}}
+                </div>
+                <div ng-if="note.mark > (note.exam.max_mark / 2)" class="col-25">
+                  {{note.mark}} / {{ note.exam.max_mark}}
+                </div>
+                <div class="col-50">{{note.comment}}</div>
+              </div>
+            </div>
+
+          </div>
+          <a href="#/tab/notes" class="forgot-password">
+            Voir toutes les notes
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tableau des leçon du jour -->
+    <div ng-if="accessRules.includes('lessons.self.index')">
+      <div id="profile-lesson">
+        <div class="card">
+          <div class="item item-divider">
+            <div class="row nopadding">
+              <div class="col-50 pt-4">Evenements du jour</div>
+              <div class="col-50 right">
+                <label class="item item-input">
+                  <span class="input-label">Date</span>
+                  <input type="date" id="dateInput" class="dateInput" name="input" ng-model="date_today.value" placeholder="yyyy-MM-dd" required/>
+                </label>
+              </div>
+            </div>
+          </div>
+          <span ng-repeat="lessons in lesson">
+            <div ng-if="(date_today.value | date:'dd-MM-yyyy') == (lessons.start | dayMonthYear)">
+                <div class="item item-text-wrap" id="profile-lesson-tab">
+                    <h3 class="pt-15">{{ lessons.subject.name }}</h3>
+                    <a class="lesson-link" href="#/tab/lesson/{{lessons.id}}">
+                        <div class="row row-color">
+                            <div class="col-25">{{ lessons.start | hours }}h-{{ lessons.end | hours }}h</div>
+                            <div class="col-50">{{ lessons.description }}</div>
+                            <div class="col-20">{{ lessons.reservation.room.identifier }}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+          </span>
+          <a href="#/tab/lessons" class="forgot-password">
+            Voir tout les évenements
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tableau des devoirs -->
+    <!-- Homeworks -->
+    <div class="block card" ng-if="accessRules.includes('users.profile.homeworks')">
+      <div class="item item-divider">
+        Devoirs
+      </div>
+      <div>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Matière</th>
+            <th>Description</th>
+            <th>Leçon</th>
+          </tr>
+          </thead>
+          <tbody ng-repeat="lesson in currentUser.homeworks">
+          <tr ng-repeat="homework in lesson.homeworks">
+            <td class="text-center">{{ lesson.subject.name }}</td>
+            <td class="text-center">{{ homework.description }}</td>
+            <td class="text-center"><a class="simpleLink" ui-sref="tab.lesson-details({ id: lesson.id })">Voir la
+              leçon</a></td>
+          </tr>
+          </tbody>
+          <tbody ng-if="currentUser.homeworks.length == 0">
+          <tr>
+            <td colspan="3" class="text-center">Aucun devoir enregistré</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Student difficulties -->
+    <div class="block card"
+         ng-if="accessRules.includes('difficulties.index') || accessRules.includes('difficulties.self.index')">
+      <div class="item item-divider">
+        Elèves en difficultés
+      </div>
+      <div class="row img-profile-list">
+        <a class="col-20 text-center block-img-profile" ng-repeat="difficulty in currentUser.assigned_difficulties | limitTo: 5">
+          <pre-img ratio="_1_1" helper-class="rounded-image">
+            <img class="user-image-difficulties" ng-src="{{ avatarLinkApi + difficulty.student.avatar }}" spinner-on-load>
+          </pre-img>
+          <span>{{ difficulty.student.firstname }}<br> {{ difficulty.student.lastname }}</span>
+        </a>
+      </div>
+      <div class="pt-15 pb-15 text-center" ng-if="currentUser.assigned_difficulties.length == 0">
+        Aucun étudiant en difficulté ne vous a été assigné actuellement.
+      </div>
+    </div>
+
+
+    <!-- Received criteria summary -->
+    <div class="block card" ng-if="accessRules.includes('criteria.summary.received')">
+      <div class="item item-divider">
+        Résumé des critères récents reçus
+      </div>
+      <ul class="list-group margLeft-right"
+          ng-if="currentUser.criteria_sums.length > 0 || currentUser.criteria_averages.length > 0">
+        <li ng-repeat="criterion_sum in currentUser.criteria_sums"
+            class="list-group-item list-group-item-{{ { positive: 'success', negative: 'danger', neutral: 'info' }[criterion_sum.criterion.impact] }}">
+          <strong>{{ criterion_sum.criterion.name }}</strong>
+          ({{ { positive: 'positif', negative: 'négatif', neutral: 'neutre' }[criterion_sum.criterion.impact] }})
+          <span class="pull-right badge">
+							{{ criterion_sum.sum | number: 0 }}
+						</span>
+        </li>
+        <li ng-repeat="criterion_avg in currentUser.criteria_averages"
+            class="list-group-item list-group-item-{{ { positive: 'success', negative: 'danger', neutral: 'info' }[criterion_avg.criterion.impact] }}">
+          <strong>{{ criterion_avg.criterion.name }}</strong>
+          ({{ { positive: 'positif', negative: 'négatif', neutral: 'neutre' }[criterion_avg.criterion.impact] }})
+          <span class="pull-right badge">
+							{{ criterion_avg.average | number: 1 }}
+						</span>
+        </li>
+      </ul>
+
+      <ul class="list-group margLeft-right" ng-if="currentUser.last_absences_delays_sum">
+        <li
+          class="list-group-item list-group-item-{{ currentUser.last_absences_delays_sum.absences == 0 ? 'success' : 'danger' }}">
+          <strong>Absences de la semaine</strong>
+          <span class="pull-right badge">
+							{{ currentUser.last_absences_delays_sum.absences }}
+						</span>
+        </li>
+        <li
+          class="list-group-item list-group-item-{{ currentUser.last_absences_delays_sum.delays == 0 ? 'success' : 'danger' }}">
+          <strong>Retards de la semaine</strong>
+          <span class="pull-right badge">
+							{{ currentUser.last_absences_delays_sum.delays }}
+						</span>
+        </li>
+      </ul>
+      <div class="text-center"
+           ng-if="currentUser.criteria_sums.length == 0 && currentUser.criteria_averages.length == 0 && !currentUser.last_absences_delays_sum">
+        Aucun critère enregistré récemment
+      </div>
+    </div>
+
+
+    <!-- Given criteria summary -->
+    <div class="block card" ng-if="accessRules.includes('criteria.summary.given')">
+      <div class="item item-divider">
+        Résumé des critères récents donnés
+      </div>
+      <ul class="list-group margLeft-right"
+          ng-if="currentUser.given_criteria_sums.length > 0 || currentUser.given_criteria_averages.length > 0">
+        <li ng-repeat="criterion_sum in currentUser.given_criteria_sums"
+            class="list-group-item list-group-item-{{ { positive: 'success', negative: 'danger', neutral: 'info' }[criterion_sum.criterion.impact] }}">
+          <strong>{{ criterion_sum.criterion.name }}</strong>
+          ({{ { positive: 'positif', negative: 'négatif', neutral: 'neutre' }[criterion_sum.criterion.impact] }})
+          <span class="pull-right badge">
+							{{ criterion_sum.sum | number: 0 }}
+						</span>
+        </li>
+        <li ng-repeat="criterion_avg in currentUser.given_criteria_averages"
+            class="list-group-item list-group-item-{{ { positive: 'success', negative: 'danger', neutral: 'info' }[criterion_avg.criterion.impact] }}">
+          <strong>{{ criterion_avg.criterion.name }}</strong>
+          ({{ { positive: 'positif', negative: 'négatif', neutral: 'neutre' }[criterion_avg.criterion.impact] }})
+          <span class="pull-right badge">
+							{{ criterion_avg.average | number: 1 }}
+						</span>
+        </li>
+      </ul>
+
+      <ul class="list-group margLeft-right" ng-if="currentUser.given_last_absences_delays_sum">
+        <li
+          class="list-group-item list-group-item-{{ currentUser.given_last_absences_delays_sum.absences == 0 ? 'success' : 'danger' }}">
+          <strong>Absences de la semaine</strong>
+          <span class="pull-right badge">
+							{{ currentUser.given_last_absences_delays_sum.absences }}
+						</span>
+        </li>
+        <li
+          class="list-group-item list-group-item-{{ currentUser.given_last_absences_delays_sum.delays == 0 ? 'success' : 'danger' }}">
+          <strong>Retards de la semaine</strong>
+          <span class="pull-right badge">
+							{{ currentUser.given_last_absences_delays_sum.delays }}
+						</span>
+        </li>
+      </ul>
+      <div class="text-center"
+           ng-if="currentUser.given_criteria_sums.length == 0 && currentUser.given_criteria_averages.length == 0 && !currentUser.given_last_absences_delays_sum">
+        Aucun critère enregistré récemment
+      </div>
+    </div>
+
+
+    <!-- Alerts -->
+    <div class="block card" ng-if="accessRules.includes('alerts.self.index')">
+      <div class="item item-divider">
+        Alertes
+      </div>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Type</th>
+          <th>Message</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="alert in currentUser.alerts" ng-class="alert.type">
+          <td class="text-center">{{ alert.id }}</td>
+          <td class="text-center"><span
+            class="icons ion-{{ { success: 'checkmark', danger: 'close', warning: 'alert', info: 'information' }[alert.type] }}-circled"></span>
+          </td>
+          <td>{{ alert.message }}</td>
+        </tr>
+        <tr ng-if="currentUser.alerts.length == 0" class="text-center">
+          <td colspan="3">Aucune alerte à afficher</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </ion-content>
+  </body>
+  </html>
+</ion-view>

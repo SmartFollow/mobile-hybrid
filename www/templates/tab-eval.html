@@ -1,0 +1,57 @@
+<ion-view class="profile-view" view-title="Evaluations">
+  
+
+<div ng-if="currentUser.group.id == 4">
+  <ion-content class="padding">
+    <div id="profile-evaluations-student">
+        <div class="item item-text-wrap border-bottom">
+            <div class="row ">
+                <div class="col-25">Date</div>
+                <div class="col-25">Leçon</div>
+                <div class="col-50">Type</div>
+            </div>
+            <span ng-repeat="eval in evaluations | orderBy: '-created_at'">
+                <div ng-if="eval.student_id  == currentUser.id ">
+                <p class="pl-10 pt-15"><b>Commentaire :</b> {{ eval.comment }}</p>
+                    <div class="item item-text-wrap">
+                        <div class="row row-color" ng-repeat="crit in eval.criteria">
+                            <div class="col-25">{{ eval.created_at | dayMonth}}</div>
+                            <div class="col-25"><a class="doc-link" href="#/tab/lesson/{{eval.lesson_id}}"><i class="icon ion-eye"></i></a></div>
+                            <div class="col-50">{{crit.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </span>
+        </div>
+    </div>
+  </ion-content>
+</div>
+
+<div ng-if="currentUser.group.id == 2">
+    <ion-content class="padding">
+        <div id="profile-evaluations-teacher">
+            <div class="item item-text-wrap border-bottom">
+                <div class="row ">
+                    <div class="col-25">Date</div>
+                    <div class="col-25">Leçon</div>
+                    <div class="col-50">Type</div>
+                </div>
+                <span ng-repeat="eval in evaluations | orderBy: '-created_at'">
+                    <div ng-if="eval.lesson.subject.teacher.id  == currentUser.id ">
+                        <p class="pl-10 pt-15">{{ eval.student.firstname }} {{ eval.student.lastname }}</p>
+                        <p class="pl-10"><b>Commentaire :</b> {{ eval.comment }}</p>
+                        <div class="item item-text-wrap">
+                            <div class="row row-color" ng-repeat="crit in eval.criteria">
+                                <div class="col-25">{{ eval.created_at | dayMonth}}</div>
+                                <div class="col-25"><a class="doc-link" href="#/tab/lesson/{{eval.lesson_id}}"><i class="icon ion-eye"></i></a></div>
+                                <div class="col-50">{{crit.name}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </ion-content>
+</div>
+
+</ion-view>

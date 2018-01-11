@@ -1,0 +1,46 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view class="profile-view" view-title="Toutes les leçons">
+
+	<div ng-if="currentUser.group.id == 4">
+	  	<ion-content class="padding">
+	  		<span ng-repeat="lessons in lesson | orderBy: '-start'">
+	  			<div ng-if="lessons.student_class_id == currentUser.student_class.id" >
+					<div class="item item-text-wrap" id="profile-lesson-tab">
+			        	<h3 class="pt-15">{{ lessons.subject.name }} / {{ lessons.start | dayMonthYear }}</h3>
+			            <a class="lesson-link" href="#/tab/lesson/{{lessons.id}}">
+				            <div class="row row-color">
+				                <div class="col-25">{{ lessons.start | hours }}h-{{ lessons.end | hours }}h</div>
+				                <div class="col-50">{{ lessons.description }}</div>
+				                <div class="col-20">{{ lessons.reservation.room.identifier }}</div>
+				            </div>
+			            </a>
+			        </div>
+		   		</div>
+	   		</span>
+	    </ion-content>
+	</div>
+
+	<div ng-if="currentUser.group.id == 2">
+	  	<ion-content class="padding">
+	  		<span ng-repeat="lessons in lesson| orderBy: '-start'">
+	  			<div ng-if="lessons.subject.teacher_id == currentUser.id" >
+					<div class="item item-text-wrap pt-0 pb-0" id="profile-lesson-tab">
+			        	<h3 class="pt-15">{{ lessons.subject.name }} / {{ lessons.start | dayMonthYear }}</h3>
+			            <a class="lesson-link" href="#/tab/lesson/{{lessons.id}}">
+				            <div class="row row-color">
+				                <div class="col-25">{{ lessons.start | hours }}h-{{ lessons.end | hours }}h</div>
+				                <div class="col-50">{{ lessons.description }}</div>
+				                <div class="col-20">{{ lessons.reservation.room.identifier }}</div>
+				            </div>
+			            </a>
+			        </div>
+		   		</div>
+	   		</span>
+	    </ion-content>
+	</div>
+</ion-view>

@@ -1,0 +1,25 @@
+<ion-view view-title="Nouvelle conversation">
+  <ion-content class="padding">
+    <form name="newConvForm">
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Nom de la conversation" ng-model="newConversationCtrl.newConversation.subject">
+        </label>
+      </div>
+
+      <div class="list">
+        <button class="button button-stable" multiple="true" modal-select ng-model="newConversationCtrl.newConversation.participants" options="newConversationCtrl.users" modal-title="Selectionnez des participants">
+          Selectionnez les participants<br>
+          <div class="option">
+            {{option.firstname}} {{ option.lastname }}
+          </div>
+        </button>
+      </div>
+      <b>Participants :</b><span ng-repeat="tag in newConversationCtrl.newConversation.participants"> {{ tag.firstname }} </span>
+
+      <div class="list" style="text-align: center;">
+        <button id="create" class="button button-block button-assertive" type="submit" ng-click="newConversationCtrl.add()">Démarrer une nouvelle conversation</button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

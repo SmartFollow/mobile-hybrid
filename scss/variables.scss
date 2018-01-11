@@ -1,0 +1,77 @@
+// Theme
+$theme-color-1: #E74D3D;
+$theme-color-2: #E74D3D;
+$theme-color-3: #3E454C;
+
+$positive: $theme-color-1 !default;
+
+// Images - Preload images
+$pre-img-bg: rgba(lighten(#666666, 15%), .25);
+
+// Images - Preload images - Spinner on load
+$spinner-size: 50px;
+$spinner-svg-size: 28px;
+$spinner-color: #FFFFFF;
+
+// Images - Multimedia background
+$multi-bg: darken(#666666, 30%);
+$overlay-bg: darken(#fcfcfc, 80%);
+
+$pre-img-ratios: ();
+
+// App colors
+$top-bar-bg: $theme-color-2;
+$top-bar-color: #FFFFFF;
+
+$loading-color: #FFFFFF;
+$loading-background-color: rgba(#444444, .9);
+
+$content-bg: #EAEAEA;
+$content-color: #444444;
+
+// Side Menu
+$main-menu-bg: $theme-color-3;
+$main-menu-color: #FFFFFF;
+
+// Menu - User image
+$menu-user-img-width: 10vw;
+$menu-user-img-ratio: 1 1;
+
+// Merge maps
+$pre-img-ratios: append($pre-img-ratios, $menu-user-img-ratio);
+
+// App - Profile
+$image-width: 46vw;
+$image-max-width: 200px;
+
+$profile-bg: #FFFFFF;
+
+$profile-user-img-ratio: 1 1;
+$pre-img-ratios: append($pre-img-ratios, $profile-user-img-ratio);
+
+// Login
+$auth-color: #FFFFFF;
+$show-hide-password-color: lighten(#444444, 25%);
+$auth-tabs-highlight: $theme-color-1;
+$auth-tabs-bg: $theme-color-3;
+$auth-tabs-color: darken($auth-color, 10%);
+$auth-login-btn-bg: rgba($theme-color-1, .8);
+$auth-signup-btn-bg: rgba($theme-color-2, .8);
+
+
+$dark-background: #282828;
+$darker-background: #1f1f1f;
+$dark-background-text-color: #ffffff;
+
+$light-background: #dddddd;
+$lighter-background: #edecec;
+$light-background-text-color: #333333;
+
+$theme-background: #e74c3c;
+$theme-darker-background: #c0392b;
+$theme-text-color: #ffffff;
+
+$font-family: 'Lato', Arial, sans-serif;
+$font-color: #333333;
+
+$block-padding: 10px;
